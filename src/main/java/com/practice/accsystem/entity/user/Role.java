@@ -1,25 +1,28 @@
 package com.practice.accsystem.entity.user;
 
-import com.sun.xml.internal.ws.policy.privateutil.PolicyUtils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
+import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import static com.practice.accsystem.entity.user.Permission.testPermission;
+import static com.practice.accsystem.entity.user.Permission.*;
 
 /**
  * Роли пользователя
  */
 @RequiredArgsConstructor
 public enum Role {
-    ADMIN("ADMIN", Collections.singletonList(testPermission)),
-    USER("USER", Collections.singletonList(testPermission));
+    ADMIN("ADMIN", Arrays.asList(
+            readUserAll,
+            writeUserAll)
+    ),
+    USER("USER", Arrays.asList(
+            readUserSelf,
+            writeUserSelf)
+    );
 
     private final String roleStr;
     private final List<Permission> permissions;

@@ -9,7 +9,10 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
  */
 @RequiredArgsConstructor
 public enum Permission {
-    testPermission("test-perm");
+    readUserAll("user:read:all"),
+    readUserSelf("user:read:self"),
+    writeUserAll("user:write:all"),
+    writeUserSelf("user:read:self");
 
     private final String permissionStr;
 
