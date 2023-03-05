@@ -1,46 +1,35 @@
-package com.practice.accsystem.entity;
+package com.practice.accsystem.dto.contract;
 
-import com.practice.accsystem.entity.user.AppUserEntity;
+import com.practice.accsystem.entity.ContractType;
 import lombok.*;
 
-import javax.persistence.*;
 import java.math.BigDecimal;
 import java.util.Date;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.HashMap;
+import java.util.Map;
 
-/**
- * Сущность основного договора
- */
-@Entity
-@Table(name = "contract")
 @Getter
 @Setter
-@RequiredArgsConstructor
 @AllArgsConstructor
+@NoArgsConstructor
 @Builder
-public class ContractEntity {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+public class ContractGetDto {
     private Long id;
 
     /**
      * Пользователь, управляющий контрактом
      */
-    @ManyToOne(optional = false)
-    private AppUserEntity assignedUser;
+    private Long assignedUserId;
 
     /**
      * Этапы договора
      */
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "contract", orphanRemoval = true)
-    private Set<ContractStageEntity> contractStages = new HashSet<>();
+    private Map<Long, String> contractStagesMap = new HashMap<>();
 
     /**
      * Договоры с контрагентами
      */
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "contract", orphanRemoval = true)
-    private Set<CounterpartyContractEntity> counterpartyContracts = new HashSet<>();
+    private Map<Long, String> counterpartyContractsMap = new HashMap<>();
 
     /**
      * Название договора
@@ -50,7 +39,6 @@ public class ContractEntity {
     /**
      * Тип договора
      */
-    @Enumerated(EnumType.STRING)
     private ContractType contractType;
 
     /**

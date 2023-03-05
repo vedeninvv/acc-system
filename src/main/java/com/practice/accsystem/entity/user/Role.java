@@ -19,13 +19,17 @@ public enum Role {
             readUserAll,
             writeUserAll,
             readCounterparty,
-            writeCounterparty)
+            writeCounterparty,
+            readContractAll,
+            writeContractAll)
     ),
     USER("USER", Arrays.asList(
             readUserSelf,
             writeUserSelf,
             readCounterparty,
-            writeCounterparty)
+            writeCounterparty,
+            readContractSelf,
+            writeContractSelf)
     );
 
     private final String roleStr;
