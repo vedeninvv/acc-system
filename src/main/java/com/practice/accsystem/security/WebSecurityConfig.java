@@ -1,9 +1,11 @@
 package com.practice.accsystem.security;
 
+import com.practice.accsystem.config.OpenApiConfiguration;
 import com.practice.accsystem.security.jwt.AuthEntryPointJwt;
 import com.practice.accsystem.security.jwt.AuthTokenFilter;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
@@ -60,6 +62,8 @@ public class WebSecurityConfig {
                 .exceptionHandling().authenticationEntryPoint(unauthorizedHandler).and()
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
                 .authorizeRequests().antMatchers("/api/auth/**").permitAll()
+                .antMatchers(HttpMethod.GET, "/api").permitAll()
+                .antMatchers(OpenApiConfiguration.SWAGGER_WHITELIST).permitAll()
                 .anyRequest().authenticated();
 
         http.authenticationProvider(authenticationProvider());
