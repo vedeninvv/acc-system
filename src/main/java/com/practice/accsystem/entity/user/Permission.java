@@ -12,7 +12,9 @@ public enum Permission {
     readUserAll("user:read:all"),
     readUserSelf("user:read:self"),
     writeUserAll("user:write:all"),
-    writeUserSelf("user:read:self");
+    writeUserSelf("user:read:self"),
+    readCounterparty("counterparty:read:all"),
+    writeCounterparty("counterparty:write:all");
 
     private final String permissionStr;
 

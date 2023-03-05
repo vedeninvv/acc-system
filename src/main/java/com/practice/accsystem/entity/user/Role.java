@@ -17,11 +17,15 @@ import static com.practice.accsystem.entity.user.Permission.*;
 public enum Role {
     ADMIN("ADMIN", Arrays.asList(
             readUserAll,
-            writeUserAll)
+            writeUserAll,
+            readCounterparty,
+            writeCounterparty)
     ),
     USER("USER", Arrays.asList(
             readUserSelf,
-            writeUserSelf)
+            writeUserSelf,
+            readCounterparty,
+            writeCounterparty)
     );
 
     private final String roleStr;
