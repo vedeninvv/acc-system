@@ -1,32 +1,23 @@
-package com.practice.accsystem.entity;
+package com.practice.accsystem.dto.contractStage;
 
+import com.practice.accsystem.dto.expense.ExpenseGetDto;
 import lombok.*;
 
-import javax.persistence.*;
 import java.math.BigDecimal;
-import java.util.HashSet;
 import java.util.Set;
 
-/**
- * Сущность этапа договора
- */
-@Entity
-@Table(name = "contract_stage")
 @Getter
 @Setter
-@RequiredArgsConstructor
 @AllArgsConstructor
+@NoArgsConstructor
 @Builder
-public class ContractStageEntity {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+public class ContractStageGetDto {
     private Long id;
 
     /**
      * Основной договор, к которому относится этап
      */
-    @ManyToOne(optional = false)
-    private ContractEntity contract;
+    private Long contractId;
 
     /**
      * Название этапа
@@ -51,6 +42,5 @@ public class ContractStageEntity {
     /**
      * Список расходов
      */
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "contractStage", orphanRemoval = true)
-    private Set<ExpenseEntity> expenses = new HashSet<>();
+    private Set<ExpenseGetDto> expenses;
 }

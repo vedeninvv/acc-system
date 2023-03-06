@@ -23,7 +23,9 @@ public enum Role {
             readContractAll,
             writeContractAll,
             writeCounterpartyContract,
-            readCounterpartyContract)
+            readCounterpartyContract,
+            writeContractStage,
+            readContractStage)
     ),
     USER("USER", Arrays.asList(
             readUserSelf,
@@ -33,7 +35,9 @@ public enum Role {
             readContractSelf,
             writeContractSelf,
             writeCounterpartyContract,
-            readCounterpartyContract)
+            readCounterpartyContract,
+            writeContractStage,
+            readContractStage)
     );
 
     private final String roleStr;

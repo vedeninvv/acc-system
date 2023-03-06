@@ -1,30 +1,21 @@
-package com.practice.accsystem.entity;
+package com.practice.accsystem.dto.expense;
 
 import lombok.*;
 
-import javax.persistence.*;
 import java.math.BigDecimal;
 
-/**
- * Сущность пункта расходов этапа договора
- */
-@Entity
-@Table(name = "expense")
 @Getter
 @Setter
-@RequiredArgsConstructor
 @AllArgsConstructor
+@NoArgsConstructor
 @Builder
-public class ExpenseEntity {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+public class ExpenseGetDto {
     private Long id;
 
     /**
      * Этап договора, к которому относится пункт расходов
      */
-    @ManyToOne(optional = false)
-    private ContractStageEntity contractStage;
+    private Long contractStageId;
 
     /**
      * Название пункта расходов
