@@ -1,15 +1,13 @@
 package com.practice.accsystem.dto.counterpartyContract;
 
 import com.practice.accsystem.entity.ContractType;
-import lombok.*;
+import lombok.Builder;
+import lombok.Data;
 
 import java.math.BigDecimal;
 import java.util.Date;
 
-@Getter
-@Setter
-@AllArgsConstructor
-@NoArgsConstructor
+@Data
 @Builder
 public class CounterpartyContractGetDto {
     private Long id;

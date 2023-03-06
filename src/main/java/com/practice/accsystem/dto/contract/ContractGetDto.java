@@ -1,17 +1,14 @@
 package com.practice.accsystem.dto.contract;
 
 import com.practice.accsystem.entity.ContractType;
-import lombok.*;
+import lombok.Builder;
+import lombok.Data;
 
 import java.math.BigDecimal;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.Map;
 
-@Getter
-@Setter
-@AllArgsConstructor
-@NoArgsConstructor
+@Data
 @Builder
 public class ContractGetDto {
     private Long id;
@@ -24,12 +21,12 @@ public class ContractGetDto {
     /**
      * Этапы договора
      */
-    private Map<Long, String> contractStagesMap = new HashMap<>();
+    private Map<Long, String> contractStagesMap;
 
     /**
      * Договоры с контрагентами
      */
-    private Map<Long, String> counterpartyContractsMap = new HashMap<>();
+    private Map<Long, String> counterpartyContractsMap;
 
     /**
      * Название договора

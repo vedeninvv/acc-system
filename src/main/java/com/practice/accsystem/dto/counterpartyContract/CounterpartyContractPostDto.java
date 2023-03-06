@@ -1,17 +1,13 @@
 package com.practice.accsystem.dto.counterpartyContract;
 
 import com.practice.accsystem.entity.ContractType;
-import lombok.*;
+import lombok.Data;
 
 import javax.validation.constraints.*;
 import java.math.BigDecimal;
 import java.util.Date;
 
-@Getter
-@Setter
-@AllArgsConstructor
-@NoArgsConstructor
-@Builder
+@Data
 public class CounterpartyContractPostDto {
     /**
      * Организация-контрагент, с которой заключается договор

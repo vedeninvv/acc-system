@@ -1,10 +1,7 @@
 package com.practice.accsystem.dto.contractStage;
 
 import com.practice.accsystem.dto.expense.ExpensePostDto;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.Data;
 
 import javax.validation.constraints.DecimalMin;
 import javax.validation.constraints.Digits;
@@ -13,10 +10,7 @@ import javax.validation.constraints.Size;
 import java.math.BigDecimal;
 import java.util.Set;
 
-@Getter
-@Setter
-@AllArgsConstructor
-@NoArgsConstructor
+@Data
 public class ContractStagePostDto {
     /**
      * Название этапа
