@@ -18,7 +18,9 @@ public enum Permission {
     readContractSelf("contract:read:self"),
     writeContractSelf("contract:write:self"),
     readContractAll("contract:read:all"),
-    writeContractAll("contract:write:all");
+    writeContractAll("contract:write:all"),
+    writeCounterpartyContract("counterpartyContract:write"),
+    readCounterpartyContract("counterpartyContract:read");
 
     private final String permissionStr;
 

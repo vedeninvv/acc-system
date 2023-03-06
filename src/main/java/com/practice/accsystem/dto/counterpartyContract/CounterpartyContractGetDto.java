@@ -1,37 +1,28 @@
-package com.practice.accsystem.entity;
+package com.practice.accsystem.dto.counterpartyContract;
 
+import com.practice.accsystem.entity.ContractType;
 import lombok.*;
 
-import javax.persistence.*;
 import java.math.BigDecimal;
 import java.util.Date;
 
-/**
- * Сущность договора с контрагентом
- */
-@Entity
-@Table(name = "counterparty_contract")
 @Getter
 @Setter
-@RequiredArgsConstructor
 @AllArgsConstructor
+@NoArgsConstructor
 @Builder
-public class CounterpartyContractEntity {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+public class CounterpartyContractGetDto {
     private Long id;
 
     /**
      * Организация-контрагент, с которой заключается договор
      */
-    @ManyToOne(optional = false)
-    private CounterpartyEntity counterparty;
+    private Long counterpartyId;
 
     /**
      * Основной договор, к которому относится договор с контрагентом
      */
-    @ManyToOne(optional = false)
-    private ContractEntity contract;
+    private Long contractId;
 
     /**
      * Название договора
@@ -41,7 +32,6 @@ public class CounterpartyContractEntity {
     /**
      * Тип договора
      */
-    @Enumerated(EnumType.STRING)
     private ContractType contractType;
 
     /**
