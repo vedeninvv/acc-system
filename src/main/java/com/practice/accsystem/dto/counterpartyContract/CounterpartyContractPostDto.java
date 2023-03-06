@@ -1,17 +1,13 @@
 package com.practice.accsystem.dto.counterpartyContract;
 
 import com.practice.accsystem.entity.ContractType;
-import lombok.*;
+import lombok.Data;
 
 import javax.validation.constraints.*;
 import java.math.BigDecimal;
 import java.util.Date;
 
-@Getter
-@Setter
-@AllArgsConstructor
-@NoArgsConstructor
-@Builder
+@Data
 public class CounterpartyContractPostDto {
     /**
      * Организация-контрагент, с которой заключается договор
@@ -35,6 +31,7 @@ public class CounterpartyContractPostDto {
     /**
      * Сумма договора
      */
+    @NotNull
     @DecimalMin(value = "0.0")
     @Digits(integer = 12, fraction = 2)
     private BigDecimal sum;

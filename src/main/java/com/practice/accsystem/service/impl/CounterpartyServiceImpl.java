@@ -41,9 +41,7 @@ public class CounterpartyServiceImpl implements CounterpartyService {
     }
 
     @Override
-    public CounterpartyEntity updateCounterparty(Long counterpartyId, CounterpartyEntity newCounterparty) {
-        CounterpartyEntity oldCounterparty = counterpartyRepository.findById(counterpartyId).orElseThrow(() ->
-                new NotFoundEntityException(String.format("Counterparty not found by id '%d' when try to update", counterpartyId)));
+    public CounterpartyEntity updateCounterparty(CounterpartyEntity oldCounterparty, CounterpartyEntity newCounterparty) {
 
         oldCounterparty.setTitle(newCounterparty.getTitle());
         oldCounterparty.setAddress(newCounterparty.getAddress());
@@ -53,10 +51,7 @@ public class CounterpartyServiceImpl implements CounterpartyService {
     }
 
     @Override
-    public CounterpartyEntity deleteCounterparty(Long counterpartyId) {
-        CounterpartyEntity counterparty = counterpartyRepository.findById(counterpartyId).orElseThrow(() ->
-                new NotFoundEntityException(String.format("Counterparty not found by id '%d' when try to delete", counterpartyId)));
-
+    public CounterpartyEntity deleteCounterparty(CounterpartyEntity counterparty) {
         if (!counterparty.getCounterpartyContracts().isEmpty()) {
             throw new RelatedEntitiesCanNotBeDeleted("Counterparty", "CounterpartyContract");
         }

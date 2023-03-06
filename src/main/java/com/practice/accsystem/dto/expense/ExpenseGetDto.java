@@ -1,13 +1,11 @@
 package com.practice.accsystem.dto.expense;
 
-import lombok.*;
+import lombok.Builder;
+import lombok.Data;
 
 import java.math.BigDecimal;
 
-@Getter
-@Setter
-@AllArgsConstructor
-@NoArgsConstructor
+@Data
 @Builder
 public class ExpenseGetDto {
     private Long id;

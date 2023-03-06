@@ -8,8 +8,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
 public interface CounterpartyContractService {
-    CounterpartyContractEntity createCounterpartyContract(AppUserEntity user,
-                                                          ContractEntity contract,
+    CounterpartyContractEntity createCounterpartyContract(ContractEntity contract,
                                                           CounterpartyEntity counterparty,
                                                           CounterpartyContractEntity counterpartyContract);
 

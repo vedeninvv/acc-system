@@ -21,6 +21,7 @@ public class CounterpartyEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Builder.Default
     @OneToMany(mappedBy = "counterparty")
     private Set<CounterpartyContractEntity> counterpartyContracts = new HashSet<>();
 

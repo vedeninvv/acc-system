@@ -43,6 +43,7 @@ public class AppUserEntity {
     /**
      * Контракты, управляемые пользователем
      */
+    @Builder.Default
     @OneToMany(mappedBy = "assignedUser")
     private Set<ContractEntity> managingContracts = new HashSet<>();
 

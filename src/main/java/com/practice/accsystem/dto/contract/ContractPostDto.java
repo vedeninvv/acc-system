@@ -7,11 +7,7 @@ import javax.validation.constraints.*;
 import java.math.BigDecimal;
 import java.util.Date;
 
-@Getter
-@Setter
-@AllArgsConstructor
-@NoArgsConstructor
-@Builder
+@Data
 public class ContractPostDto {
     /**
      * Название договора
@@ -29,6 +25,7 @@ public class ContractPostDto {
     /**
      * Сумма договора
      */
+    @NotNull
     @DecimalMin(value = "0.0")
     @Digits(integer = 12, fraction = 2)
     private BigDecimal sum;

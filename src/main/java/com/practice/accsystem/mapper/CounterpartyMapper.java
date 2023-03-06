@@ -28,7 +28,6 @@ public class CounterpartyMapper {
                 .title(counterpartyPostDto.getTitle())
                 .address(counterpartyPostDto.getAddress())
                 .INN(counterpartyPostDto.getINN())
-                .counterpartyContracts(new HashSet<>())
                 .build();
     }
 }

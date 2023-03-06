@@ -23,8 +23,7 @@ public class CounterpartyContractServiceImpl implements CounterpartyContractServ
     }
 
     @Override
-    public CounterpartyContractEntity createCounterpartyContract(AppUserEntity user,
-                                                                 ContractEntity contract,
+    public CounterpartyContractEntity createCounterpartyContract(ContractEntity contract,
                                                                  CounterpartyEntity counterparty,
                                                                  CounterpartyContractEntity counterpartyContract) {
         counterpartyContract.setContract(contract);

@@ -60,7 +60,10 @@ public class UserController {
                                  @Valid @RequestBody UserPostDto userPostDto,
                                  @AuthenticationPrincipal UserDetailsImpl userDetails) {
         return userMapper.toDto(
-                userService.updateUser(userId, userMapper.toEntity(userPostDto))
+                userService.updateUser(
+                        userService.findUserById(userId),
+                        userMapper.toEntity(userPostDto)
+                )
         );
     }
 
@@ -68,6 +71,10 @@ public class UserController {
     @DeleteMapping("/{userId}")
     public UserGetDto deleteUser(@PathVariable Long userId,
                                  @AuthenticationPrincipal UserDetailsImpl userDetails) {
-        return userMapper.toDto(userService.deleteUser(userId));
+        return userMapper.toDto(
+                userService.deleteUser(
+                        userService.findUserById(userId)
+                )
+        );
     }
 }

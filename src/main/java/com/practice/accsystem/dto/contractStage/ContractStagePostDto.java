@@ -1,22 +1,13 @@
 package com.practice.accsystem.dto.contractStage;
 
 import com.practice.accsystem.dto.expense.ExpensePostDto;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.Data;
 
-import javax.validation.constraints.DecimalMin;
-import javax.validation.constraints.Digits;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.Size;
+import javax.validation.constraints.*;
 import java.math.BigDecimal;
 import java.util.Set;
 
-@Getter
-@Setter
-@AllArgsConstructor
-@NoArgsConstructor
+@Data
 public class ContractStagePostDto {
     /**
      * Название этапа
@@ -28,6 +19,7 @@ public class ContractStagePostDto {
     /**
      * Сумма этапа
      */
+    @NotNull
     @DecimalMin(value = "0.0")
     @Digits(integer = 12, fraction = 2)
     private BigDecimal sum;
@@ -35,5 +27,6 @@ public class ContractStagePostDto {
     /**
      * Список расходов
      */
+    @NotNull
     private Set<ExpensePostDto> expenses;
 }

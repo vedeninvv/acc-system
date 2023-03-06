@@ -20,9 +20,9 @@ public interface ContractService {
                                           BigDecimal maxSum,
                                           Pageable pageable);
 
-    ContractEntity updateContract(Long contractId, AppUserEntity user, ContractEntity newContract);
+    ContractEntity updateContract(ContractEntity oldContract, ContractEntity newContract);
 
-    ContractEntity deleteContract(AppUserEntity user, Long contractId);
+    ContractEntity deleteContract(ContractEntity contract);
 
     boolean hasAccessToContract(AppUserEntity user, ContractEntity contract);
 }

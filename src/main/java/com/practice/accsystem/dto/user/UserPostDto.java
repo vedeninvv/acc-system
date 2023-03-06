@@ -1,17 +1,11 @@
 package com.practice.accsystem.dto.user;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.Data;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 
-@Getter
-@Setter
-@AllArgsConstructor
-@NoArgsConstructor
+@Data
 public class UserPostDto {
     /**
      * Логин пользователя
@@ -31,17 +25,20 @@ public class UserPostDto {
      * Имя пользователя
      */
     @NotBlank
+    @Size(max = 255)
     private String name;
 
     /**
      * Фамилия пользователя
      */
     @NotBlank
+    @Size(max = 255)
     private String surname;
 
     /**
      * Отчество пользователя
      */
     @NotBlank
+    @Size(max = 255)
     private String middleName;
 }

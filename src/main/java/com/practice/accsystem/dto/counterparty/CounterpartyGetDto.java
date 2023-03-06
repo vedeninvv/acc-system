@@ -1,13 +1,11 @@
 package com.practice.accsystem.dto.counterparty;
 
-import lombok.*;
+import lombok.Builder;
+import lombok.Data;
 
 import java.util.Set;
 
-@Getter
-@Setter
-@AllArgsConstructor
-@NoArgsConstructor
+@Data
 @Builder
 public class CounterpartyGetDto {
     private Long id;

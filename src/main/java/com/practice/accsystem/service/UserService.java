@@ -12,7 +12,7 @@ public interface UserService {
 
     Page<AppUserEntity> findAllUsers(Role role, String searchStr, Pageable pageable);
 
-    AppUserEntity updateUser(Long userId, AppUserEntity newUser);
+    AppUserEntity updateUser(AppUserEntity oldUser, AppUserEntity newUser);
 
-    AppUserEntity deleteUser(Long userId);
+    AppUserEntity deleteUser(AppUserEntity user);
 }
