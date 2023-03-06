@@ -25,6 +25,7 @@ public class ContractPostDto {
     /**
      * Сумма договора
      */
+    @NotNull
     @DecimalMin(value = "0.0")
     @Digits(integer = 12, fraction = 2)
     private BigDecimal sum;

@@ -25,17 +25,20 @@ public class UserPostDto {
      * Имя пользователя
      */
     @NotBlank
+    @Size(max = 255)
     private String name;
 
     /**
      * Фамилия пользователя
      */
     @NotBlank
+    @Size(max = 255)
     private String surname;
 
     /**
      * Отчество пользователя
      */
     @NotBlank
+    @Size(max = 255)
     private String middleName;
 }

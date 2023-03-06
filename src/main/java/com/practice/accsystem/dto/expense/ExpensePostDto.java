@@ -2,10 +2,7 @@ package com.practice.accsystem.dto.expense;
 
 import lombok.Data;
 
-import javax.validation.constraints.DecimalMin;
-import javax.validation.constraints.Digits;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.Size;
+import javax.validation.constraints.*;
 import java.math.BigDecimal;
 
 @Data
@@ -20,6 +17,7 @@ public class ExpensePostDto {
     /**
      * Планируемая величина пункта расходов
      */
+    @NotNull
     @DecimalMin(value = "0.0")
     @Digits(integer = 12, fraction = 2)
     private BigDecimal planAmount;
@@ -27,6 +25,7 @@ public class ExpensePostDto {
     /**
      * Фактическая величина пункта расходов
      */
+    @NotNull
     @DecimalMin(value = "0.0")
     @Digits(integer = 12, fraction = 2)
     private BigDecimal factAmount;
