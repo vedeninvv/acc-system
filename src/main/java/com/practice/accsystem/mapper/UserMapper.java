@@ -33,7 +33,6 @@ public class UserMapper {
                 .name(userPostDto.getName())
                 .surname(userPostDto.getSurname())
                 .middleName(userPostDto.getMiddleName())
-                .managingContracts(new HashSet<>())
                 .build();
     }
 }

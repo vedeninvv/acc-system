@@ -1,13 +1,15 @@
 package com.practice.accsystem.dto.user;
 
 import com.practice.accsystem.entity.user.Role;
-import lombok.Builder;
-import lombok.Data;
+import lombok.*;
 
 import java.util.Date;
 import java.util.Set;
 
-@Data
+@Getter
+@Setter
+@AllArgsConstructor
+@NoArgsConstructor
 @Builder
 public class UserGetDto {
     private Long id;

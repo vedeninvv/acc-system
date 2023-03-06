@@ -33,12 +33,14 @@ public class ContractEntity {
     /**
      * Этапы договора
      */
+    @Builder.Default
     @OneToMany(cascade = CascadeType.REMOVE, mappedBy = "contract", orphanRemoval = true)
     private Set<ContractStageEntity> contractStages = new HashSet<>();
 
     /**
      * Договоры с контрагентами
      */
+    @Builder.Default
     @OneToMany(cascade = CascadeType.REMOVE, mappedBy = "contract", orphanRemoval = true)
     private Set<CounterpartyContractEntity> counterpartyContracts = new HashSet<>();
 

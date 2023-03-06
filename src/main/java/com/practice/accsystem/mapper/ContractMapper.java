@@ -21,8 +21,6 @@ public class ContractMapper {
                 .planEndDate(contractPostDto.getPlanEndDate())
                 .factStartDate(contractPostDto.getFactStartDate())
                 .factEndDate(contractPostDto.getFactEndDate())
-                .contractStages(new HashSet<>())
-                .counterpartyContracts(new HashSet<>())
                 .build();
     }
 
