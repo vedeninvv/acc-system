@@ -11,7 +11,7 @@ public interface CounterpartyService {
 
     Page<CounterpartyEntity> findAllCounterparties(String searchStr, Pageable pageable);
 
-    CounterpartyEntity updateCounterparty(Long counterpartyId, CounterpartyEntity newCounterparty);
+    CounterpartyEntity updateCounterparty(CounterpartyEntity oldCounterparty, CounterpartyEntity newCounterparty);
 
-    CounterpartyEntity deleteCounterparty(Long counterpartyId);
+    CounterpartyEntity deleteCounterparty(CounterpartyEntity counterparty);
 }

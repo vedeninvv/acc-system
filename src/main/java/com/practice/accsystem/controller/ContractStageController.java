@@ -67,7 +67,8 @@ public class ContractStageController {
         AppUserEntity user = userService.findUserById(userDetails.getId());
         ContractStageEntity contractStage = contractStageService.findContractStageById(
                 contractService.findContractById(contractId),
-                contractStageId);
+                contractStageId
+        );
 
         if (contractStageService.hasAccessToContractStage(user, contractStage)) {
             return contractStageMapper.toDto(contractStage);
@@ -103,7 +104,8 @@ public class ContractStageController {
         AppUserEntity user = userService.findUserById(userDetails.getId());
         ContractStageEntity contractStage = contractStageService.findContractStageById(
                 contractService.findContractById(contractId),
-                contractStageId);
+                contractStageId
+        );
 
         if (contractStageService.hasAccessToContractStage(user, contractStage)) {
             return contractStageMapper.toDto(
@@ -123,7 +125,8 @@ public class ContractStageController {
         AppUserEntity user = userService.findUserById(userDetails.getId());
         ContractStageEntity contractStage = contractStageService.findContractStageById(
                 contractService.findContractById(contractId),
-                contractStageId);
+                contractStageId
+        );
 
         if (contractStageService.hasAccessToContractStage(user, contractStage)) {
             return contractStageMapper.toDto(

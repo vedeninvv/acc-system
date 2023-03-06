@@ -4,7 +4,6 @@ import com.practice.accsystem.entity.ContractEntity;
 import com.practice.accsystem.entity.ContractType;
 import com.practice.accsystem.entity.user.AppUserEntity;
 import com.practice.accsystem.exception.NotFoundEntityException;
-import com.practice.accsystem.exception.NotHasPermissionException;
 import com.practice.accsystem.repository.ContractRepository;
 import com.practice.accsystem.service.ContractService;
 import org.springframework.data.domain.Page;
@@ -52,38 +51,21 @@ public class ContractServiceImpl implements ContractService {
     }
 
     @Override
-    public ContractEntity updateContract(Long contractId, AppUserEntity user, ContractEntity newContract) {
-        ContractEntity contract = contractRepository.findById(contractId).orElseThrow(() ->
-                new NotFoundEntityException(String.format("Contract with id '%d' not found when try to update", contractId))
-        );
+    public ContractEntity updateContract(ContractEntity oldContract, ContractEntity newContract) {
+        oldContract.setTitle(newContract.getTitle());
+        oldContract.setContractType(newContract.getContractType());
+        oldContract.setSum(newContract.getSum());
+        oldContract.setPlanStartDate(newContract.getPlanStartDate());
+        oldContract.setPlanEndDate(newContract.getPlanEndDate());
+        oldContract.setFactStartDate(newContract.getFactStartDate());
+        oldContract.setFactEndDate(newContract.getFactEndDate());
 
-        if (!hasAccessToContract(user, contract)) {
-            throw new NotHasPermissionException(
-                    String.format("Can not update contract with id '%d' by user with id '%d'", contractId, user.getId()));
-        }
-
-        contract.setTitle(newContract.getTitle());
-        contract.setContractType(newContract.getContractType());
-        contract.setSum(newContract.getSum());
-        contract.setPlanStartDate(newContract.getPlanStartDate());
-        contract.setPlanEndDate(newContract.getPlanEndDate());
-        contract.setFactStartDate(newContract.getFactStartDate());
-        contract.setFactEndDate(newContract.getFactEndDate());
-
-        return contractRepository.save(contract);
+        return contractRepository.save(oldContract);
     }
 
     @Override
-    public ContractEntity deleteContract(AppUserEntity user, Long contractId) {
-        ContractEntity contract = contractRepository.findById(contractId).orElseThrow(() ->
-                new NotFoundEntityException(String.format("Contract with id '%d' not found when try to delete", contractId)));
-
-        if (hasAccessToContract(user, contract)) {
-            contractRepository.delete(contract);
-        } else {
-            throw new NotHasPermissionException(
-                    String.format("Can not update contract with id '%d' by user with id '%d'", contractId, user.getId()));
-        }
+    public ContractEntity deleteContract(ContractEntity contract) {
+        contractRepository.delete(contract);
 
         return contract;
     }

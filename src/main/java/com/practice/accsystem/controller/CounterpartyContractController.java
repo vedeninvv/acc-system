@@ -53,19 +53,18 @@ public class CounterpartyContractController {
         AppUserEntity user = userService.findUserById(userDetails.getId());
         ContractEntity contract = contractService.findContractById(contractId);
 
-        if (!contractService.hasAccessToContract(user, contract)) {
+        if (contractService.hasAccessToContract(user, contract)) {
+            return counterpartyContractMapper.toDto(
+                    counterpartyContractService.createCounterpartyContract(
+                            contract,
+                            counterpartyService.findCounterpartyById(counterpartyContractPostDto.getCounterpartyId()),
+                            counterpartyContractMapper.toEntity(counterpartyContractPostDto)
+                    )
+            );
+        } else {
             throw new NotHasPermissionException(
                     String.format("Can not create counterpartyContract for contract with id '%d'", contract.getId()));
         }
-
-        return counterpartyContractMapper.toDto(
-                counterpartyContractService.createCounterpartyContract(
-                        user,
-                        contract,
-                        counterpartyService.findCounterpartyById(counterpartyContractPostDto.getCounterpartyId()),
-                        counterpartyContractMapper.toEntity(counterpartyContractPostDto)
-                )
-        );
     }
 
     @PreAuthorize("hasAuthority('counterpartyContract:read')")
@@ -121,7 +120,8 @@ public class CounterpartyContractController {
             return counterpartyContractMapper.toDto(
                     counterpartyContractService.updateCounterpartyContract(
                             counterpartyContract,
-                            counterpartyContractMapper.toEntity(counterpartyContractPostDto))
+                            counterpartyContractMapper.toEntity(counterpartyContractPostDto)
+                    )
             );
         } else {
             throw new NotHasPermissionException(
@@ -138,7 +138,8 @@ public class CounterpartyContractController {
         AppUserEntity user = userService.findUserById(userDetails.getId());
         CounterpartyContractEntity counterpartyContract = counterpartyContractService.findCounterpartyContractById(
                 contractService.findContractById(contractId),
-                counterpartyContractId);
+                counterpartyContractId
+        );
 
         if (counterpartyContractService.hasAccessToCounterpartyContract(user, counterpartyContract)) {
             return counterpartyContractMapper.toDto(

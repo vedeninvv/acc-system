@@ -30,7 +30,8 @@ public class CounterpartyController {
     @PostMapping
     public CounterpartyGetDto createCounterparty(@Valid @RequestBody CounterpartyPostDto counterpartyPostDto) {
         return counterpartyMapper.toDto(
-                counterpartyService.createCounterparty(counterpartyMapper.toEntity(counterpartyPostDto)));
+                counterpartyService.createCounterparty(counterpartyMapper.toEntity(counterpartyPostDto))
+        );
     }
 
     @PreAuthorize("hasAuthority('counterparty:read:all')")
@@ -53,7 +54,10 @@ public class CounterpartyController {
     public CounterpartyGetDto updateCounterparty(@PathVariable Long counterpartyId,
                                                  @Valid @RequestBody CounterpartyPostDto counterpartyPostDto) {
         return counterpartyMapper.toDto(
-                counterpartyService.updateCounterparty(counterpartyId, counterpartyMapper.toEntity(counterpartyPostDto))
+                counterpartyService.updateCounterparty(
+                        counterpartyService.findCounterpartyById(counterpartyId),
+                        counterpartyMapper.toEntity(counterpartyPostDto)
+                )
         );
     }
 
@@ -61,7 +65,9 @@ public class CounterpartyController {
     @DeleteMapping("/{counterpartyId}")
     public CounterpartyGetDto deleteCounterparty(@PathVariable Long counterpartyId) {
         return counterpartyMapper.toDto(
-                counterpartyService.deleteCounterparty(counterpartyId)
+                counterpartyService.deleteCounterparty(
+                        counterpartyService.findCounterpartyById(counterpartyId)
+                )
         );
     }
 }

@@ -2,7 +2,10 @@ package com.practice.accsystem.controller;
 
 import com.practice.accsystem.dto.contract.ContractGetDto;
 import com.practice.accsystem.dto.contract.ContractPostDto;
+import com.practice.accsystem.entity.ContractEntity;
 import com.practice.accsystem.entity.ContractType;
+import com.practice.accsystem.entity.user.AppUserEntity;
+import com.practice.accsystem.exception.NotHasPermissionException;
 import com.practice.accsystem.mapper.ContractMapper;
 import com.practice.accsystem.security.UserDetailsImpl;
 import com.practice.accsystem.service.ContractService;
@@ -86,23 +89,33 @@ public class ContractController {
     public ContractGetDto updateContract(@PathVariable Long contractId,
                                          @Valid @RequestBody ContractPostDto contractPostDto,
                                          @Parameter(hidden = true) @AuthenticationPrincipal UserDetailsImpl userDetails) {
-        return contractMapper.toDto(
-                contractService.updateContract(
-                        contractId,
-                        userService.findUserById(userDetails.getId()),
-                        contractMapper.toEntity(contractPostDto))
-        );
+        AppUserEntity user = userService.findUserById(userDetails.getId());
+        ContractEntity contract = contractService.findContractById(contractId);
+
+        if (contractService.hasAccessToContract(user, contract)) {
+            return contractMapper.toDto(
+                    contractService.updateContract(contract, contractMapper.toEntity(contractPostDto))
+            );
+        } else {
+            throw new NotHasPermissionException(
+                    String.format("Can not update contract with id '%d' by user with id '%d'", contractId, user.getId()));
+        }
     }
 
     @PreAuthorize("hasAuthority('contract:write:all') or hasAuthority('contract:write:self')")
     @DeleteMapping("/{contractId}")
     public ContractGetDto deleteContract(@PathVariable Long contractId,
                                          @Parameter(hidden = true) @AuthenticationPrincipal UserDetailsImpl userDetails) {
-        return contractMapper.toDto(
-                contractService.deleteContract(
-                        userService.findUserById(userDetails.getId()),
-                        contractId
-                )
-        );
+        AppUserEntity user = userService.findUserById(userDetails.getId());
+        ContractEntity contract = contractService.findContractById(contractId);
+
+        if (contractService.hasAccessToContract(user, contract)) {
+            return contractMapper.toDto(
+                    contractService.deleteContract(contract)
+            );
+        } else {
+            throw new NotHasPermissionException(
+                    String.format("Can not delete contract with id '%d' by user with id '%d'", contractId, user.getId()));
+        }
     }
 }
