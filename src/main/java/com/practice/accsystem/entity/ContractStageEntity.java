@@ -17,7 +17,7 @@ import java.util.Set;
 @RequiredArgsConstructor
 @AllArgsConstructor
 @Builder
-public class ContractStageEntity {
+public class ContractStageEntity implements ExcelRecord {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;

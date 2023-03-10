@@ -15,7 +15,7 @@ import java.math.BigDecimal;
 @RequiredArgsConstructor
 @AllArgsConstructor
 @Builder
-public class ExpenseEntity {
+public class ExpenseEntity implements ExcelRecord {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;

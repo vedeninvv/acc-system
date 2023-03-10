@@ -19,7 +19,7 @@ import java.util.Set;
 @RequiredArgsConstructor
 @AllArgsConstructor
 @Builder
-public class ContractEntity {
+public class ContractEntity implements ExcelRecord {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
