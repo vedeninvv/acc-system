@@ -12,6 +12,9 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
+import java.util.List;
+
 @Service
 public class CounterpartyContractServiceImpl implements CounterpartyContractService {
     private final CounterpartyContractRepository counterpartyContractRepository;
@@ -44,6 +47,11 @@ public class CounterpartyContractServiceImpl implements CounterpartyContractServ
     @Override
     public Page<CounterpartyContractEntity> findAllCounterpartyContractsByContract(ContractEntity contract, Pageable pageable) {
         return counterpartyContractRepository.findAllByContract(contract, pageable);
+    }
+
+    @Override
+    public List<CounterpartyContractEntity> findAllCounterpartyContractsByUserInPeriodByPlanDeadline(AppUserEntity user, Date periodStart, Date periodEnd) {
+        return counterpartyContractRepository.findAllByUserInPeriodByPlanDeadline(user, periodStart, periodEnd);
     }
 
     @Override
