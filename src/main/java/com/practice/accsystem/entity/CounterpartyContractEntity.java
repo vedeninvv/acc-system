@@ -16,7 +16,7 @@ import java.util.Date;
 @RequiredArgsConstructor
 @AllArgsConstructor
 @Builder
-public class CounterpartyContractEntity {
+public class CounterpartyContractEntity implements ExcelRecord {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
