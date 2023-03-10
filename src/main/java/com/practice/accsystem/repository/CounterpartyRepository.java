@@ -19,7 +19,7 @@ public interface CounterpartyRepository extends PagingAndSortingRepository<Count
      * @param INN   проверяемое ИНН
      * @return true, если существует, иначе false
      */
-    Boolean existsByTitleAndINN(String title, String INN);
+    Boolean existsByTitleOrINN(String title, String INN);
 
     /**
      * Поиск всех контрагентов с фильтрацией по совпадению переданной строки с хотя бы частью названия, адреса или ИНН
