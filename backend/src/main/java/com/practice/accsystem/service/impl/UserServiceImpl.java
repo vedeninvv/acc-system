@@ -69,7 +69,7 @@ public class UserServiceImpl implements UserService {
             throw new DuplicateUniqueValueException(
                     String.format("Username '%s' already exist when try to update user by id '%d''", newUser.getUsername(), oldUser.getId()));
         }
-        if (newUser.getUsername().equals(System.getenv("SUPERUSER_USERNAME"))) {
+        if (oldUser.getUsername().equals(System.getenv("SUPERUSER_USERNAME"))) {
             throw new NotAllowedException("Not allowed to change username for superuser");
         }
         oldUser.setUsername(newUser.getUsername());
