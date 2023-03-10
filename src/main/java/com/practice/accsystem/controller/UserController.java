@@ -58,7 +58,7 @@ public class UserController {
     @PutMapping("/{userId}")
     public UserGetDto updateUser(@PathVariable Long userId,
                                  @Valid @RequestBody UserPostDto userPostDto,
-                                 @AuthenticationPrincipal UserDetailsImpl userDetails) {
+                                 @Parameter(hidden = true) @AuthenticationPrincipal UserDetailsImpl userDetails) {
         return userMapper.toDto(
                 userService.updateUser(
                         userService.findUserById(userId),
@@ -70,7 +70,7 @@ public class UserController {
     @PreAuthorize("hasAuthority('user:write:all') or (hasAuthority('user:write:self') and #userDetails.id == #userId)")
     @DeleteMapping("/{userId}")
     public UserGetDto deleteUser(@PathVariable Long userId,
-                                 @AuthenticationPrincipal UserDetailsImpl userDetails) {
+                                 @Parameter(hidden = true) @AuthenticationPrincipal UserDetailsImpl userDetails) {
         return userMapper.toDto(
                 userService.deleteUser(
                         userService.findUserById(userId)
