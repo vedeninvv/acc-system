@@ -6,6 +6,9 @@ import lombok.*;
 import java.util.Date;
 import java.util.Set;
 
+/**
+ * DTO для вывода данных пользователя клиенту
+ */
 @Getter
 @Setter
 @AllArgsConstructor

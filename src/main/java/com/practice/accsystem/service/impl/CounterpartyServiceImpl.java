@@ -20,7 +20,7 @@ public class CounterpartyServiceImpl implements CounterpartyService {
 
     @Override
     public CounterpartyEntity createCounterparty(CounterpartyEntity counterparty) {
-        if (counterpartyRepository.existsByTitleAndINN(counterparty.getTitle(), counterparty.getINN())) {
+        if (counterpartyRepository.existsByTitleOrINN(counterparty.getTitle(), counterparty.getINN())) {
             throw new DuplicateUniqueValueException(
                     String.format("Title '%s' or INN '%s' already exist when try to create counterparty",
                             counterparty.getTitle(), counterparty.getINN()));

@@ -4,6 +4,9 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
 
+/**
+ * Класс текстового сообщения о статусе авторизации
+ */
 @Getter
 @Setter
 @AllArgsConstructor

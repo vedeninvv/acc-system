@@ -5,6 +5,9 @@ import lombok.Data;
 
 import java.math.BigDecimal;
 
+/**
+ * DTO для вывода данных расхода этапа контракта клиенту
+ */
 @Data
 @Builder
 public class ExpenseGetDto {

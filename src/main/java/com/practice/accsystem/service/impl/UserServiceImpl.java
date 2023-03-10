@@ -6,6 +6,7 @@ import com.practice.accsystem.exception.DuplicateUniqueValueException;
 import com.practice.accsystem.exception.NotFoundEntityException;
 import com.practice.accsystem.exception.RelatedEntitiesCanNotBeDeleted;
 import com.practice.accsystem.repository.UserRepository;
+import com.practice.accsystem.security.jwt.RefreshTokenService;
 import com.practice.accsystem.service.UserService;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -17,10 +18,12 @@ import java.util.Locale;
 @Service
 public class UserServiceImpl implements UserService {
     private final UserRepository userRepository;
+    private final RefreshTokenService refreshTokenService;
     private final PasswordEncoder encoder;
 
-    public UserServiceImpl(UserRepository userRepository, PasswordEncoder encoder) {
+    public UserServiceImpl(UserRepository userRepository, RefreshTokenService refreshTokenService, PasswordEncoder encoder) {
         this.userRepository = userRepository;
+        this.refreshTokenService = refreshTokenService;
         this.encoder = encoder;
     }
 
@@ -72,6 +75,7 @@ public class UserServiceImpl implements UserService {
             throw new RelatedEntitiesCanNotBeDeleted("User", "Contract");
         }
 
+        refreshTokenService.deleteByUserId(user.getId());
         userRepository.delete(user);
         return user;
     }

@@ -5,6 +5,9 @@ import lombok.Data;
 import javax.validation.constraints.*;
 import java.math.BigDecimal;
 
+/**
+ * DTO для ввода данных расхода этапа контракта с клиента
+ */
 @Data
 public class ExpensePostDto {
     /**

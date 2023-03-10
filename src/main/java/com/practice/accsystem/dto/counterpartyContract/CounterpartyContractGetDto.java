@@ -7,6 +7,9 @@ import lombok.Data;
 import java.math.BigDecimal;
 import java.util.Date;
 
+/**
+ * DTO для вывода данных контра с контрагентом клиенту
+ */
 @Data
 @Builder
 public class CounterpartyContractGetDto {
