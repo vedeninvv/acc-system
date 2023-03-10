@@ -2,6 +2,7 @@ package com.practice.accsystem.repository;
 
 import com.practice.accsystem.entity.ContractEntity;
 import com.practice.accsystem.entity.ContractType;
+import com.practice.accsystem.entity.user.AppUserEntity;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.Query;
@@ -9,6 +10,8 @@ import org.springframework.data.repository.PagingAndSortingRepository;
 import org.springframework.stereotype.Repository;
 
 import java.math.BigDecimal;
+import java.util.Date;
+import java.util.List;
 
 @Repository
 public interface ContractRepository extends PagingAndSortingRepository<ContractEntity, Long> {
@@ -24,4 +27,8 @@ public interface ContractRepository extends PagingAndSortingRepository<ContractE
                                             BigDecimal minSum,
                                             BigDecimal maxSum,
                                             Pageable pageable);
+
+    List<ContractEntity> findAllByAssignedUserAndPlanStartDateAfterAndPlanEndDateBefore(AppUserEntity user,
+                                                                                        Date periodStart,
+                                                                                        Date periodEnd);
 }

@@ -22,7 +22,8 @@ public enum Permission {
     writeCounterpartyContract("counterpartyContract:write"),
     readCounterpartyContract("counterpartyContract:read"),
     writeContractStage("contractStage:write"),
-    readContractStage("contractStage:read");
+    readContractStage("contractStage:read"),
+    report("report");
 
     private final String permissionStr;
 
