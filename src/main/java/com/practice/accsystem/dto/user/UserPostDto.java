@@ -5,6 +5,9 @@ import lombok.Data;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 
+/**
+ * DTO для ввода данных пользователя клиенту
+ */
 @Data
 public class UserPostDto {
     /**

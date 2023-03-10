@@ -8,6 +8,9 @@ import java.math.BigDecimal;
 import java.util.Date;
 import java.util.Map;
 
+/**
+ * DTO для вывода данных контракта клиенту
+ */
 @Data
 @Builder
 public class ContractGetDto {

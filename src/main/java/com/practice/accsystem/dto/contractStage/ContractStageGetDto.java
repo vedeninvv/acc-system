@@ -6,6 +6,9 @@ import lombok.*;
 import java.math.BigDecimal;
 import java.util.Set;
 
+/**
+ * DTO для вывода данных этапа контракта клиенту
+ */
 @Data
 @Builder
 public class ContractStageGetDto {

@@ -5,6 +5,9 @@ import lombok.Data;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 
+/**
+ * DTO ввода данных контрагента с клиента
+ */
 @Data
 public class CounterpartyPostDto {
     /**

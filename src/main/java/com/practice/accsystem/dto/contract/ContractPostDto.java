@@ -7,6 +7,9 @@ import javax.validation.constraints.*;
 import java.math.BigDecimal;
 import java.util.Date;
 
+/**
+ * DTO для ввода данных контракта с клиента
+ */
 @Data
 public class ContractPostDto {
     /**

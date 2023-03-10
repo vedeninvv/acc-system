@@ -7,6 +7,9 @@ import javax.validation.constraints.*;
 import java.math.BigDecimal;
 import java.util.Set;
 
+/**
+ * DTO для ввода данных этапа контракта с клиента
+ */
 @Data
 public class ContractStagePostDto {
     /**

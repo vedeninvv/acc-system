@@ -5,6 +5,9 @@ import lombok.Data;
 
 import java.util.Set;
 
+/**
+ * DTO для вывода данных контрагента клиенту
+ */
 @Data
 @Builder
 public class CounterpartyGetDto {
