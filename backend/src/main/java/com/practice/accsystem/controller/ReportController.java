@@ -22,12 +22,10 @@ import java.util.Date;
 @RestController
 @RequestMapping("/api/reports")
 public class ReportController {
-    private final ExcelServiceImpl excelService;
     private final ContractService contractService;
     private final UserService userService;
 
-    public ReportController(ExcelServiceImpl excelService, ContractService contractService, UserService userService) {
-        this.excelService = excelService;
+    public ReportController(ContractService contractService, UserService userService) {
         this.contractService = contractService;
         this.userService = userService;
     }
