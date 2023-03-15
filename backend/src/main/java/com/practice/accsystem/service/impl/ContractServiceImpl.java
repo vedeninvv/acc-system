@@ -60,13 +60,15 @@ public class ContractServiceImpl implements ContractService {
                                                  ContractType contractType,
                                                  BigDecimal minSum,
                                                  BigDecimal maxSum,
+                                                 Date startPeriod,
+                                                 Date endPeriod,
                                                  Pageable pageable) {
         if (title != null) {
             title = title.toLowerCase(Locale.ROOT);
         }
 
         return contractRepository.findAllWithFilters(assignedUserId, title,
-                contractType, minSum, maxSum, pageable);
+                contractType, minSum, maxSum, startPeriod, endPeriod, pageable);
     }
 
     @Override
