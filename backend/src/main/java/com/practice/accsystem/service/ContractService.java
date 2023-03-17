@@ -41,6 +41,10 @@ public interface ContractService {
      * @param contractType   тип контракта
      * @param minSum         минимальное значение для суммы контракта
      * @param maxSum         максимальное значение для суммы контракта
+     * @param startPeriod    дата начала периода для плановой или фактической даты
+     *                       (достаточно, чтобы в период входила хотя бы одна)
+     * @param endPeriod      дата конца периода для плановой или фактической даты
+     *                       (достаточно, чтобы в период входила хотя бы одна)
      * @param pageable       настройки пагинации
      * @return контракты, удовлетворяющие критериям
      */
@@ -49,6 +53,8 @@ public interface ContractService {
                                           ContractType contractType,
                                           BigDecimal minSum,
                                           BigDecimal maxSum,
+                                          Date startPeriod,
+                                          Date endPeriod,
                                           Pageable pageable);
 
     /**

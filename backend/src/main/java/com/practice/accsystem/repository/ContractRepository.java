@@ -27,6 +27,10 @@ public interface ContractRepository extends PagingAndSortingRepository<ContractE
      * @param contractType   тип контракта
      * @param minSum         минимальное значение для суммы контракта
      * @param maxSum         максимальное значение для суммы контракта
+     * @param startDate      дата начала периода для плановой или фактической даты
+     *                       (достаточно, чтобы в период входила хотя бы одна)
+     * @param endDate        дата конца периода для плановой или фактической даты
+     *                       (достаточно, чтобы в период входила хотя бы одна)
      * @param pageable       настройки пагинации
      * @return контракты, удовлетворяющие критериям
      */
@@ -35,12 +39,16 @@ public interface ContractRepository extends PagingAndSortingRepository<ContractE
             " and (:title is null or contract.title like %:title%)" +
             " and (:contractType is null or contract.contractType = :contractType)" +
             " and (:minSum is null or contract.sum >= :minSum)" +
-            " and (:maxSum is null  or contract.sum <= :maxSum)")
+            " and (:maxSum is null  or contract.sum <= :maxSum)" +
+            " and (:startDate is null or contract.planStartDate >= :startDate or contract.factStartDate >= :startDate)" +
+            " and (:endDate is null or contract.planEndDate <= : endDate or contract.factEndDate <= :endDate)")
     Page<ContractEntity> findAllWithFilters(Long assignedUserId,
                                             String title,
                                             ContractType contractType,
                                             BigDecimal minSum,
                                             BigDecimal maxSum,
+                                            Date startDate,
+                                            Date endDate,
                                             Pageable pageable);
 
     /**

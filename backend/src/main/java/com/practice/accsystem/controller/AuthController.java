@@ -1,7 +1,9 @@
 package com.practice.accsystem.controller;
 
 import com.practice.accsystem.dto.auth.AuthMessageResponse;
+import com.practice.accsystem.dto.auth.AuthRefreshRequest;
 import com.practice.accsystem.dto.auth.AuthRequest;
+import com.practice.accsystem.dto.auth.AuthResponse;
 import com.practice.accsystem.dto.user.UserGetDto;
 import com.practice.accsystem.dto.user.UserPostDto;
 import com.practice.accsystem.entity.user.RefreshToken;
@@ -11,8 +13,7 @@ import com.practice.accsystem.security.UserDetailsImpl;
 import com.practice.accsystem.security.jwt.JwtUtils;
 import com.practice.accsystem.security.jwt.RefreshTokenService;
 import com.practice.accsystem.service.UserService;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.ResponseCookie;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -23,9 +24,10 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import java.util.Objects;
+
+import static com.practice.accsystem.config.OpenApiConfiguration.SECURITY_CONFIG_NAME;
 
 @RestController
 @RequestMapping("/api/auth")
@@ -55,19 +57,11 @@ public class AuthController {
         SecurityContextHolder.getContext().setAuthentication(authentication);
         UserDetailsImpl userDetails = (UserDetailsImpl) authentication.getPrincipal();
 
-        ResponseCookie jwtCookie = jwtUtils.generateJwtCookie(userDetails);
-
-        RefreshToken refreshToken = refreshTokenService.createRefreshToken(userDetails.getId());
-
-        ResponseCookie jwtRefreshCookie = jwtUtils.generateRefreshJwtCookie(refreshToken.getToken());
+        String accessToken = jwtUtils.generateJwt(userDetails);
+        String refreshToken = refreshTokenService.createRefreshToken(userDetails.getId()).getToken();
 
         return ResponseEntity.ok()
-                .header(HttpHeaders.SET_COOKIE, jwtCookie.toString())
-                .header(HttpHeaders.SET_COOKIE, jwtRefreshCookie.toString())
-                .body(new UserGetDto(
-                        userDetails.getId(),
-                        userDetails.getUsername())
-                );
+                .body(new AuthResponse(accessToken, refreshToken));
     }
 
     @PostMapping("/signup")
@@ -77,6 +71,7 @@ public class AuthController {
         );
     }
 
+    @SecurityRequirement(name = SECURITY_CONFIG_NAME)
     @PostMapping("/signout")
     public ResponseEntity<?> logoutUser() {
         Object principle = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
@@ -85,32 +80,27 @@ public class AuthController {
             refreshTokenService.deleteByUserId(userId);
         }
 
-        ResponseCookie jwtCookie = jwtUtils.getCleanJwtCookie();
-        ResponseCookie jwtRefreshCookie = jwtUtils.getCleanJwtRefreshCookie();
-
         return ResponseEntity.ok()
-                .header(HttpHeaders.SET_COOKIE, jwtCookie.toString())
-                .header(HttpHeaders.SET_COOKIE, jwtRefreshCookie.toString())
                 .body(new AuthMessageResponse("You've been signed out!"));
     }
 
     @PostMapping("/refreshtoken")
-    public ResponseEntity<?> refreshToken(HttpServletRequest request) {
-        String refreshToken = jwtUtils.getJwtRefreshFromCookies(request);
+    public ResponseEntity<?> refreshToken(@RequestBody AuthRefreshRequest request) {
+        String refreshToken = request.getRefreshToken();
 
         if ((refreshToken != null) && (refreshToken.length() > 0)) {
             return refreshTokenService.findByToken(refreshToken)
                     .map(refreshTokenService::verifyExpiration)
                     .map(RefreshToken::getUser)
                     .map(user -> {
-                        ResponseCookie jwtCookie = jwtUtils.generateJwtCookie(user);
+                        String accessToken = jwtUtils.generateJwt(user);
 
                         return ResponseEntity.ok()
-                                .header(HttpHeaders.SET_COOKIE, jwtCookie.toString())
-                                .body(new AuthMessageResponse("Token is refreshed successfully!"));
+                                .body(AuthResponse.builder()
+                                        .accessToken(accessToken)
+                                        .build());
                     })
-                    .orElseThrow(() -> new TokenRefreshException(refreshToken,
-                            "Refresh token is not in database!"));
+                    .orElseThrow(() -> new TokenRefreshException(refreshToken, "Refresh token is not in database!"));
         }
 
         return ResponseEntity.badRequest().body(new AuthMessageResponse("Refresh Token is empty!"));

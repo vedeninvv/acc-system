@@ -11,11 +11,13 @@ import com.practice.accsystem.security.UserDetailsImpl;
 import com.practice.accsystem.service.ContractService;
 import com.practice.accsystem.service.UserService;
 import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import org.springdoc.api.annotations.ParameterObject;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.security.access.prepost.PostAuthorize;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -23,9 +25,13 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.math.BigDecimal;
+import java.util.Date;
+
+import static com.practice.accsystem.config.OpenApiConfiguration.SECURITY_CONFIG_NAME;
 
 @RestController
 @RequestMapping("/api/contracts")
+@SecurityRequirement(name = SECURITY_CONFIG_NAME)
 public class ContractController {
     private final ContractService contractService;
     private final UserService userService;
@@ -65,9 +71,11 @@ public class ContractController {
                                                          @RequestParam(required = false) ContractType contractType,
                                                          @RequestParam(required = false) BigDecimal minSum,
                                                          @RequestParam(required = false) BigDecimal maxSum,
+                                                         @RequestParam(required = false) @DateTimeFormat(pattern = "yyyy-MM-dd") Date startPeriod,
+                                                         @RequestParam(required = false) @DateTimeFormat(pattern = "yyyy-MM-dd") Date endPeriod,
                                                          @ParameterObject @PageableDefault(sort = "id", direction = Sort.Direction.ASC) Pageable pageable,
                                                          @Parameter(hidden = true) @AuthenticationPrincipal UserDetailsImpl userDetails) {
-        return contractService.findAllContracts(userDetails.getId(), title, contractType, minSum, maxSum, pageable)
+        return contractService.findAllContracts(userDetails.getId(), title, contractType, minSum, maxSum, startPeriod, endPeriod, pageable)
                 .map(contractMapper::toDto);
     }
 
@@ -78,9 +86,10 @@ public class ContractController {
                                                  @RequestParam(required = false) ContractType contractType,
                                                  @RequestParam(required = false) BigDecimal minSum,
                                                  @RequestParam(required = false) BigDecimal maxSum,
-                                                 @ParameterObject @PageableDefault(sort = "id", direction = Sort.Direction.ASC) Pageable pageable,
-                                                 @Parameter(hidden = true) @AuthenticationPrincipal UserDetailsImpl userDetails) {
-        return contractService.findAllContracts(assignedUserId, title, contractType, minSum, maxSum, pageable)
+                                                 @RequestParam(required = false) @DateTimeFormat(pattern = "yyyy-MM-dd") Date startPeriod,
+                                                 @RequestParam(required = false) @DateTimeFormat(pattern = "yyyy-MM-dd") Date endPeriod,
+                                                 @ParameterObject @PageableDefault(sort = "id", direction = Sort.Direction.ASC) Pageable pageable) {
+        return contractService.findAllContracts(assignedUserId, title, contractType, minSum, maxSum, startPeriod, endPeriod, pageable)
                 .map(contractMapper::toDto);
     }
 
