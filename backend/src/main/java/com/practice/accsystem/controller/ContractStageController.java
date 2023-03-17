@@ -12,6 +12,7 @@ import com.practice.accsystem.service.ContractService;
 import com.practice.accsystem.service.ContractStageService;
 import com.practice.accsystem.service.UserService;
 import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import org.springdoc.api.annotations.ParameterObject;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -23,8 +24,11 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 
+import static com.practice.accsystem.config.OpenApiConfiguration.SECURITY_CONFIG_NAME;
+
 @RestController
 @RequestMapping("/api/contracts/{contractId}/stage")
+@SecurityRequirement(name = SECURITY_CONFIG_NAME)
 public class ContractStageController {
     private final ContractStageService contractStageService;
     private final ContractService contractService;
