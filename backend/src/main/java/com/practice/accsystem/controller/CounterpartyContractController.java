@@ -13,6 +13,7 @@ import com.practice.accsystem.service.CounterpartyContractService;
 import com.practice.accsystem.service.CounterpartyService;
 import com.practice.accsystem.service.UserService;
 import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import org.springdoc.api.annotations.ParameterObject;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -24,8 +25,11 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 
+import static com.practice.accsystem.config.OpenApiConfiguration.SECURITY_CONFIG_NAME;
+
 @RestController
 @RequestMapping("/api/contracts/{contractId}/counterparty-contracts")
+@SecurityRequirement(name = SECURITY_CONFIG_NAME)
 public class CounterpartyContractController {
     private final CounterpartyContractService counterpartyContractService;
     private final ContractService contractService;

@@ -23,6 +23,7 @@ import org.springframework.context.annotation.Configuration;
         )
 )
 public class OpenApiConfiguration {
+    public static final String SECURITY_CONFIG_NAME = "BearerAuth";
     public static final String[] SWAGGER_WHITELIST = {
             // -- Swagger UI v2
             "/v2/api-docs",

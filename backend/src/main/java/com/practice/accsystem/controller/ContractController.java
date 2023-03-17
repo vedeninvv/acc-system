@@ -11,6 +11,7 @@ import com.practice.accsystem.security.UserDetailsImpl;
 import com.practice.accsystem.service.ContractService;
 import com.practice.accsystem.service.UserService;
 import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import org.springdoc.api.annotations.ParameterObject;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -26,8 +27,11 @@ import javax.validation.Valid;
 import java.math.BigDecimal;
 import java.util.Date;
 
+import static com.practice.accsystem.config.OpenApiConfiguration.SECURITY_CONFIG_NAME;
+
 @RestController
 @RequestMapping("/api/contracts")
+@SecurityRequirement(name = SECURITY_CONFIG_NAME)
 public class ContractController {
     private final ContractService contractService;
     private final UserService userService;

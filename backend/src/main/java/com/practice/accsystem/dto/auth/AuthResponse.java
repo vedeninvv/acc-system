@@ -1,8 +1,13 @@
 package com.practice.accsystem.dto.auth;
 
-import lombok.Data;
+import lombok.*;
 
-@Data
+@Getter
+@Setter
+@AllArgsConstructor
+@NoArgsConstructor
+@Builder
 public class AuthResponse {
-    private String jwtToken;
+    private String accessToken;
+    private String refreshToken;
 }

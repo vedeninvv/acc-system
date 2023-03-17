@@ -6,8 +6,8 @@ import com.practice.accsystem.exception.NotHasPermissionException;
 import com.practice.accsystem.security.UserDetailsImpl;
 import com.practice.accsystem.service.ContractService;
 import com.practice.accsystem.service.UserService;
-import com.practice.accsystem.service.impl.ExcelServiceImpl;
 import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import org.springframework.core.io.ByteArrayResource;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpHeaders;
@@ -19,8 +19,11 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.Date;
 
+import static com.practice.accsystem.config.OpenApiConfiguration.SECURITY_CONFIG_NAME;
+
 @RestController
 @RequestMapping("/api/reports")
+@SecurityRequirement(name = SECURITY_CONFIG_NAME)
 public class ReportController {
     private final ContractService contractService;
     private final UserService userService;
@@ -50,7 +53,7 @@ public class ReportController {
     @PreAuthorize("hasAuthority('report')")
     @GetMapping("/contracts/{contractId}/stages")
     public ResponseEntity<ByteArrayResource> createContractStageReport(@PathVariable Long contractId,
-                                            @Parameter(hidden = true) @AuthenticationPrincipal UserDetailsImpl userDetails) {
+                                                                       @Parameter(hidden = true) @AuthenticationPrincipal UserDetailsImpl userDetails) {
         AppUserEntity user = userService.findUserById(userDetails.getId());
         ContractEntity contract = contractService.findContractById(contractId);
 
