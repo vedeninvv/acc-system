@@ -4,6 +4,7 @@ import ContractsPage from "@/views/ContractsPage";
 import CounterpartiesPage from "@/views/СounterpartiesPage"
 import ReportsPage from "@/views/ReportsPage";
 import AdministrationPage from "@/views/AdministrationPage";
+import LoginPage from "@/views/LoginPage";
 
 Vue.use(VueRouter)
 
@@ -11,6 +12,10 @@ const routes = [
     {
         path: '/',
         redirect: '/contracts'
+    },
+    {
+        path: '/signin',
+        component: LoginPage
     },
     {
         path: '/contracts',
