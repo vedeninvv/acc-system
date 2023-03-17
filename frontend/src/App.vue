@@ -1,23 +1,27 @@
 <template>
-  <div id="app">
+  <v-app>
+    <app-navbar></app-navbar>
 
-  </div>
+    <v-main>
+      <v-container fluid>
+        <router-view></router-view>
+      </v-container>
+    </v-main>
+
+    <v-spacer></v-spacer>
+    <app-footer></app-footer>
+  </v-app>
 </template>
 
 <script>
+import AppNavbar from "@/components/AppNavbar";
+import AppFooter from "@/components/AppFooter";
 
 export default {
-  name: 'App'
+  name: 'App',
+  components: {
+    AppNavbar,
+    AppFooter
+  }
 }
 </script>
-
-<style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
-</style>
