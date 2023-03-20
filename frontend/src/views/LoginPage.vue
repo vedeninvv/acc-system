@@ -30,7 +30,7 @@
 </template>
 
 <script>
-import {login} from "@/shared/request";
+import {signin} from "@/shared/request";
 
 export default {
   name: "LoginPage",
@@ -47,8 +47,7 @@ export default {
   methods: {
     submit() {
       if (this.valid) {
-        const user = {username: this.username, password: this.password}
-        login(user).then(() => {
+        signin(this.loginForm).then(() => {
           this.$router.push('/')
         })
       }

@@ -12,12 +12,18 @@
 
       <v-spacer></v-spacer>
       <v-btn outlined>Выход</v-btn>
-    </v-app-bar >
+    </v-app-bar>
   </nav>
 </template>
 
 <script>
+import {getCurrentUser} from "@/shared/request";
+
 export default {
+  async created() {
+    console.log(await getCurrentUser())
+  },
+
   name: "NavbarMain"
 }
 </script>
