@@ -1,17 +1,15 @@
 package com.practice.accsystem.dto.user;
 
-import com.practice.accsystem.entity.user.Role;
 import lombok.Data;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
-import java.util.Date;
 
 /**
- * DTO для ввода данных пользователя клиенту
+ * DTO для ввода данных для обновления пользователя
  */
 @Data
-public class UserPostDto {
+public class UserPutDto {
     /**
      * Логин пользователя
      */
@@ -46,14 +44,4 @@ public class UserPostDto {
     @NotBlank
     @Size(max = 255)
     private String middleName;
-
-    /**
-     * Дата прекращения действия пользователя
-     */
-    private Date dateUserExpired;
-
-    /**
-     * Роль пользователя
-     */
-    private Role role;
 }

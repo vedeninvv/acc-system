@@ -63,7 +63,7 @@ public class AppUserEntity {
     private String middleName;
 
     /**
-     * Дата прекращения действия
+     * Дата прекращения действия аккаунта пользователя
      */
     @Temporal(TemporalType.DATE)
     private Date dateUserExpired;
