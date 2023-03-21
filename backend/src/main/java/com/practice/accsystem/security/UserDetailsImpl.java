@@ -6,6 +6,7 @@ import lombok.Getter;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import java.time.LocalDate;
 import java.util.Collection;
 import java.util.Date;
 import java.util.Objects;
@@ -41,7 +42,8 @@ public class UserDetailsImpl implements UserDetails {
 
     @Override
     public boolean isAccountNonExpired() {
-        return dateUserExpired == null || dateUserExpired.after(new Date());
+        Date currentDateWithoutTime = java.sql.Date.valueOf(LocalDate.now());
+        return dateUserExpired == null || dateUserExpired.compareTo(currentDateWithoutTime) >= 0;
     }
 
     @Override

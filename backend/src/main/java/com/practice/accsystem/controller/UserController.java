@@ -2,6 +2,7 @@ package com.practice.accsystem.controller;
 
 import com.practice.accsystem.dto.user.UserGetDto;
 import com.practice.accsystem.dto.user.UserPostDto;
+import com.practice.accsystem.dto.user.UserPutDto;
 import com.practice.accsystem.entity.user.Role;
 import com.practice.accsystem.mapper.UserMapper;
 import com.practice.accsystem.security.UserDetailsImpl;
@@ -69,12 +70,12 @@ public class UserController {
     @PreAuthorize("hasAuthority('user:write:all') or (hasAuthority('user:write:self') and #userDetails.id == #userId)")
     @PutMapping("/{userId}")
     public UserGetDto updateUser(@PathVariable Long userId,
-                                 @Valid @RequestBody UserPostDto userPostDto,
+                                 @Valid @RequestBody UserPutDto userPutDto,
                                  @Parameter(hidden = true) @AuthenticationPrincipal UserDetailsImpl userDetails) {
         return userMapper.toDto(
                 userService.updateUser(
                         userService.findUserById(userId),
-                        userMapper.toEntity(userPostDto)
+                        userMapper.toEntity(userPutDto)
                 )
         );
     }
