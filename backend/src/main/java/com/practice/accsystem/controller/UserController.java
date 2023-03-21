@@ -33,6 +33,14 @@ public class UserController {
         this.userMapper = userMapper;
     }
 
+    @PreAuthorize("hasAuthority('user:write:all')")
+    @PostMapping
+    public UserGetDto createUser(@Valid @RequestBody UserPostDto userPostDto) {
+        return userMapper.toDto(
+                userService.createUser(userMapper.toEntity(userPostDto))
+        );
+    }
+
     @PreAuthorize("isAuthenticated()")
     @GetMapping("/current")
     public UserGetDto currentUser(@Parameter(hidden = true) @AuthenticationPrincipal UserDetailsImpl userDetails) {

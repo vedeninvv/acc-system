@@ -64,13 +64,6 @@ public class AuthController {
                 .body(new AuthResponse(accessToken, refreshToken));
     }
 
-    @PostMapping("/signup")
-    public UserGetDto createUser(@Valid @RequestBody UserPostDto userPostDto) {
-        return userMapper.toDto(
-                userService.createUser(userMapper.toEntity(userPostDto))
-        );
-    }
-
     @SecurityRequirement(name = SECURITY_CONFIG_NAME)
     @PostMapping("/signout")
     public ResponseEntity<?> logoutUser() {
