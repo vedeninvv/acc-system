@@ -75,6 +75,7 @@ public class WebSecurityConfig {
                 .authorizeRequests().antMatchers("/api/auth/**").permitAll()
                 .antMatchers(HttpMethod.GET, "/api").permitAll()
                 .antMatchers(OpenApiConfiguration.SWAGGER_WHITELIST).permitAll()
+                .antMatchers("/error").permitAll() //необходимо чтобы возвращалось тело ошибки
                 .anyRequest().authenticated();
 
         http.authenticationProvider(authenticationProvider());
