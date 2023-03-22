@@ -28,11 +28,13 @@ public interface CounterpartyService {
      * Поиск всех контрагентов с фильтрацией по совпадению переданной строки с хотя бы частью названия, адреса или ИНН
      * Если строка null, то фильтрация не осуществляется
      *
-     * @param searchStr поисковая строка
+     * @param title название или его часть
+     * @param address адрес или его часть
+     * @param INN ИНН или его часть
      * @param pageable  настройки пагинации
      * @return контрагенты
      */
-    Page<CounterpartyEntity> findAllCounterparties(String searchStr, Pageable pageable);
+    Page<CounterpartyEntity> findAllCounterparties(String title, String address, String INN, Pageable pageable);
 
     /**
      * Обновить контрагента

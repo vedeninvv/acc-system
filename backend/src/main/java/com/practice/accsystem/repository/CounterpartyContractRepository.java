@@ -9,6 +9,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.PagingAndSortingRepository;
 import org.springframework.stereotype.Repository;
 
+import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
@@ -30,11 +31,28 @@ public interface CounterpartyContractRepository extends PagingAndSortingReposito
     /**
      * Поиск всех контрактов с контрагентами по переданному контракту
      *
-     * @param contract контракт, к которому относятся контракты с контрагентами
-     * @param pageable настройки пагинации
+     * @param contract       контракт, к которому относятся контракты с контрагентами
+     * @param counterpartyId ID организации-контрагента, договора с которой ищутся
+     * @param title          название или его часть
+     * @param minSum         минимальная сумма этапа
+     * @param maxSum         максимальная сумма этапа
+     * @param startPeriod    начальная дата для планируемой или фактической даты
+     * @param endPeriod      конечная дата для планируемой или фактической даты
+     * @param pageable       настройки пагинации
      * @return контракты с контрагентом
      */
-    Page<CounterpartyContractEntity> findAllByContract(ContractEntity contract, Pageable pageable);
+    @Query("select counterpartyContract from CounterpartyContractEntity as counterpartyContract where" +
+            " counterpartyContract.contract = :contract" +
+            " and (:counterpartyId is null or counterpartyContract.counterparty.id = :counterpartyId)" +
+            " and (:title is null or counterpartyContract.title like %:title%)" +
+            " and (:minSum is null or counterpartyContract.sum >= :minSum)" +
+            " and (:maxSum is null or counterpartyContract.sum <= :maxSum)" +
+            " and (:startPeriod is null or counterpartyContract.planStartDate >= :startPeriod" +
+            " or counterpartyContract.factStartDate >= :startPeriod)" +
+            " and (:endPeriod is null or counterpartyContract.planEndDate <= :endPeriod" +
+            " or counterpartyContract.factEndDate <= :endPeriod)")
+    Page<CounterpartyContractEntity> findAllByContract(ContractEntity contract, Long counterpartyId, String title,
+                                                       BigDecimal minSum, BigDecimal maxSum, Date startPeriod, Date endPeriod, Pageable pageable);
 
     /**
      * Поиск всех контрактов с контрагентами, относящихся к переданному пользователю и входящих в переданный период

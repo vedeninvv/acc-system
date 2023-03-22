@@ -4,6 +4,7 @@ import com.practice.accsystem.dto.expense.ExpenseGetDto;
 import lombok.*;
 
 import java.math.BigDecimal;
+import java.util.Date;
 import java.util.Set;
 
 /**
@@ -43,4 +44,24 @@ public class ContractStageGetDto {
      * Список расходов
      */
     private Set<ExpenseGetDto> expenses;
+
+    /**
+     * Плановый срок начала
+     */
+    private Date planStartDate;
+
+    /**
+     * Плановый срок конца
+     */
+    private Date planEndDate;
+
+    /**
+     * Фактический срок начала
+     */
+    private Date factStartDate;
+
+    /**
+     * Фактический срок конца
+     */
+    private Date factEndDate;
 }

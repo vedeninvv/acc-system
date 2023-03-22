@@ -19,11 +19,14 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.math.BigDecimal;
+import java.util.Date;
 
 import static com.practice.accsystem.config.OpenApiConfiguration.SECURITY_CONFIG_NAME;
 
@@ -94,13 +97,20 @@ public class CounterpartyContractController {
     @PreAuthorize("hasAuthority('counterpartyContract:read')")
     @GetMapping
     public Page<CounterpartyContractGetDto> findAllCounterpartyContracts(@PathVariable Long contractId,
+                                                                         @RequestParam(required = false) Long counterpartyId,
+                                                                         @RequestParam(required = false) String title,
+                                                                         @RequestParam(required = false) BigDecimal minSum,
+                                                                         @RequestParam(required = false) BigDecimal maxSum,
+                                                                         @RequestParam(required = false) @DateTimeFormat(pattern = "yyyy-MM-dd") Date startPeriod,
+                                                                         @RequestParam(required = false) @DateTimeFormat(pattern = "yyyy-MM-dd") Date endPeriod,
                                                                          @ParameterObject @PageableDefault(sort = "id", direction = Sort.Direction.ASC) Pageable pageable,
                                                                          @Parameter(hidden = true) @AuthenticationPrincipal UserDetailsImpl userDetails) {
         ContractEntity contract = contractService.findContractById(contractId);
         AppUserEntity user = userService.findUserById(userDetails.getId());
 
         if (contractService.hasAccessToContract(user, contract)) {
-            return counterpartyContractService.findAllCounterpartyContractsByContract(contract, pageable)
+            return counterpartyContractService.findAllCounterpartyContractsByContract(contract, counterpartyId, title,
+                            minSum, maxSum, startPeriod, endPeriod, pageable)
                     .map(counterpartyContractMapper::toDto);
         } else {
             throw new NotHasPermissionException(

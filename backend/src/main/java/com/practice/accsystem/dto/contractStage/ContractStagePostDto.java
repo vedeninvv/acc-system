@@ -5,6 +5,7 @@ import lombok.Data;
 
 import javax.validation.constraints.*;
 import java.math.BigDecimal;
+import java.util.Date;
 import java.util.Set;
 
 /**
@@ -32,4 +33,24 @@ public class ContractStagePostDto {
      */
     @NotNull
     private Set<ExpensePostDto> expenses;
+
+    /**
+     * Плановый срок начала
+     */
+    private Date planStartDate;
+
+    /**
+     * Плановый срок конца
+     */
+    private Date planEndDate;
+
+    /**
+     * Фактический срок начала
+     */
+    private Date factStartDate;
+
+    /**
+     * Фактический срок конца
+     */
+    private Date factEndDate;
 }
