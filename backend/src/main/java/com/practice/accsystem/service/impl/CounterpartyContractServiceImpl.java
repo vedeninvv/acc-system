@@ -12,6 +12,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
 
@@ -45,8 +46,11 @@ public class CounterpartyContractServiceImpl implements CounterpartyContractServ
 
 
     @Override
-    public Page<CounterpartyContractEntity> findAllCounterpartyContractsByContract(ContractEntity contract, Pageable pageable) {
-        return counterpartyContractRepository.findAllByContract(contract, pageable);
+    public Page<CounterpartyContractEntity> findAllCounterpartyContractsByContract(ContractEntity contract, Long counterpartyId,
+                                                                                   String title, BigDecimal minSum, BigDecimal maxSum,
+                                                                                   Date startPeriod, Date endPeriod, Pageable pageable) {
+        return counterpartyContractRepository.findAllByContract(contract, counterpartyId, title, minSum, maxSum,
+                startPeriod, endPeriod, pageable);
     }
 
     @Override

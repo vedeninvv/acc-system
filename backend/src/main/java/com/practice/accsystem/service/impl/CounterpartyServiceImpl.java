@@ -36,8 +36,8 @@ public class CounterpartyServiceImpl implements CounterpartyService {
     }
 
     @Override
-    public Page<CounterpartyEntity> findAllCounterparties(String searchStr, Pageable pageable) {
-        return counterpartyRepository.findAllBySearchStr(searchStr, pageable);
+    public Page<CounterpartyEntity> findAllCounterparties(String title, String address, String INN, Pageable pageable) {
+        return counterpartyRepository.findAllWithFilters(title, address, INN, pageable);
     }
 
     @Override

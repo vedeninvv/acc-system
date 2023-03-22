@@ -22,17 +22,18 @@ public interface CounterpartyRepository extends PagingAndSortingRepository<Count
     Boolean existsByTitleOrINN(String title, String INN);
 
     /**
-     * Поиск всех контрагентов с фильтрацией по совпадению переданной строки с хотя бы частью названия, адреса или ИНН
-     * Если строка null, то фильтрация не осуществляется
+     * Поиск всех контрагентов с фильтрацией по переданным значениям
+     * Если параметр null, то фильтрация по нему не осуществляется
      *
-     * @param searchStr поисковая строка
+     * @param title название или его часть
+     * @param address адрес или его часть
+     * @param INN ИНН или его часть
      * @param pageable  настройки пагинации
      * @return контрагенты
      */
     @Query("select counterparty from CounterpartyEntity as counterparty where " +
-            ":searchStr is null " +
-            "or counterparty.title like %:searchStr% " +
-            "or counterparty.address like %:searchStr% " +
-            "or counterparty.INN like %:searchStr%")
-    Page<CounterpartyEntity> findAllBySearchStr(String searchStr, Pageable pageable);
+            "(:title is null or counterparty.title like %:title%)" +
+            " and (counterparty.address like %:address%)" +
+            " and (counterparty.INN like %:INN%)")
+    Page<CounterpartyEntity> findAllWithFilters(String title, String address, String INN, Pageable pageable);
 }

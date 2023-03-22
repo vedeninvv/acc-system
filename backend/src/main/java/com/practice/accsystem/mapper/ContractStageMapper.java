@@ -21,6 +21,10 @@ public class ContractStageMapper {
                 .sum(contractStagePostDto.getSum())
                 .expenses(contractStagePostDto.getExpenses().stream()
                         .map(expenseMapper::toEntity).collect(Collectors.toSet()))
+                .planStartDate(contractStagePostDto.getPlanStartDate())
+                .planEndDate(contractStagePostDto.getPlanEndDate())
+                .factStartDate(contractStagePostDto.getFactStartDate())
+                .factEndDate(contractStagePostDto.getFactEndDate())
                 .build();
     }
 
@@ -34,6 +38,10 @@ public class ContractStageMapper {
                 .factTotalExpenses(contractStage.getFactTotalExpenses())
                 .expenses(contractStage.getExpenses().stream()
                         .map(expenseMapper::toDto).collect(Collectors.toSet()))
+                .planStartDate(contractStage.getPlanStartDate())
+                .planEndDate(contractStage.getPlanEndDate())
+                .factStartDate(contractStage.getFactStartDate())
+                .factEndDate(contractStage.getFactEndDate())
                 .build();
     }
 }

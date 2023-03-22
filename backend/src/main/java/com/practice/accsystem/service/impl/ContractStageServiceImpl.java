@@ -13,6 +13,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
+import java.util.Date;
 
 @Service
 public class ContractStageServiceImpl implements ContractStageService {
@@ -53,8 +54,9 @@ public class ContractStageServiceImpl implements ContractStageService {
     }
 
     @Override
-    public Page<ContractStageEntity> findAllContractStageByContract(ContractEntity contract, Pageable pageable) {
-        return contractStageRepository.findAllByContract(contract, pageable);
+    public Page<ContractStageEntity> findAllContractStageByContract(ContractEntity contract, String title, BigDecimal minSum,
+                                                                    BigDecimal maxSum, Date startPeriod, Date endPeriod, Pageable pageable) {
+        return contractStageRepository.findAllByContract(contract, title, minSum, maxSum, startPeriod, endPeriod, pageable);
     }
 
     @Override

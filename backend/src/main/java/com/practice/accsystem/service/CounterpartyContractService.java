@@ -7,6 +7,7 @@ import com.practice.accsystem.entity.user.AppUserEntity;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
+import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
 
@@ -38,11 +39,19 @@ public interface CounterpartyContractService {
     /**
      * Найти все контракты с контрагентами по переданному контракту
      *
-     * @param contract контракт, к которому относятся контракты с контрагентами
-     * @param pageable настройки пагинации
+     * @param contract       контракт, к которому относятся контракты с контрагентами
+     * @param counterpartyId ID организации-контрагента, договора с которой ищутся
+     * @param title          название или его часть
+     * @param minSum         минимальная сумма этапа
+     * @param maxSum         максимальная сумма этапа
+     * @param startPeriod    начальная дата для планируемой или фактической даты
+     * @param endPeriod      конечная дата для планируемой или фактической даты
+     * @param pageable       настройки пагинации
      * @return контракты с контрагентом
      */
-    Page<CounterpartyContractEntity> findAllCounterpartyContractsByContract(ContractEntity contract, Pageable pageable);
+    Page<CounterpartyContractEntity> findAllCounterpartyContractsByContract(ContractEntity contract, Long counterpartyId,
+                                                                            String title, BigDecimal minSum, BigDecimal maxSum,
+                                                                            Date startPeriod, Date endPeriod, Pageable pageable);
 
     /**
      * Найти все контракты с контрагентами, относящиеся к переданному пользователю и входящих в переданный период

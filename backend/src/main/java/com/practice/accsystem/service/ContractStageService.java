@@ -6,6 +6,9 @@ import com.practice.accsystem.entity.user.AppUserEntity;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
+import java.math.BigDecimal;
+import java.util.Date;
+
 /**
  * Сервис для этапов контракта
  */
@@ -38,13 +41,19 @@ public interface ContractStageService {
     ContractStageEntity findContractStageById(ContractEntity contract, Long contractStageId);
 
     /**
-     * Поиск всех этапов переданного контракта
+     * Поиск всех этапов переданного контракта, которые удовлетворяют переданным фильтрам
      *
-     * @param contract контракт, чьи этапы ищутся
-     * @param pageable настройки пагинации
+     * @param contract    контракт, чьи этапы ищутся
+     * @param title       название или его часть
+     * @param minSum      минимальная сумма этапа
+     * @param maxSum      максимальная сумма этапа
+     * @param startPeriod начальная дата для планируемой или фактической даты
+     * @param endPeriod   конечная дата для планируемой или фактической даты
+     * @param pageable    настройки пагинации
      * @return этапы контракта
      */
-    Page<ContractStageEntity> findAllContractStageByContract(ContractEntity contract, Pageable pageable);
+    Page<ContractStageEntity> findAllContractStageByContract(ContractEntity contract, String title, BigDecimal minSum,
+                                                             BigDecimal maxSum, Date startPeriod, Date endPeriod, Pageable pageable);
 
     /**
      * Обновить этап контракта

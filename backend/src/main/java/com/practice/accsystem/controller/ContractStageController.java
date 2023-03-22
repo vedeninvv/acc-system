@@ -18,16 +18,19 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.math.BigDecimal;
+import java.util.Date;
 
 import static com.practice.accsystem.config.OpenApiConfiguration.SECURITY_CONFIG_NAME;
 
 @RestController
-@RequestMapping("/api/contracts/{contractId}/stage")
+@RequestMapping("/api/contracts/{contractId}/stages")
 @SecurityRequirement(name = SECURITY_CONFIG_NAME)
 public class ContractStageController {
     private final ContractStageService contractStageService;
@@ -85,13 +88,18 @@ public class ContractStageController {
     @PreAuthorize("hasAuthority('contractStage:read')")
     @GetMapping
     public Page<ContractStageGetDto> findAllContractStage(@PathVariable Long contractId,
+                                                          @RequestParam(required = false) String title,
+                                                          @RequestParam(required = false) BigDecimal minSum,
+                                                          @RequestParam(required = false) BigDecimal maxSum,
+                                                          @RequestParam(required = false) @DateTimeFormat(pattern = "yyyy-MM-dd") Date startPeriod,
+                                                          @RequestParam(required = false) @DateTimeFormat(pattern = "yyyy-MM-dd") Date endPeriod,
                                                           @Parameter(hidden = true) @AuthenticationPrincipal UserDetailsImpl userDetails,
                                                           @ParameterObject @PageableDefault(sort = "id", direction = Sort.Direction.ASC) Pageable pageable) {
         AppUserEntity user = userService.findUserById(userDetails.getId());
         ContractEntity contract = contractService.findContractById(contractId);
 
         if (contractService.hasAccessToContract(user, contract)) {
-            return contractStageService.findAllContractStageByContract(contract, pageable)
+            return contractStageService.findAllContractStageByContract(contract, title, minSum, maxSum, startPeriod, endPeriod, pageable)
                     .map(contractStageMapper::toDto);
         } else {
             throw new NotHasPermissionException(

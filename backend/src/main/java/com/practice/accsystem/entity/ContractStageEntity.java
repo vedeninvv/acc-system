@@ -4,6 +4,7 @@ import lombok.*;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -53,4 +54,24 @@ public class ContractStageEntity implements ExcelRecord {
      */
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "contractStage", orphanRemoval = true)
     private Set<ExpenseEntity> expenses = new HashSet<>();
+
+    /**
+     * Плановый срок начала
+     */
+    private Date planStartDate;
+
+    /**
+     * Плановый срок конца
+     */
+    private Date planEndDate;
+
+    /**
+     * Фактический срок начала
+     */
+    private Date factStartDate;
+
+    /**
+     * Фактический срок конца
+     */
+    private Date factEndDate;
 }

@@ -48,9 +48,11 @@ public class CounterpartyController {
 
     @PreAuthorize("hasAuthority('counterparty:read:all')")
     @GetMapping
-    public Page<CounterpartyGetDto> findAllCounterparties(@RequestParam(required = false) String searchStr,
+    public Page<CounterpartyGetDto> findAllCounterparties(@RequestParam(required = false) String title,
+                                                          @RequestParam(required = false) String address,
+                                                          @RequestParam(required = false) String INN,
                                                           @ParameterObject @PageableDefault(sort = "id", direction = Sort.Direction.ASC) Pageable pageable) {
-        return counterpartyService.findAllCounterparties(searchStr, pageable).map(counterpartyMapper::toDto);
+        return counterpartyService.findAllCounterparties(title, address, INN, pageable).map(counterpartyMapper::toDto);
     }
 
     @PreAuthorize("hasAuthority('counterparty:write:all')")
