@@ -2,6 +2,7 @@ package com.practice.accsystem.service;
 
 import com.practice.accsystem.entity.user.AppUserEntity;
 import com.practice.accsystem.entity.user.Role;
+import com.practice.accsystem.security.UserDetailsImpl;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
@@ -53,4 +54,6 @@ public interface UserService {
      * @return удаленный пользователь
      */
     AppUserEntity deleteUser(AppUserEntity user);
+
+    void createLoginHistoryRecord(UserDetailsImpl userDetails);
 }
