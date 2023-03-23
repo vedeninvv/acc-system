@@ -70,7 +70,7 @@ public class CounterpartyContractServiceImpl implements CounterpartyContractServ
         oldCounterpartyContract.setFactStartDate(newCounterpartyContract.getFactStartDate());
         oldCounterpartyContract.setFactEndDate(newCounterpartyContract.getFactEndDate());
 
-        return oldCounterpartyContract;
+        return counterpartyContractRepository.save(oldCounterpartyContract);
     }
 
     @Override

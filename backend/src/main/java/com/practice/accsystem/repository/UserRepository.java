@@ -41,11 +41,12 @@ public interface UserRepository extends PagingAndSortingRepository<AppUserEntity
      * @return пользователи
      */
     @Query("select user from AppUserEntity as user where " +
-            ":role is null or user.role = :role" +
+            "(:role is null or user.role = :role)" +
             " and (" +
             ":searchStr is null" +
             " or user.name like %:searchStr%" +
             " or user.surname like %:searchStr%" +
-            " or user.middleName like %:searchStr%)")
+            " or user.middleName like %:searchStr%)" +
+            " or user.username like %:searchStr%")
     Page<AppUserEntity> findAllByRoleAndSearchStr(Role role, String searchStr, Pageable pageable);
 }

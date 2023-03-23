@@ -42,12 +42,17 @@ public class CounterpartyServiceImpl implements CounterpartyService {
 
     @Override
     public CounterpartyEntity updateCounterparty(CounterpartyEntity oldCounterparty, CounterpartyEntity newCounterparty) {
+        if (counterpartyRepository.existsByTitleOrINN(newCounterparty.getTitle(), newCounterparty.getINN())) {
+            throw new DuplicateUniqueValueException(
+                    String.format("Title '%s' or INN '%s' already exist when try to update counterparty",
+                            newCounterparty.getTitle(), newCounterparty.getINN()));
+        }
 
         oldCounterparty.setTitle(newCounterparty.getTitle());
         oldCounterparty.setAddress(newCounterparty.getAddress());
         oldCounterparty.setINN(newCounterparty.getINN());
 
-        return oldCounterparty;
+        return counterpartyRepository.save(oldCounterparty);
     }
 
     @Override
