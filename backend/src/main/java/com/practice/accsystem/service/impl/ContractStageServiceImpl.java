@@ -63,6 +63,10 @@ public class ContractStageServiceImpl implements ContractStageService {
     public ContractStageEntity updateContractStage(ContractStageEntity oldContractStage, ContractStageEntity newContractStage) {
         oldContractStage.setTitle(newContractStage.getTitle());
         oldContractStage.setSum(newContractStage.getSum());
+        oldContractStage.setPlanStartDate(newContractStage.getPlanStartDate());
+        oldContractStage.setPlanEndDate(newContractStage.getPlanEndDate());
+        oldContractStage.setFactStartDate(newContractStage.getFactStartDate());
+        oldContractStage.setFactEndDate(newContractStage.getFactEndDate());
 
         oldContractStage.getExpenses().clear();
         oldContractStage.getExpenses().addAll(newContractStage.getExpenses());

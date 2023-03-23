@@ -13,8 +13,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.util.Locale;
-
 @Service
 public class UserServiceImpl implements UserService {
     private final UserRepository userRepository;
@@ -46,9 +44,6 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public Page<AppUserEntity> findAllUsers(Role role, String searchStr, Pageable pageable) {
-        if (searchStr != null) {
-            searchStr = searchStr.toLowerCase(Locale.ROOT);
-        }
         return userRepository.findAllByRoleAndSearchStr(role, searchStr, pageable);
     }
 
