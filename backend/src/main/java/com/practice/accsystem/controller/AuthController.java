@@ -4,11 +4,8 @@ import com.practice.accsystem.dto.auth.AuthMessageResponse;
 import com.practice.accsystem.dto.auth.AuthRefreshRequest;
 import com.practice.accsystem.dto.auth.AuthRequest;
 import com.practice.accsystem.dto.auth.AuthResponse;
-import com.practice.accsystem.dto.user.UserGetDto;
-import com.practice.accsystem.dto.user.UserPostDto;
 import com.practice.accsystem.entity.user.RefreshToken;
 import com.practice.accsystem.exception.TokenRefreshException;
-import com.practice.accsystem.mapper.UserMapper;
 import com.practice.accsystem.security.UserDetailsImpl;
 import com.practice.accsystem.security.jwt.JwtUtils;
 import com.practice.accsystem.security.jwt.RefreshTokenService;
@@ -36,18 +33,15 @@ public class AuthController {
     private final JwtUtils jwtUtils;
     private final RefreshTokenService refreshTokenService;
     private final UserService userService;
-    private final UserMapper userMapper;
 
     public AuthController(AuthenticationManager authenticationManager,
                           JwtUtils jwtUtils,
                           RefreshTokenService refreshTokenService,
-                          UserService userService,
-                          UserMapper userMapper) {
+                          UserService userService) {
         this.authenticationManager = authenticationManager;
         this.jwtUtils = jwtUtils;
         this.refreshTokenService = refreshTokenService;
         this.userService = userService;
-        this.userMapper = userMapper;
     }
 
     @PostMapping("/signin")
@@ -59,6 +53,8 @@ public class AuthController {
 
         String accessToken = jwtUtils.generateJwt(userDetails);
         String refreshToken = refreshTokenService.createRefreshToken(userDetails.getId()).getToken();
+
+        userService.createLoginHistoryRecord(userDetails);
 
         return ResponseEntity.ok()
                 .body(new AuthResponse(accessToken, refreshToken));

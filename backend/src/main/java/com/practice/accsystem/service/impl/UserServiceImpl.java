@@ -1,11 +1,14 @@
 package com.practice.accsystem.service.impl;
 
+import com.practice.accsystem.entity.LoginHistory;
 import com.practice.accsystem.entity.user.AppUserEntity;
 import com.practice.accsystem.entity.user.Role;
 import com.practice.accsystem.exception.DuplicateUniqueValueException;
 import com.practice.accsystem.exception.NotFoundEntityException;
 import com.practice.accsystem.exception.RelatedEntitiesCanNotBeDeleted;
 import com.practice.accsystem.repository.UserRepository;
+import com.practice.accsystem.repository.mongo.LoginHistoryRepository;
+import com.practice.accsystem.security.UserDetailsImpl;
 import com.practice.accsystem.security.jwt.RefreshTokenService;
 import com.practice.accsystem.service.UserService;
 import org.springframework.data.domain.Page;
@@ -13,16 +16,23 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
+
 @Service
 public class UserServiceImpl implements UserService {
     private final UserRepository userRepository;
     private final RefreshTokenService refreshTokenService;
     private final PasswordEncoder encoder;
+    private final LoginHistoryRepository loginHistoryRepository;
 
-    public UserServiceImpl(UserRepository userRepository, RefreshTokenService refreshTokenService, PasswordEncoder encoder) {
+    public UserServiceImpl(UserRepository userRepository,
+                           RefreshTokenService refreshTokenService,
+                           PasswordEncoder encoder,
+                           LoginHistoryRepository loginHistoryRepository) {
         this.userRepository = userRepository;
         this.refreshTokenService = refreshTokenService;
         this.encoder = encoder;
+        this.loginHistoryRepository = loginHistoryRepository;
     }
 
     @Override
@@ -72,5 +82,15 @@ public class UserServiceImpl implements UserService {
         refreshTokenService.deleteByUserId(user.getId());
         userRepository.delete(user);
         return user;
+    }
+
+    @Override
+    public void createLoginHistoryRecord(UserDetailsImpl userDetails) {
+        loginHistoryRepository.save(
+                new LoginHistory(
+                        userDetails.getUsername(),
+                        userDetails.getId(),
+                        new Date())
+        );
     }
 }
