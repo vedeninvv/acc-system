@@ -1,5 +1,6 @@
 package com.practice.accsystem.controller;
 
+import com.practice.accsystem.dto.user.AuthSettings;
 import com.practice.accsystem.dto.user.UserGetDto;
 import com.practice.accsystem.dto.user.UserPostDto;
 import com.practice.accsystem.dto.user.UserPutDto;
@@ -7,6 +8,7 @@ import com.practice.accsystem.entity.user.Role;
 import com.practice.accsystem.mapper.UserMapper;
 import com.practice.accsystem.security.UserDetailsImpl;
 import com.practice.accsystem.service.UserService;
+import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import org.springdoc.api.annotations.ParameterObject;
@@ -34,6 +36,7 @@ public class UserController {
         this.userMapper = userMapper;
     }
 
+    @Operation(summary = "Создать пользователя")
     @PreAuthorize("hasAuthority('user:write:all')")
     @PostMapping
     public UserGetDto createUser(@Valid @RequestBody UserPostDto userPostDto) {
@@ -42,6 +45,7 @@ public class UserController {
         );
     }
 
+    @Operation(summary = "Получить данные текущего пользователя")
     @PreAuthorize("isAuthenticated()")
     @GetMapping("/current")
     public UserGetDto currentUser(@Parameter(hidden = true) @AuthenticationPrincipal UserDetailsImpl userDetails) {
@@ -50,6 +54,7 @@ public class UserController {
         );
     }
 
+    @Operation(summary = "Получить пользователя по ID")
     @PreAuthorize("hasAuthority('user:read:all') or (hasAuthority('user:read:self') and #userDetails.id == #userId)")
     @GetMapping("/{userId}")
     public UserGetDto findUserById(@PathVariable Long userId,
@@ -59,6 +64,7 @@ public class UserController {
         );
     }
 
+    @Operation(summary = "Получить всех пользователей")
     @PreAuthorize("hasAuthority('user:read:all')")
     @GetMapping
     public Page<UserGetDto> findAllUsers(@RequestParam(required = false) Role role,
@@ -67,6 +73,7 @@ public class UserController {
         return userService.findAllUsers(role, searchStr, pageable).map(userMapper::toDto);
     }
 
+    @Operation(summary = "Обновить данные пользователя")
     @PreAuthorize("hasAuthority('user:write:all') or (hasAuthority('user:write:self') and #userDetails.id == #userId)")
     @PutMapping("/{userId}")
     public UserGetDto updateUser(@PathVariable Long userId,
@@ -80,6 +87,7 @@ public class UserController {
         );
     }
 
+    @Operation(summary = "Удалить пользователя")
     @PreAuthorize("hasAuthority('user:write:all') or (hasAuthority('user:write:self') and #userDetails.id == #userId)")
     @DeleteMapping("/{userId}")
     public UserGetDto deleteUser(@PathVariable Long userId,
@@ -88,6 +96,15 @@ public class UserController {
                 userService.deleteUser(
                         userService.findUserById(userId)
                 )
+        );
+    }
+
+    @Operation(summary = "Обновить настройки авторизации (роль и дата действия аккаунта)")
+    @PreAuthorize("hasAuthority('user:write:all')")
+    @PutMapping("/auth-settings/{userId}")
+    public UserGetDto updateUserAuthSettings(@PathVariable Long userId, @RequestBody AuthSettings authSettings) {
+        return userMapper.toDto(
+                userService.updateUserAuthSettings(userService.findUserById(userId), authSettings)
         );
     }
 }

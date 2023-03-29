@@ -10,6 +10,7 @@ import com.practice.accsystem.mapper.ContractMapper;
 import com.practice.accsystem.security.UserDetailsImpl;
 import com.practice.accsystem.service.ContractService;
 import com.practice.accsystem.service.UserService;
+import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import org.springdoc.api.annotations.ParameterObject;
@@ -43,6 +44,7 @@ public class ContractController {
         this.contractMapper = contractMapper;
     }
 
+    @Operation(summary = "Создать контракт")
     @PreAuthorize("hasAuthority('contract:read:all') or hasAuthority('contract:read:self')")
     @PostMapping
     public ContractGetDto createContract(@Valid @RequestBody ContractPostDto contractPostDto,
@@ -55,6 +57,7 @@ public class ContractController {
         );
     }
 
+    @Operation(summary = "Получить контракт по ID")
     @PostAuthorize("hasAuthority('contract:read:all') " +
             "or (hasAuthority('contract:read:self') and returnObject.assignedUserId == #userDetails.id)")
     @GetMapping("/{contractId}")
@@ -65,6 +68,7 @@ public class ContractController {
         );
     }
 
+    @Operation(summary = "Получить все контракты, назначенные на текущего пользователя")
     @PreAuthorize("hasAuthority('contract:read:all') or hasAuthority('contract:read:self')")
     @GetMapping("/managing")
     public Page<ContractGetDto> findAllManagingContracts(@RequestParam(required = false) String title,
@@ -79,6 +83,7 @@ public class ContractController {
                 .map(contractMapper::toDto);
     }
 
+    @Operation(summary = "Найти все контракты")
     @PreAuthorize("hasAuthority('contract:read:all')")
     @GetMapping
     public Page<ContractGetDto> findAllContracts(@RequestParam(required = false) Long assignedUserId,
@@ -93,6 +98,7 @@ public class ContractController {
                 .map(contractMapper::toDto);
     }
 
+    @Operation(summary = "Обновить контракт")
     @PreAuthorize("hasAuthority('contract:write:all') or hasAuthority('contract:write:self')")
     @PutMapping("/{contractId}")
     public ContractGetDto updateContract(@PathVariable Long contractId,
@@ -111,6 +117,7 @@ public class ContractController {
         }
     }
 
+    @Operation(summary = "Удалить контракт")
     @PreAuthorize("hasAuthority('contract:write:all') or hasAuthority('contract:write:self')")
     @DeleteMapping("/{contractId}")
     public ContractGetDto deleteContract(@PathVariable Long contractId,

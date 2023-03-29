@@ -1,5 +1,6 @@
 package com.practice.accsystem.service.impl;
 
+import com.practice.accsystem.dto.user.AuthSettings;
 import com.practice.accsystem.entity.LoginHistory;
 import com.practice.accsystem.entity.user.AppUserEntity;
 import com.practice.accsystem.entity.user.Role;
@@ -92,5 +93,14 @@ public class UserServiceImpl implements UserService {
                         userDetails.getId(),
                         new Date())
         );
+    }
+
+    @Override
+    public AppUserEntity updateUserAuthSettings(AppUserEntity user, AuthSettings authSettings) {
+        if (authSettings.getRole() != null) {
+            user.setRole(authSettings.getRole());
+        }
+        user.setDateUserExpired(user.getDateUserExpired());
+        return userRepository.save(user);
     }
 }

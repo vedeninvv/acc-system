@@ -12,6 +12,7 @@ import com.practice.accsystem.service.ContractService;
 import com.practice.accsystem.service.CounterpartyContractService;
 import com.practice.accsystem.service.CounterpartyService;
 import com.practice.accsystem.service.UserService;
+import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import org.springdoc.api.annotations.ParameterObject;
@@ -52,6 +53,7 @@ public class CounterpartyContractController {
         this.counterpartyContractMapper = counterpartyContractMapper;
     }
 
+    @Operation(summary = "Создать контракт с контрагентом")
     @PreAuthorize("hasAuthority('counterpartyContract:write')")
     @PostMapping
     public CounterpartyContractGetDto createCounterpartyContract(@PathVariable Long contractId,
@@ -74,6 +76,7 @@ public class CounterpartyContractController {
         }
     }
 
+    @Operation(summary = "Найти контракт с контрагентом по ID")
     @PreAuthorize("hasAuthority('counterpartyContract:read')")
     @GetMapping("/{counterpartyContractId}")
     public CounterpartyContractGetDto findCounterpartyContractById(@PathVariable Long contractId,
@@ -94,6 +97,7 @@ public class CounterpartyContractController {
         }
     }
 
+    @Operation(summary = "Найти все контракты с контрагентами")
     @PreAuthorize("hasAuthority('counterpartyContract:read')")
     @GetMapping
     public Page<CounterpartyContractGetDto> findAllCounterpartyContracts(@PathVariable Long contractId,
@@ -118,6 +122,7 @@ public class CounterpartyContractController {
         }
     }
 
+    @Operation(summary = "Обновить контракт с контрагентом")
     @PreAuthorize("hasAuthority('counterpartyContract:write')")
     @PutMapping("/{counterpartyContractId}")
     public CounterpartyContractGetDto updateCounterpartyContract(@PathVariable Long contractId,
@@ -144,6 +149,7 @@ public class CounterpartyContractController {
         }
     }
 
+    @Operation(summary = "Удалить контракт с контрагентом")
     @PreAuthorize("hasAuthority('counterpartyContract:write')")
     @DeleteMapping("/{counterpartyContractId}")
     public CounterpartyContractGetDto deleteCounterpartyContract(@PathVariable Long contractId,

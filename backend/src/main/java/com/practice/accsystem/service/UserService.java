@@ -1,5 +1,6 @@
 package com.practice.accsystem.service;
 
+import com.practice.accsystem.dto.user.AuthSettings;
 import com.practice.accsystem.entity.user.AppUserEntity;
 import com.practice.accsystem.entity.user.Role;
 import com.practice.accsystem.security.UserDetailsImpl;
@@ -55,5 +56,19 @@ public interface UserService {
      */
     AppUserEntity deleteUser(AppUserEntity user);
 
+    /**
+     * Сделать запись о входе пользователя в no-sql базе
+     *
+     * @param userDetails пользователь, который входит
+     */
     void createLoginHistoryRecord(UserDetailsImpl userDetails);
+
+    /**
+     * Обновить настройки авторизации (роль и дату действия) пользователя
+     *
+     * @param user         обновляемый пользователь
+     * @param authSettings настройки авторизации
+     * @return обновленный пользователь
+     */
+    AppUserEntity updateUserAuthSettings(AppUserEntity user, AuthSettings authSettings);
 }
