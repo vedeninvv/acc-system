@@ -66,7 +66,7 @@ public class CounterpartyContractServiceImplTest {
 
         verify(counterpartyContractRepository, times(1)).save(counterpartyContractCaptor.capture());
         CounterpartyContractEntity actualCounterpartyContractInArgumentToSave = counterpartyContractCaptor.getValue();
-        assertEqualsCounterpartyContractByAllFields(actualCounterpartyContractInArgumentToSave, expectedCounterpartyContract);
+        assertThat(actualCounterpartyContractInArgumentToSave).usingRecursiveComparison().isEqualTo(expectedCounterpartyContract);
         assertThat(actualCounterpartyContract).isEqualTo(expectedCounterpartyContract);
     }
 
@@ -181,7 +181,7 @@ public class CounterpartyContractServiceImplTest {
         verify(counterpartyContractRepository, times(1)).save(counterpartyContractCaptor.capture());
         CounterpartyContractEntity actualCounterpartyContractInArgToSave = counterpartyContractCaptor.getValue();
         assertThat(actualCounterpartyContract).isEqualTo(expectedCounterpartyContract);
-        assertEqualsCounterpartyContractByAllFields(actualCounterpartyContractInArgToSave, expectedCounterpartyContract);
+        assertThat(actualCounterpartyContractInArgToSave).usingRecursiveComparison().isEqualTo(expectedCounterpartyContract);
     }
 
     @Test
@@ -236,18 +236,5 @@ public class CounterpartyContractServiceImplTest {
         boolean actual = counterpartyContractService.hasAccessToCounterpartyContract(user, counterpartyContract);
 
         assertThat(actual).isFalse();
-    }
-
-    private void assertEqualsCounterpartyContractByAllFields(CounterpartyContractEntity actual, CounterpartyContractEntity expected) {
-        assertThat(actual.getId()).isEqualTo(expected.getId());
-        assertThat(actual.getTitle()).isEqualTo(expected.getTitle());
-        assertThat(actual.getContract()).isEqualTo(expected.getContract());
-        assertThat(actual.getCounterparty()).isEqualTo(expected.getCounterparty());
-        assertThat(actual.getContractType()).isEqualTo(expected.getContractType());
-        assertThat(actual.getPlanStartDate()).isEqualTo(expected.getPlanStartDate());
-        assertThat(actual.getPlanEndDate()).isEqualTo(expected.getPlanEndDate());
-        assertThat(actual.getFactStartDate()).isEqualTo(expected.getFactStartDate());
-        assertThat(actual.getFactEndDate()).isEqualTo(expected.getFactEndDate());
-        assertThat(actual.getSum()).isEqualTo(expected.getSum());
     }
 }

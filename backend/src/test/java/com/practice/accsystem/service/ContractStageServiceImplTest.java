@@ -105,7 +105,7 @@ public class ContractStageServiceImplTest {
 
         verify(contractStageRepository, times(1)).save(contractStageCaptor.capture());
         ContractStageEntity actualContractStageInArgumentToSave = contractStageCaptor.getValue();
-        assertEqualsContractStagesByAllFields(actualContractStageInArgumentToSave, expectedContractStage);
+        assertThat(actualContractStageInArgumentToSave).usingRecursiveComparison().isEqualTo(expectedContractStage);
         assertThat(actualContractStage).isEqualTo(expectedContractStage);
     }
 
@@ -222,9 +222,9 @@ public class ContractStageServiceImplTest {
         ContractStageEntity actualUpdatedContractStage = contractStageService.updateContractStage(contractStage, updatingContent);
 
         verify(contractStageRepository, times(1)).save(contractStageCaptor.capture());
-        ContractStageEntity actualArgumentToSaveContract = contractStageCaptor.getValue();
+        ContractStageEntity actualArgumentToSaveContractStage = contractStageCaptor.getValue();
         assertThat(actualUpdatedContractStage).isEqualTo(expectedContractStage);
-        assertEqualsContractStagesByAllFields(actualArgumentToSaveContract, expectedContractStage);
+        assertThat(actualArgumentToSaveContractStage).usingRecursiveComparison().isEqualTo(expectedContractStage);
     }
 
     @Test
@@ -253,19 +253,5 @@ public class ContractStageServiceImplTest {
 
         verify(contractStageRepository, times(1)).delete(contractStage);
         assertThat(deletedContractStage).isEqualTo(contractStage);
-    }
-
-    private void assertEqualsContractStagesByAllFields(ContractStageEntity actual, ContractStageEntity expected) {
-        assertThat(actual.getId()).isEqualTo(expected.getId());
-        assertThat(actual.getTitle()).isEqualTo(expected.getTitle());
-        assertThat(actual.getSum()).isEqualByComparingTo(expected.getSum());
-        assertThat(actual.getContract()).isEqualTo(expected.getContract());
-        assertThat(actual.getPlanStartDate()).isEqualTo(expected.getPlanStartDate());
-        assertThat(actual.getPlanEndDate()).isEqualTo(expected.getPlanEndDate());
-        assertThat(actual.getFactStartDate()).isEqualTo(expected.getFactStartDate());
-        assertThat(actual.getFactEndDate()).isEqualTo(expected.getFactEndDate());
-        assertThat(actual.getPlanTotalExpenses()).isEqualByComparingTo(expected.getPlanTotalExpenses());
-        assertThat(actual.getFactTotalExpenses()).isEqualByComparingTo(expected.getFactTotalExpenses());
-        assertThat(actual.getExpenses().size()).isEqualTo(expected.getExpenses().size());
     }
 }
