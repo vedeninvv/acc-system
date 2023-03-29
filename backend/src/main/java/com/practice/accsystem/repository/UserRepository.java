@@ -36,7 +36,7 @@ public interface UserRepository extends PagingAndSortingRepository<AppUserEntity
      * Если переданные критерии null, то фильтрация по ним не осуществляется
      *
      * @param role      роль пользователя
-     * @param searchStr строка, которая должна совпадать хотя бы с частью ФИО
+     * @param searchStr строка, которая должна совпадать хотя бы с частью ФИО или логином
      * @param pageable  настройки пагинации
      * @return пользователи
      */
@@ -46,7 +46,7 @@ public interface UserRepository extends PagingAndSortingRepository<AppUserEntity
             ":searchStr is null" +
             " or user.name like %:searchStr%" +
             " or user.surname like %:searchStr%" +
-            " or user.middleName like %:searchStr%)" +
-            " or user.username like %:searchStr%")
+            " or user.middleName like %:searchStr%" +
+            " or user.username like %:searchStr%)")
     Page<AppUserEntity> findAllByRoleAndSearchStr(Role role, String searchStr, Pageable pageable);
 }
