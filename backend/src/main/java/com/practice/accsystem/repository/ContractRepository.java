@@ -2,6 +2,7 @@ package com.practice.accsystem.repository;
 
 import com.practice.accsystem.entity.ContractEntity;
 import com.practice.accsystem.entity.ContractType;
+import com.practice.accsystem.entity.CounterpartyContractEntity;
 import com.practice.accsystem.entity.user.AppUserEntity;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -12,6 +13,7 @@ import org.springframework.stereotype.Repository;
 import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
+import java.util.Set;
 
 /**
  * Класс репозитория для контрактов
@@ -62,4 +64,12 @@ public interface ContractRepository extends PagingAndSortingRepository<ContractE
     List<ContractEntity> findAllByAssignedUserAndPlanStartDateAfterAndPlanEndDateBefore(AppUserEntity user,
                                                                                         Date periodStart,
                                                                                         Date periodEnd);
+
+    /**
+     * Найти все контракты, которые имеют связь хотя бы с одним контрактом с контрагентами
+     *
+     * @param counterpartyContracts контракты с контрагентами, для которых ищутся контракты
+     * @return контракты, у которых есть хоть один переданный контракт с контрагентом
+     */
+    Set<ContractEntity> findAllByCounterpartyContractsIn(Set<CounterpartyContractEntity> counterpartyContracts);
 }
