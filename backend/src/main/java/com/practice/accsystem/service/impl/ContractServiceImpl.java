@@ -2,6 +2,7 @@ package com.practice.accsystem.service.impl;
 
 import com.practice.accsystem.entity.ContractEntity;
 import com.practice.accsystem.entity.ContractType;
+import com.practice.accsystem.entity.CounterpartyContractEntity;
 import com.practice.accsystem.entity.ExcelRecord;
 import com.practice.accsystem.entity.user.AppUserEntity;
 import com.practice.accsystem.exception.NotFoundEntityException;
@@ -21,7 +22,8 @@ import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.Locale;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 @Service
 public class ContractServiceImpl implements ContractService {
@@ -105,9 +107,18 @@ public class ContractServiceImpl implements ContractService {
 
     @Override
     public ByteArrayResource createContractsReportByUserInPeriodByPlanDeadline(AppUserEntity user, Date periodStart, Date periodEnd) {
+        List<ContractEntity> contractsInPeriod = findAllContractsByUserInPeriodByPlanDeadline(user, periodStart, periodEnd);
+        List<CounterpartyContractEntity> counterpartyContractsInPeriod = counterpartyContractService
+                .findAllCounterpartyContractsByUserInPeriodByPlanDeadline(user, periodStart, periodEnd);
+        Set<ContractEntity> contractsNotInPeriodButForCounterpartyContracts = contractRepository.findAllByCounterpartyContractsIn(
+                counterpartyContractsInPeriod.stream()
+                        .filter(counterpartyContract -> !contractsInPeriod.contains(counterpartyContract.getContract()))
+                        .collect(Collectors.toSet())
+        );
         List<ExcelRecord> excelRecords = new ArrayList<>();
-        excelRecords.addAll(findAllContractsByUserInPeriodByPlanDeadline(user, periodStart, periodEnd));
-        excelRecords.addAll(counterpartyContractService.findAllCounterpartyContractsByUserInPeriodByPlanDeadline(user, periodStart, periodEnd));
+        excelRecords.addAll(contractsInPeriod);
+        excelRecords.addAll(counterpartyContractsInPeriod);
+        excelRecords.addAll(contractsNotInPeriodButForCounterpartyContracts);
 
         Resource template = resourceLoader.getResource(CONTRACTS_TEMPLATE_RESOURCE);
 
