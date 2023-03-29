@@ -4,6 +4,7 @@ import com.practice.accsystem.dto.counterparty.CounterpartyGetDto;
 import com.practice.accsystem.dto.counterparty.CounterpartyPostDto;
 import com.practice.accsystem.mapper.CounterpartyMapper;
 import com.practice.accsystem.service.CounterpartyService;
+import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import org.springdoc.api.annotations.ParameterObject;
 import org.springframework.data.domain.Page;
@@ -30,6 +31,7 @@ public class CounterpartyController {
         this.counterpartyService = counterpartyService;
     }
 
+    @Operation(summary = "Создать контрагента")
     @PreAuthorize("hasAuthority('counterparty:write:all')")
     @PostMapping
     public CounterpartyGetDto createCounterparty(@Valid @RequestBody CounterpartyPostDto counterpartyPostDto) {
@@ -38,6 +40,7 @@ public class CounterpartyController {
         );
     }
 
+    @Operation(summary = "Найти контрагента по ID")
     @PreAuthorize("hasAuthority('counterparty:read:all')")
     @GetMapping("/{counterpartyId}")
     public CounterpartyGetDto findCounterpartyById(@PathVariable Long counterpartyId) {
@@ -46,6 +49,7 @@ public class CounterpartyController {
         );
     }
 
+    @Operation(summary = "Найти всех контрагентов")
     @PreAuthorize("hasAuthority('counterparty:read:all')")
     @GetMapping
     public Page<CounterpartyGetDto> findAllCounterparties(@RequestParam(required = false) String title,
@@ -55,6 +59,7 @@ public class CounterpartyController {
         return counterpartyService.findAllCounterparties(title, address, INN, pageable).map(counterpartyMapper::toDto);
     }
 
+    @Operation(summary = "Обновить данные контрагента")
     @PreAuthorize("hasAuthority('counterparty:write:all')")
     @PutMapping("/{counterpartyId}")
     public CounterpartyGetDto updateCounterparty(@PathVariable Long counterpartyId,
@@ -67,6 +72,7 @@ public class CounterpartyController {
         );
     }
 
+    @Operation(summary = "Удалить контрагента")
     @PreAuthorize("hasAuthority('counterparty:write:all')")
     @DeleteMapping("/{counterpartyId}")
     public CounterpartyGetDto deleteCounterparty(@PathVariable Long counterpartyId) {

@@ -4,6 +4,7 @@ import com.practice.accsystem.entity.user.Role;
 import lombok.Data;
 
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.util.Date;
 
@@ -55,5 +56,6 @@ public class UserPostDto {
     /**
      * Роль пользователя
      */
+    @NotNull
     private Role role;
 }

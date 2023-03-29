@@ -51,9 +51,4 @@ public class UserGetDto {
      * Дата прекращения действия
      */
     private Date dateUserExpired;
-
-    public UserGetDto(Long id, String username) {
-        this.id = id;
-        this.username = username;
-    }
 }

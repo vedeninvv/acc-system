@@ -11,6 +11,7 @@ import com.practice.accsystem.security.UserDetailsImpl;
 import com.practice.accsystem.service.ContractService;
 import com.practice.accsystem.service.ContractStageService;
 import com.practice.accsystem.service.UserService;
+import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import org.springdoc.api.annotations.ParameterObject;
@@ -48,6 +49,7 @@ public class ContractStageController {
         this.contractStageMapper = contractStageMapper;
     }
 
+    @Operation(summary = "Создать этап контракта")
     @PreAuthorize("hasAuthority('contractStage:write')")
     @PostMapping
     public ContractStageGetDto createContractStage(@PathVariable Long contractId,
@@ -66,6 +68,7 @@ public class ContractStageController {
         }
     }
 
+    @Operation(summary = "Найти этап контракта по ID")
     @PreAuthorize("hasAuthority('contractStage:read')")
     @GetMapping("/{contractStageId}")
     public ContractStageGetDto findContractStageById(@PathVariable Long contractId,
@@ -85,6 +88,7 @@ public class ContractStageController {
         }
     }
 
+    @Operation(summary = "Найти все этапы контракта")
     @PreAuthorize("hasAuthority('contractStage:read')")
     @GetMapping
     public Page<ContractStageGetDto> findAllContractStage(@PathVariable Long contractId,
@@ -107,6 +111,7 @@ public class ContractStageController {
         }
     }
 
+    @Operation(summary = "Обновить этап контракта")
     @PreAuthorize("hasAuthority('contractStage:write')")
     @PutMapping("/{contractStageId}")
     public ContractStageGetDto updateContractStage(@PathVariable Long contractId,
@@ -129,6 +134,7 @@ public class ContractStageController {
         }
     }
 
+    @Operation(summary = "Удалить этап контракта")
     @PreAuthorize("hasAuthority('contractStage:write')")
     @DeleteMapping("/{contractStageId}")
     public ContractStageGetDto deleteContractStage(@PathVariable Long contractId,

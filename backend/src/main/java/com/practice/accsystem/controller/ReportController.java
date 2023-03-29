@@ -6,6 +6,7 @@ import com.practice.accsystem.exception.NotHasPermissionException;
 import com.practice.accsystem.security.UserDetailsImpl;
 import com.practice.accsystem.service.ContractService;
 import com.practice.accsystem.service.UserService;
+import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import org.springframework.core.io.ByteArrayResource;
@@ -33,6 +34,7 @@ public class ReportController {
         this.userService = userService;
     }
 
+    @Operation(summary = "Создать для пользователя отчет по контрактам, входящим в период по плановым срокам")
     @PreAuthorize("hasAuthority('report')")
     @GetMapping("/contracts")
     public ResponseEntity<ByteArrayResource> createContractsReportByUserInPeriodByPlanDeadline(@RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd") Date periodStart,
@@ -50,6 +52,7 @@ public class ReportController {
 
     }
 
+    @Operation(summary = "Создать отчет по этапам контракта")
     @PreAuthorize("hasAuthority('report')")
     @GetMapping("/contracts/{contractId}/stages")
     public ResponseEntity<ByteArrayResource> createContractStageReport(@PathVariable Long contractId,

@@ -10,6 +10,7 @@ import com.practice.accsystem.security.UserDetailsImpl;
 import com.practice.accsystem.security.jwt.JwtUtils;
 import com.practice.accsystem.security.jwt.RefreshTokenService;
 import com.practice.accsystem.service.UserService;
+import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -44,8 +45,9 @@ public class AuthController {
         this.userService = userService;
     }
 
+    @Operation(summary = "Аутентификация пользователя")
     @PostMapping("/signin")
-    public ResponseEntity<?> authenticateUser(@Valid @RequestBody AuthRequest authRequest) {
+    public AuthResponse authenticateUser(@Valid @RequestBody AuthRequest authRequest) {
         Authentication authentication = authenticationManager
                 .authenticate(new UsernamePasswordAuthenticationToken(authRequest.getUsername(), authRequest.getPassword()));
         SecurityContextHolder.getContext().setAuthentication(authentication);
@@ -56,23 +58,23 @@ public class AuthController {
 
         userService.createLoginHistoryRecord(userDetails);
 
-        return ResponseEntity.ok()
-                .body(new AuthResponse(accessToken, refreshToken));
+        return new AuthResponse(accessToken, refreshToken);
     }
 
+    @Operation(summary = "Выход")
     @SecurityRequirement(name = SECURITY_CONFIG_NAME)
     @PostMapping("/signout")
-    public ResponseEntity<?> logoutUser() {
+    public AuthMessageResponse logoutUser() {
         Object principle = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         if (!Objects.equals(principle.toString(), "anonymousUser")) {
             Long userId = ((UserDetailsImpl) principle).getId();
             refreshTokenService.deleteByUserId(userId);
         }
 
-        return ResponseEntity.ok()
-                .body(new AuthMessageResponse("You've been signed out!"));
+        return new AuthMessageResponse("You've been signed out!");
     }
 
+    @Operation(summary = "Получить новый access-токен по refresh-токену")
     @PostMapping("/refreshtoken")
     public ResponseEntity<?> refreshToken(@RequestBody AuthRefreshRequest request) {
         String refreshToken = request.getRefreshToken();

@@ -1,5 +1,6 @@
 package com.practice.accsystem.security.jwt;
 
+import com.practice.accsystem.entity.user.AppUserEntity;
 import com.practice.accsystem.entity.user.RefreshToken;
 import com.practice.accsystem.exception.NotFoundEntityException;
 import com.practice.accsystem.exception.TokenRefreshException;
@@ -11,7 +12,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.time.Instant;
 import java.util.Optional;
-import java.util.UUID;
 
 @Service
 public class RefreshTokenService {
@@ -20,10 +20,12 @@ public class RefreshTokenService {
 
     private final RefreshTokenRepository refreshTokenRepository;
     private final UserRepository userRepository;
+    private final JwtUtils jwtUtils;
 
-    public RefreshTokenService(RefreshTokenRepository refreshTokenRepository, UserRepository userRepository) {
+    public RefreshTokenService(RefreshTokenRepository refreshTokenRepository, UserRepository userRepository, JwtUtils jwtUtils) {
         this.refreshTokenRepository = refreshTokenRepository;
         this.userRepository = userRepository;
+        this.jwtUtils = jwtUtils;
     }
 
     public Optional<RefreshToken> findByToken(String token) {
@@ -33,15 +35,14 @@ public class RefreshTokenService {
     public RefreshToken createRefreshToken(Long userId) {
         RefreshToken refreshToken = new RefreshToken();
 
-        refreshToken.setUser(userRepository.findById(userId)
+        AppUserEntity user = userRepository.findById(userId)
                 .orElseThrow(() -> new NotFoundEntityException(
-                        String.format("User not found when try to create refreshToken for user by id %d", userId)))
-        );
+                        String.format("User not found when try to create refreshToken for user by id %d", userId)));
+        refreshToken.setUser(user);
         refreshToken.setExpiryDate(Instant.now().plusMillis(refreshTokenDurationMs));
-        refreshToken.setToken(UUID.randomUUID().toString());
+        refreshToken.setToken(jwtUtils.generateTokenFromUsername(user.getUsername(), refreshTokenDurationMs));
 
-        refreshToken = refreshTokenRepository.save(refreshToken);
-        return refreshToken;
+        return refreshTokenRepository.save(refreshToken);
     }
 
     public RefreshToken verifyExpiration(RefreshToken token) {
