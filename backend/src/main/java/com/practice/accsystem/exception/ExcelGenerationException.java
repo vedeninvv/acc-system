@@ -8,4 +8,7 @@ public class ExcelGenerationException extends RuntimeException {
     public ExcelGenerationException(String message, Throwable cause) {
         super(message, cause);
     }
+    public ExcelGenerationException(String message) {
+        super(message);
+    }
 }

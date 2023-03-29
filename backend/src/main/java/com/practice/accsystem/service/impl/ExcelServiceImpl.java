@@ -4,7 +4,6 @@ import com.practice.accsystem.entity.ExcelRecord;
 import com.practice.accsystem.excel.ExcelExporter;
 import com.practice.accsystem.exception.ExcelGenerationException;
 import com.practice.accsystem.service.ExcelService;
-import org.apache.commons.lang3.NotImplementedException;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
@@ -12,7 +11,10 @@ import org.apache.poi.ss.usermodel.Workbook;
 import org.springframework.core.io.Resource;
 import org.springframework.stereotype.Service;
 
-import java.io.*;
+import java.io.ByteArrayOutputStream;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -32,6 +34,9 @@ public class ExcelServiceImpl implements ExcelService {
 
     public Row writeEntityInLine(Row row, ExcelRecord entity, Sheet sheet) throws IOException {
         if (excelExporterMap.containsKey(entity.getClass())) {
+            if (excelExporterMap.get(entity.getClass()) == null) {
+                throw new ExcelGenerationException(String.format("No exporter for type '%s'", entity.getClass().getName()));
+            }
             return excelExporterMap.get(entity.getClass()).writeEntity(row, DEFAULT_COLUMN_CONTENT_START_INDEX, entity, sheet);
         } else {
             throw new IOException(String.format("Can not write entity '%s'", entity.getClass().getName()));
