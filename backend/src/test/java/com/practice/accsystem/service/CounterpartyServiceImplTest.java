@@ -128,7 +128,7 @@ public class CounterpartyServiceImplTest {
         verify(counterpartyRepository, times(1)).save(counterpartyCaptor.capture());
         CounterpartyEntity actualCounterpartyInArgsToSave = counterpartyCaptor.getValue();
         assertThat(actualCounterparty).isEqualTo(expectedCounterparty);
-        assertEqualsCounterpartiesByAllFields(actualCounterpartyInArgsToSave, expectedCounterparty);
+        assertThat(actualCounterpartyInArgsToSave).usingRecursiveComparison().isEqualTo(expectedCounterparty);
     }
 
     @Test
@@ -160,13 +160,5 @@ public class CounterpartyServiceImplTest {
         CounterpartyEntity deletedCounterparty = counterpartyService.deleteCounterparty(counterparty);
 
         assertThat(deletedCounterparty).isEqualTo(counterparty);
-    }
-
-    private void assertEqualsCounterpartiesByAllFields(CounterpartyEntity actual, CounterpartyEntity expected) {
-        assertThat(actual.getId()).isEqualTo(expected.getId());
-        assertThat(actual.getTitle()).isEqualTo(expected.getTitle());
-        assertThat(actual.getINN()).isEqualTo(expected.getINN());
-        assertThat(actual.getAddress()).isEqualTo(expected.getAddress());
-        assertThat(actual.getCounterpartyContracts().size()).isEqualTo(expected.getCounterpartyContracts().size());
     }
 }

@@ -63,7 +63,7 @@ public class UserServiceImplTest {
         verify(userRepository, times(1)).save(userCaptor.capture());
         AppUserEntity actualUserInArgsToSave = userCaptor.getValue();
         assertThat(actualUser).isEqualTo(expectedUser);
-        assertEqualsUsersByAllFields(actualUserInArgsToSave, expectedUser);
+        assertThat(actualUserInArgsToSave).usingRecursiveComparison().isEqualTo(expectedUser);
     }
 
     @Test
@@ -162,7 +162,7 @@ public class UserServiceImplTest {
         verify(userRepository, times(1)).save(userCaptor.capture());
         AppUserEntity actualUserInArgsToSave = userCaptor.getValue();
         assertThat(actualUser).isEqualTo(expectedUser);
-        assertEqualsUsersByAllFields(actualUserInArgsToSave, expectedUser);
+        assertThat(actualUserInArgsToSave).usingRecursiveComparison().isEqualTo(expectedUser);
     }
 
     @Test
@@ -195,17 +195,5 @@ public class UserServiceImplTest {
         verify(refreshTokenService, times(1)).deleteByUserId(1L);
         verify(userRepository, times(1)).delete(user);
         assertThat(actualUser).isEqualTo(user);
-    }
-
-    private void assertEqualsUsersByAllFields(AppUserEntity actual, AppUserEntity expected) {
-        assertThat(actual.getId()).isEqualTo(expected.getId());
-        assertThat(actual.getUsername()).isEqualTo(expected.getUsername());
-        assertThat(actual.getPassword()).isEqualTo(expected.getPassword());
-        assertThat(actual.getRole()).isEqualTo(expected.getRole());
-        assertThat(actual.getName()).isEqualTo(expected.getName());
-        assertThat(actual.getSurname()).isEqualTo(expected.getSurname());
-        assertThat(actual.getMiddleName()).isEqualTo(expected.getMiddleName());
-        assertThat(actual.getDateUserExpired()).isEqualTo(expected.getDateUserExpired());
-        assertThat(actual.getManagingContracts().size()).isEqualTo(expected.getManagingContracts().size());
     }
 }
