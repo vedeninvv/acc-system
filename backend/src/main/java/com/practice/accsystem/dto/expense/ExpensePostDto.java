@@ -22,7 +22,7 @@ public class ExpensePostDto {
      */
     @NotNull
     @DecimalMin(value = "0.0")
-    @Digits(integer = 12, fraction = 2)
+    @Digits(integer = 19, fraction = 2)
     private BigDecimal planAmount;
 
     /**
@@ -30,6 +30,6 @@ public class ExpensePostDto {
      */
     @NotNull
     @DecimalMin(value = "0.0")
-    @Digits(integer = 12, fraction = 2)
+    @Digits(integer = 19, fraction = 2)
     private BigDecimal factAmount;
 }
