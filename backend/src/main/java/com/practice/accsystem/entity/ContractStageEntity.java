@@ -58,20 +58,24 @@ public class ContractStageEntity implements ExcelRecord {
     /**
      * Плановый срок начала
      */
+    @Temporal(TemporalType.DATE)
     private Date planStartDate;
 
     /**
      * Плановый срок конца
      */
+    @Temporal(TemporalType.DATE)
     private Date planEndDate;
 
     /**
      * Фактический срок начала
      */
+    @Temporal(TemporalType.DATE)
     private Date factStartDate;
 
     /**
      * Фактический срок конца
      */
+    @Temporal(TemporalType.DATE)
     private Date factEndDate;
 }
