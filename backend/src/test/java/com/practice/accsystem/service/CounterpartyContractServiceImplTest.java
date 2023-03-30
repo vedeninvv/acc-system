@@ -1,6 +1,9 @@
 package com.practice.accsystem.service;
 
-import com.practice.accsystem.entity.*;
+import com.practice.accsystem.entity.ContractEntity;
+import com.practice.accsystem.entity.ContractType;
+import com.practice.accsystem.entity.CounterpartyContractEntity;
+import com.practice.accsystem.entity.CounterpartyEntity;
 import com.practice.accsystem.entity.user.AppUserEntity;
 import com.practice.accsystem.exception.NotFoundEntityException;
 import com.practice.accsystem.repository.CounterpartyContractRepository;
