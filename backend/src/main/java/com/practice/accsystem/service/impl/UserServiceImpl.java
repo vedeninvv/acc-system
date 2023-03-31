@@ -5,6 +5,7 @@ import com.practice.accsystem.entity.LoginHistory;
 import com.practice.accsystem.entity.user.AppUserEntity;
 import com.practice.accsystem.entity.user.Role;
 import com.practice.accsystem.exception.DuplicateUniqueValueException;
+import com.practice.accsystem.exception.NotAllowedException;
 import com.practice.accsystem.exception.NotFoundEntityException;
 import com.practice.accsystem.exception.RelatedEntitiesCanNotBeDeleted;
 import com.practice.accsystem.repository.UserRepository;
@@ -38,6 +39,10 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public AppUserEntity createUser(AppUserEntity user) {
+        if (user.getUsername().equals(System.getenv("SUPERUSER_USERNAME"))) {
+            throw new NotAllowedException(
+                    String.format("Not allowed to create user with this username. Username '%s' is reserved for superuser", user.getUsername()));
+        }
         if (userRepository.existsByUsername(user.getUsername())) {
             throw new DuplicateUniqueValueException(String.format("Username '%s' is already taken", user.getUsername()));
         }
@@ -64,7 +69,9 @@ public class UserServiceImpl implements UserService {
             throw new DuplicateUniqueValueException(
                     String.format("Username '%s' already exist when try to update user by id '%d''", newUser.getUsername(), oldUser.getId()));
         }
-
+        if (newUser.getUsername().equals(System.getenv("SUPERUSER_USERNAME"))) {
+            throw new NotAllowedException("Not allowed to change username for superuser");
+        }
         oldUser.setUsername(newUser.getUsername());
         oldUser.setPassword(encoder.encode(newUser.getPassword()));
         oldUser.setName(newUser.getName());
@@ -76,6 +83,10 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public AppUserEntity deleteUser(AppUserEntity user) {
+        if (user.getUsername().equals(System.getenv("SUPERUSER_USERNAME"))) {
+            throw new NotAllowedException(
+                    String.format("Not allowed to delete user with this username. Username '%s' is reserved for superuser", user.getUsername()));
+        }
         if (!user.getManagingContracts().isEmpty()) {
             throw new RelatedEntitiesCanNotBeDeleted("User", "Contract");
         }
@@ -97,6 +108,10 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public AppUserEntity updateUserAuthSettings(AppUserEntity user, AuthSettings authSettings) {
+        if (user.getUsername().equals(System.getenv("SUPERUSER_USERNAME"))) {
+            throw new NotAllowedException(
+                    String.format("Not allowed to update user with this username. Username '%s' is reserved for superuser", user.getUsername()));
+        }
         if (authSettings.getRole() != null) {
             user.setRole(authSettings.getRole());
         }
