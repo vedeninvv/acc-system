@@ -35,7 +35,10 @@ public class ContractServiceImpl implements ContractService {
     private final ContractRepository contractRepository;
     private final ResourceLoader resourceLoader;
 
-    public ContractServiceImpl(ExcelService excelService, @Lazy CounterpartyContractService counterpartyContractService, ContractRepository contractRepository, ResourceLoader resourceLoader) {
+    public ContractServiceImpl(ExcelService excelService,
+                               @Lazy CounterpartyContractService counterpartyContractService,
+                               ContractRepository contractRepository,
+                               ResourceLoader resourceLoader) {
         this.excelService = excelService;
         this.counterpartyContractService = counterpartyContractService;
         this.contractRepository = contractRepository;
