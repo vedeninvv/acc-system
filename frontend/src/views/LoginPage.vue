@@ -30,7 +30,7 @@
 </template>
 
 <script>
-import {signin} from "@/shared/request";
+import {apiSignin} from "@/shared/services/userService";
 
 export default {
   name: "LoginPage",
@@ -47,7 +47,7 @@ export default {
   methods: {
     submit() {
       if (this.valid) {
-        signin(this.loginForm).then(() => {
+        apiSignin(this.loginForm).then(() => {
           this.$router.push('/')
         })
       }
@@ -57,8 +57,5 @@ export default {
 </script>
 
 <style scoped>
-.disable-el {
-  pointer-events: none;
-  opacity: 0.5;
-}
+
 </style>
