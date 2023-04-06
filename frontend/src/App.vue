@@ -25,3 +25,10 @@ export default {
   }
 }
 </script>
+
+<style>
+.disable-el {
+  pointer-events: none;
+  opacity: 0.5;
+}
+</style>

@@ -24,6 +24,13 @@
         scrollable
         range
     >
+      <v-btn
+          text
+          color="primary"
+          @click="dates = []"
+      >
+        Clear
+      </v-btn>
       <v-spacer></v-spacer>
       <v-btn
           text
@@ -57,7 +64,10 @@ export default {
     datesRange() {
       if (this.dates.length === 2) {
         return this.dates[0] + " - " + this.dates[1]
-      } else
+      } else if (this.dates.length === 1) {
+        return this.dates[0] + " - "
+      }
+      else
         return null
     }
   },
