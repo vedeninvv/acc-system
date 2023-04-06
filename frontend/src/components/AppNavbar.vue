@@ -11,20 +11,27 @@
       <v-btn color="blue" depressed class="ml-3" to="/administration">Администрирование</v-btn>
 
       <v-spacer></v-spacer>
-      <v-btn outlined>Выход</v-btn>
+      <v-btn outlined
+             @click="signout">Выход
+      </v-btn>
+
     </v-app-bar>
   </nav>
 </template>
 
 <script>
-import {getCurrentUser} from "@/shared/request";
+
+import {apiSignout} from "@/shared/services/userService";
 
 export default {
-  async created() {
-    console.log(await getCurrentUser())
-  },
-
-  name: "NavbarMain"
+  name: "NavbarMain",
+  methods: {
+    signout() {
+      apiSignout().then(() => {
+        this.$router.push("/signin")
+      })
+    }
+  }
 }
 </script>
 
