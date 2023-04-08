@@ -1,55 +1,56 @@
 <template>
   <div>
-    <v-form v-model="valid"
-            @submit.prevent="findContracts"
+    <v-form v-model="isValidContractSearchForm"
+            @submit.prevent="getContracts"
     >
       <v-container>
 
-        <v-row>
+        <v-row justify="center">
           <v-col cols="6">
             <v-text-field
-                v-model="formContracts.title"
+                v-model="searchFormContracts.title"
                 label="Название договора"
             ></v-text-field>
           </v-col>
         </v-row>
 
-        <v-row>
+        <v-row justify="center">
           <v-col cols="3">
             <app-ruble-input
-                v-model="formContracts.minSum"
+                v-model="searchFormContracts.minSum"
                 label="Минимальная сумма"
             ></app-ruble-input>
           </v-col>
 
           <v-col cols="3">
             <app-ruble-input
-                v-model="formContracts.maxSum"
+                v-model="searchFormContracts.maxSum"
                 label="Максимальная сумма"
             ></app-ruble-input>
           </v-col>
         </v-row>
 
-        <v-row>
+        <v-row justify="center">
           <v-col cols="3">
             <app-range-date-picker
-                v-model="formContracts.dates"
+                v-model="searchFormContracts.dates"
                 label="Период"
             ></app-range-date-picker>
           </v-col>
 
           <v-col cols="3">
             <app-contract-type-select
-                v-model="formContracts.contractType"
+                v-model="searchFormContracts.contractType"
                 label="Тип контракта"
             ></app-contract-type-select>
           </v-col>
         </v-row>
 
         <v-row>
+          <v-spacer></v-spacer>
           <v-col cols="3">
             <v-btn
-                :class="{'disable-el': !valid}"
+                :class="{'disable-el': !isValidContractSearchForm}"
                 color="blue" dark
                 type="submit">Поиск
             </v-btn>
@@ -60,36 +61,17 @@
     </v-form>
 
     <v-container>
-      <v-row>
-        <v-spacer></v-spacer>
-        <v-btn
-            color="blue" dark
-            @click="$router.push('contracts/new')"
-        >Создать
-        </v-btn>
-      </v-row>
       <v-row justify="center">
-        <app-elements-table :headers="headersForContractsHeaders"
-                            :items="contractsForTable"
-                            @put="changeContract"
-                            @delete="deleteContract">
-        </app-elements-table>
+        <app-elements-paging-table label="Договоры"
+                                   :headers="headersForContractsHeaders"
+                                   :items="contractsForTable"
+                                   :total-pages="totalPages"
+                                   @post="$router.push('contracts/new')"
+                                   @put="updateContract"
+                                   @delete="deleteContract"
+                                   @pageSelected="changePage">
+        </app-elements-paging-table>
       </v-row>
-    </v-container>
-
-    <v-container>
-      <div class="text-center"
-           v-if="totalPages >= 1">
-        <v-pagination
-            v-model="page"
-            :length="totalPages"
-            @input="findContracts"
-        ></v-pagination>
-      </div>
-      <div class="text-center"
-           v-else>
-        Нет данных
-      </div>
     </v-container>
   </div>
 </template>
@@ -98,25 +80,31 @@
 import AppRangeDatePicker from "@/components/AppRangeDatePicker";
 import AppContractTypeSelect from "@/components/AppContractTypeSelect";
 import AppRubleInput from "@/components/AppRubleInput";
-import AppElementsTable from "@/components/AppElementsTable"
+import AppElementsPagingTable from "@/components/AppElementsPagingTable"
 import {apiDeleteContract, apiGetManagingContracts} from "@/shared/services/contractService";
 
 export default {
   name: "ContractsPage",
-  components: {AppElementsTable, AppRubleInput, AppContractTypeSelect, AppRangeDatePicker},
+  components: {AppElementsPagingTable, AppRubleInput, AppContractTypeSelect, AppRangeDatePicker},
+
+  created() {
+    this.getContracts()
+  },
 
   data: () => ({
-    valid: false,
-    formContracts: {
+    isValidContractSearchForm: true,
+    searchFormContracts: {
       title: null,
       minSum: null,
       maxSum: null,
       dates: null,
       contractType: null,
     },
+
     page: 1,
     pageSize: 10,
     totalPages: null,
+
     contracts: null,
     headersForContractsHeaders: [
       "ID",
@@ -152,19 +140,22 @@ export default {
   },
 
   methods: {
-    async findContracts() {
+    async getContracts() {
+      if (!this.isValidContractSearchForm) {
+        return
+      }
       let startPeriod = null
       let endPeriod = null
-      if (this.formContracts.dates != null) {
-        startPeriod = this.formContracts.dates[0] || null
-        endPeriod = this.formContracts.dates[1] || null
+      if (this.searchFormContracts.dates != null) {
+        startPeriod = this.searchFormContracts.dates[0] || null
+        endPeriod = this.searchFormContracts.dates[1] || null
       }
 
       let contractsPages = await apiGetManagingContracts({
-        title: this.formContracts.title,
-        contractType: this.formContracts.contractType,
-        minSum: this.formContracts.minSum,
-        maxSum: this.formContracts.maxSum,
+        title: this.searchFormContracts.title,
+        contractType: this.searchFormContracts.contractType,
+        minSum: this.searchFormContracts.minSum,
+        maxSum: this.searchFormContracts.maxSum,
         startPeriod: startPeriod,
         endPeriod: endPeriod,
         page: this.page - 1,
@@ -174,11 +165,18 @@ export default {
       this.contracts = contractsPages.content
       this.totalPages = contractsPages.totalPages
     },
-    changeContract(id) {
+
+    updateContract(id) {
       this.$router.push(`/contracts/${id}`)
     },
+
     deleteContract(id) {
-      apiDeleteContract(id).then(this.findContracts)
+      apiDeleteContract(id).then(this.getContracts)
+    },
+
+    changePage(page) {
+      this.page = page
+      this.getContracts()
     }
   }
 }
