@@ -6,7 +6,7 @@ import ReportsPage from "@/views/ReportsPage";
 import AdministrationPage from "@/views/AdministrationPage";
 import LoginPage from "@/views/LoginPage";
 import {isAuthenticated} from "@/shared/services/userService";
-import ContractUpdatePage from "@/views/ContractUpdatePage";
+import ContractCardPage from "@/views/ContractCardPage";
 import NotFoundPage from "@/views/NotFoundPage";
 
 Vue.use(VueRouter)
@@ -26,11 +26,11 @@ const routes = [
     },
     {
         path: '/contracts/:id(\\d+)',
-        component: ContractUpdatePage
+        component: ContractCardPage
     },
     {
         path: '/contracts/new',
-        component: ContractUpdatePage
+        component: ContractCardPage
     },
     {
         path: '/counterparties',
