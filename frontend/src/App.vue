@@ -1,6 +1,6 @@
 <template>
   <v-app>
-    <app-navbar></app-navbar>
+    <the-navbar/>
 
     <v-main>
       <v-container fluid>
@@ -8,20 +8,20 @@
       </v-container>
     </v-main>
 
-    <v-spacer></v-spacer>
-    <app-footer></app-footer>
+    <v-spacer/>
+    <the-footer/>
   </v-app>
 </template>
 
 <script>
-import AppNavbar from "@/components/AppNavbar";
-import AppFooter from "@/components/AppFooter";
+import TheNavbar from "@/components/TheNavbar";
+import TheFooter from "@/components/TheFooter";
 
 export default {
   name: 'App',
   components: {
-    AppNavbar,
-    AppFooter
+    TheNavbar,
+    TheFooter
   }
 }
 </script>

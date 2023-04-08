@@ -24,7 +24,7 @@
 import {apiSignout} from "@/shared/services/userService";
 
 export default {
-  name: "NavbarMain",
+  name: "TheNavbar",
   methods: {
     signout() {
       apiSignout().then(() => {
