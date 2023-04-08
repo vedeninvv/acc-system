@@ -6,7 +6,8 @@ import ReportsPage from "@/views/ReportsPage";
 import AdministrationPage from "@/views/AdministrationPage";
 import LoginPage from "@/views/LoginPage";
 import {isAuthenticated} from "@/shared/services/userService";
-import ContractFormPage from "@/views/ContractFormPage";
+import ContractUpdatePage from "@/views/ContractUpdatePage";
+import NotFoundPage from "@/views/NotFoundPage";
 
 Vue.use(VueRouter)
 
@@ -24,12 +25,12 @@ const routes = [
         component: ContractsPage,
     },
     {
-        path: '/contracts/:id',
-        component: ContractFormPage
+        path: '/contracts/:id(\\d+)',
+        component: ContractUpdatePage
     },
     {
-        path: 'new',
-        component: ContractFormPage
+        path: '/contracts/new',
+        component: ContractUpdatePage
     },
     {
         path: '/counterparties',
@@ -42,7 +43,15 @@ const routes = [
     {
         path: '/administration',
         component: AdministrationPage
-    }
+    },
+    {
+        path: '/404',
+        component: NotFoundPage
+    },
+    {
+        path: '*',
+        redirect: '/404'
+    },
 ]
 
 const router = new VueRouter({
