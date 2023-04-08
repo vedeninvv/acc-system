@@ -16,17 +16,44 @@
 export default {
   name: "AppContractTypeSelect",
   props: {
+    value: String,
     label: String,
+    nullable: {
+      type: Boolean,
+      default: true,
+    }
   },
+
+  created() {
+    if (this.value === this.items[0].value || this.value === this.items[1].value
+        || this.value === this.items[2].value) {
+      this.select = {text: "Любой", value: this.value}
+    }
+  },
+
   data: () => ({
-    select: {text: 'Любой', value: 'ALL'},
-    items: [
-      {text: 'Любой', value: 'ALL'},
-      {text: 'Закупка', value: 'PURCHASE'},
-      {text: 'Поставка', value: 'SUPPLY'},
-      {text: 'Работы', value: 'WORKS'}
-    ],
+    select: {text: "Любой", value: null},
   }),
+
+  computed: {
+    items() {
+      if (this.nullable) {
+        return [
+          {text: 'Любой', value: null},
+          {text: 'Закупка', value: 'PURCHASE'},
+          {text: 'Поставка', value: 'SUPPLY'},
+          {text: 'Работы', value: 'WORKS'}
+        ]
+      } else {
+        return [
+          {text: 'Закупка', value: 'PURCHASE'},
+          {text: 'Поставка', value: 'SUPPLY'},
+          {text: 'Работы', value: 'WORKS'}
+        ]
+      }
+    }
+  },
+
   methods: {
     selected(e) {
       if (e.value === "ALL") {
@@ -34,7 +61,7 @@ export default {
       } else {
         this.$emit('input', e.value)
       }
-    }
+    },
   }
 }
 </script>

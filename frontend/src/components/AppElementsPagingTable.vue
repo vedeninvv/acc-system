@@ -1,6 +1,6 @@
 <template>
   <v-container>
-    <v-row ju>
+    <v-row>
       <v-col>
         <h3>{{ label }}</h3>
       </v-col>
@@ -63,7 +63,7 @@
 
       <v-container v-if="totalPages != null" class="pb-16">
         <div class="text-center"
-             v-if="totalPages >= 1">
+             v-if="items != null && items.length >= 1">
           <v-pagination
               v-model="page"
               :length="totalPages"
@@ -82,14 +82,21 @@
 <script>
 export default {
   name: "AppElementsPagingTable",
+  created() {
+    this.page = this.initPage
+  },
   props: {
     headers: Array,
     items: Array,
     totalPages: Number,
+    initPage: {
+      type: Number,
+      default: 1
+    },
     label: String
   },
   data: () => ({
-    page: 1
+    page: null
   })
 }
 
