@@ -43,17 +43,30 @@ public interface ContractStageService {
     /**
      * Поиск всех этапов переданного контракта, которые удовлетворяют переданным фильтрам
      *
-     * @param contract    контракт, чьи этапы ищутся
-     * @param title       название или его часть
-     * @param minSum      минимальная сумма этапа
-     * @param maxSum      максимальная сумма этапа
-     * @param startPeriod начальная дата для планируемой или фактической даты
-     * @param endPeriod   конечная дата для планируемой или фактической даты
-     * @param pageable    настройки пагинации
+     * @param contract             контракт, чьи этапы ищутся
+     * @param title                название или его часть
+     * @param minSum               минимальная сумма этапа
+     * @param maxSum               максимальная сумма этапа
+     * @param minPlanTotalExpenses минимальная сумма плановых расходов
+     * @param maxPlanTotalExpenses максимальная сумма плановых расходов
+     * @param minFactTotalExpenses минимальная сумма фактических расходов
+     * @param maxFactTotalExpenses максимальная сумма фактических расходов
+     * @param startPeriod          начальная дата для планируемой или фактической даты
+     * @param endPeriod            конечная дата для планируемой или фактической даты
+     * @param pageable             настройки пагинации
      * @return этапы контракта
      */
-    Page<ContractStageEntity> findAllContractStageByContract(ContractEntity contract, String title, BigDecimal minSum,
-                                                             BigDecimal maxSum, Date startPeriod, Date endPeriod, Pageable pageable);
+    Page<ContractStageEntity> findAllContractStageByContract(ContractEntity contract,
+                                                             String title,
+                                                             BigDecimal minSum,
+                                                             BigDecimal maxSum,
+                                                             BigDecimal minPlanTotalExpenses,
+                                                             BigDecimal maxPlanTotalExpenses,
+                                                             BigDecimal minFactTotalExpenses,
+                                                             BigDecimal maxFactTotalExpenses,
+                                                             Date startPeriod,
+                                                             Date endPeriod,
+                                                             Pageable pageable);
 
     /**
      * Обновить этап контракта

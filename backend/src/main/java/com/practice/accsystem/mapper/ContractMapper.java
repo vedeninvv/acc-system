@@ -34,10 +34,6 @@ public class ContractMapper {
                 .planEndDate(contract.getPlanEndDate())
                 .factStartDate(contract.getFactStartDate())
                 .factEndDate(contract.getFactEndDate())
-                .contractStagesMap(contract.getContractStages().stream()
-                        .collect(Collectors.toMap(ContractStageEntity::getId, ContractStageEntity::getTitle)))
-                .counterpartyContractsMap(contract.getCounterpartyContracts().stream()
-                        .collect(Collectors.toMap(CounterpartyContractEntity::getId, CounterpartyContractEntity::getTitle)))
                 .build();
     }
 }

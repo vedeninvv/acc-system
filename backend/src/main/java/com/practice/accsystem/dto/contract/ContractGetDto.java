@@ -22,16 +22,6 @@ public class ContractGetDto {
     private Long assignedUserId;
 
     /**
-     * Этапы договора
-     */
-    private Map<Long, String> contractStagesMap;
-
-    /**
-     * Договоры с контрагентами
-     */
-    private Map<Long, String> counterpartyContractsMap;
-
-    /**
      * Название договора
      */
     private String title;

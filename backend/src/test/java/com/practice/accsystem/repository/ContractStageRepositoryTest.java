@@ -93,7 +93,8 @@ public class ContractStageRepositoryTest {
         List<ContractStageEntity> expectedContractStages = Collections.emptyList();
 
         Page<ContractStageEntity> actualContractStages = contractStageRepository.findAllByContract(null, null,
-                null, null, null, null, PageRequest.of(0, 10));
+                null, null, null, null, null, null,
+                null, null, PageRequest.of(0, 10));
 
         assertThat(actualContractStages).usingRecursiveFieldByFieldElementComparator().isEqualTo(expectedContractStages);
     }
@@ -103,7 +104,8 @@ public class ContractStageRepositoryTest {
         List<ContractStageEntity> expectedContractStages = Arrays.asList(contractStage1, contractStage2);
 
         Page<ContractStageEntity> actualContractStages = contractStageRepository.findAllByContract(contract1, null,
-                null, null, null, null, PageRequest.of(0, 10));
+                null, null, null, null, null, null,
+                null, null, PageRequest.of(0, 10));
 
         assertThat(actualContractStages).usingRecursiveFieldByFieldElementComparator().isEqualTo(expectedContractStages);
     }
@@ -114,7 +116,7 @@ public class ContractStageRepositoryTest {
 
         Page<ContractStageEntity> actualContractStages = contractStageRepository.findAllByContract(
                 contract1, "Тестовый этап1 контракта1", null, null, null, null,
-                PageRequest.of(0, 10));
+                null, null, null, null, PageRequest.of(0, 10));
 
         assertThat(actualContractStages).usingRecursiveFieldByFieldElementComparator().isEqualTo(expectedContractStages);
     }
@@ -125,7 +127,7 @@ public class ContractStageRepositoryTest {
 
         Page<ContractStageEntity> actualContractStages = contractStageRepository.findAllByContract(
                 contract1, "контракта1", null, null, null, null,
-                PageRequest.of(0, 10));
+                null, null, null, null, PageRequest.of(0, 10));
 
         assertThat(actualContractStages).usingRecursiveFieldByFieldElementComparator().isEqualTo(expectedContractStages);
     }
@@ -136,7 +138,7 @@ public class ContractStageRepositoryTest {
 
         Page<ContractStageEntity> actualContractStages = contractStageRepository.findAllByContract(
                 contract1, null, BigDecimal.valueOf(100.11), null, null, null,
-                PageRequest.of(0, 10));
+                null, null, null, null, PageRequest.of(0, 10));
 
         assertThat(actualContractStages).usingRecursiveFieldByFieldElementComparator().isEqualTo(expectedContractStages);
     }
@@ -147,7 +149,7 @@ public class ContractStageRepositoryTest {
 
         Page<ContractStageEntity> actualContractStages = contractStageRepository.findAllByContract(
                 contract1, null, BigDecimal.valueOf(100.10), null, null, null,
-                PageRequest.of(0, 10));
+                null, null, null, null, PageRequest.of(0, 10));
 
         assertThat(actualContractStages).usingRecursiveFieldByFieldElementComparator().isEqualTo(expectedContractStages);
     }
@@ -158,7 +160,7 @@ public class ContractStageRepositoryTest {
 
         Page<ContractStageEntity> actualContractStages = contractStageRepository.findAllByContract(
                 contract1, null, null, BigDecimal.valueOf(300.11), null, null,
-                PageRequest.of(0, 10));
+                null, null, null, null, PageRequest.of(0, 10));
 
         assertThat(actualContractStages).usingRecursiveFieldByFieldElementComparator().isEqualTo(expectedContractStages);
     }
@@ -169,7 +171,7 @@ public class ContractStageRepositoryTest {
 
         Page<ContractStageEntity> actualContractStages = contractStageRepository.findAllByContract(
                 contract1, null, null, BigDecimal.valueOf(100.10), null, null,
-                PageRequest.of(0, 10));
+                null, null, null, null, PageRequest.of(0, 10));
 
         assertThat(actualContractStages).usingRecursiveFieldByFieldElementComparator().isEqualTo(expectedContractStages);
     }
@@ -179,8 +181,8 @@ public class ContractStageRepositoryTest {
         List<ContractStageEntity> expectedContractStages = Arrays.asList(contractStage1, contractStage2);
 
         Page<ContractStageEntity> actualContractStages = contractStageRepository.findAllByContract(contract1, null,
-                null, null, new GregorianCalendar(2023, Calendar.JUNE, 13).getTime(),
-                null, PageRequest.of(0, 10));
+                null, null, null, null, null, null,
+                new GregorianCalendar(2023, Calendar.JUNE, 13).getTime(), null, PageRequest.of(0, 10));
 
         assertThat(actualContractStages).usingRecursiveFieldByFieldElementComparator().isEqualTo(expectedContractStages);
     }
@@ -190,8 +192,8 @@ public class ContractStageRepositoryTest {
         List<ContractStageEntity> expectedContractStages = Collections.singletonList(contractStage3);
 
         Page<ContractStageEntity> actualContractStages = contractStageRepository.findAllByContract(contract2, null,
-                null, null, new GregorianCalendar(2023, Calendar.JULY, 7).getTime(),
-                null, PageRequest.of(0, 10));
+                null, null, null, null, null, null,
+                new GregorianCalendar(2023, Calendar.JULY, 7).getTime(), null, PageRequest.of(0, 10));
 
         assertThat(actualContractStages).usingRecursiveFieldByFieldElementComparator().isEqualTo(expectedContractStages);
     }
@@ -201,8 +203,8 @@ public class ContractStageRepositoryTest {
         List<ContractStageEntity> expectedContractStages = Arrays.asList(contractStage1, contractStage2);
 
         Page<ContractStageEntity> actualContractStages = contractStageRepository.findAllByContract(contract1, null,
-                null, null, null, new GregorianCalendar(2023, Calendar.JUNE, 22).getTime(),
-                PageRequest.of(0, 10));
+                null, null, null, null, null, null,
+                null, new GregorianCalendar(2023, Calendar.JUNE, 22).getTime(), PageRequest.of(0, 10));
 
         assertThat(actualContractStages).usingRecursiveFieldByFieldElementComparator().isEqualTo(expectedContractStages);
     }
@@ -212,8 +214,8 @@ public class ContractStageRepositoryTest {
         List<ContractStageEntity> expectedContractStages = Collections.singletonList(contractStage4);
 
         Page<ContractStageEntity> actualContractStages = contractStageRepository.findAllByContract(contract2, null,
-                null, null, null,
-                new GregorianCalendar(2023, Calendar.JUNE, 1).getTime(), PageRequest.of(0, 10));
+                null, null, null, null, null, null,
+                null, new GregorianCalendar(2023, Calendar.JUNE, 1).getTime(), PageRequest.of(0, 10));
 
         assertThat(actualContractStages).usingRecursiveFieldByFieldElementComparator().isEqualTo(expectedContractStages);
     }
@@ -227,6 +229,7 @@ public class ContractStageRepositoryTest {
                 "Тестовый этап1 контракта1",
                 BigDecimal.valueOf(100),
                 BigDecimal.valueOf(150.10),
+                null, null, null, null,
                 new GregorianCalendar(2023, Calendar.JUNE, 20).getTime(),
                 new GregorianCalendar(2023, Calendar.JULY, 10).getTime(),
                 PageRequest.of(0, 10));

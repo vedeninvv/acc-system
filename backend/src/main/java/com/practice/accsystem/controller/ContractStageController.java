@@ -95,6 +95,10 @@ public class ContractStageController {
                                                           @RequestParam(required = false) String title,
                                                           @RequestParam(required = false) BigDecimal minSum,
                                                           @RequestParam(required = false) BigDecimal maxSum,
+                                                          @RequestParam(required = false) BigDecimal minPlanTotalExpenses,
+                                                          @RequestParam(required = false) BigDecimal maxPlanTotalExpenses,
+                                                          @RequestParam(required = false) BigDecimal minFactTotalExpenses,
+                                                          @RequestParam(required = false) BigDecimal maxFactTotalExpenses,
                                                           @RequestParam(required = false) @DateTimeFormat(pattern = "yyyy-MM-dd") Date startPeriod,
                                                           @RequestParam(required = false) @DateTimeFormat(pattern = "yyyy-MM-dd") Date endPeriod,
                                                           @Parameter(hidden = true) @AuthenticationPrincipal UserDetailsImpl userDetails,
@@ -103,7 +107,8 @@ public class ContractStageController {
         ContractEntity contract = contractService.findContractById(contractId);
 
         if (contractService.hasAccessToContract(user, contract)) {
-            return contractStageService.findAllContractStageByContract(contract, title, minSum, maxSum, startPeriod, endPeriod, pageable)
+            return contractStageService.findAllContractStageByContract(contract, title, minSum, maxSum, minPlanTotalExpenses,
+                            maxPlanTotalExpenses, minFactTotalExpenses, maxFactTotalExpenses, startPeriod, endPeriod, pageable)
                     .map(contractStageMapper::toDto);
         } else {
             throw new NotHasPermissionException(

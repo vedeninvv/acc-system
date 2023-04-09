@@ -137,14 +137,17 @@ public class ContractStageServiceImplTest {
         ));
         ContractEntity contract = new ContractEntity();
         when(contractStageRepository.findAllByContract(contract, null, null, null, null,
-                null, PageRequest.of(1, 2)))
+                null, null, null, null, null,
+                PageRequest.of(1, 2)))
                 .thenReturn(expectedContractStages);
 
         Page<ContractStageEntity> actualContractStages = contractStageService.findAllContractStageByContract(contract, null,
-                null, null, null, null, PageRequest.of(1, 2));
+                null, null, null, null, null, null,
+                null, null, PageRequest.of(1, 2));
 
         verify(contractStageRepository, times(1)).findAllByContract(contract, null,
-                null, null, null, null, PageRequest.of(1, 2));
+                null, null, null, null, null,
+                null, null, null, PageRequest.of(1, 2));
         assertThat(actualContractStages).isEqualTo(expectedContractStages);
     }
 
@@ -157,14 +160,17 @@ public class ContractStageServiceImplTest {
         ));
         ContractEntity contract = new ContractEntity();
         when(contractStageRepository.findAllByContract(contract, "Тестовый этап", BigDecimal.valueOf(100.01),
-                BigDecimal.valueOf(10.10), currentDate, currentDate, PageRequest.of(1, 2)))
+                BigDecimal.valueOf(10.10), null, null, null, null,
+                currentDate, currentDate, PageRequest.of(1, 2)))
                 .thenReturn(expectedContractStages);
 
         Page<ContractStageEntity> actualContractStages = contractStageService.findAllContractStageByContract(contract,
-                "Тестовый этап", BigDecimal.valueOf(100.01), BigDecimal.valueOf(10.10), currentDate, currentDate, PageRequest.of(1, 2));
+                "Тестовый этап", BigDecimal.valueOf(100.01), BigDecimal.valueOf(10.10), null, null, null, null,
+                currentDate, currentDate, PageRequest.of(1, 2));
 
         verify(contractStageRepository, times(1)).findAllByContract(contract, "Тестовый этап",
-                BigDecimal.valueOf(100.01), BigDecimal.valueOf(10.10), currentDate, currentDate, PageRequest.of(1, 2));
+                BigDecimal.valueOf(100.01), BigDecimal.valueOf(10.10), null, null, null, null,
+                currentDate, currentDate, PageRequest.of(1, 2));
         assertThat(actualContractStages).isEqualTo(expectedContractStages);
     }
 
