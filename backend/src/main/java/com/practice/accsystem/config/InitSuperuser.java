@@ -3,28 +3,28 @@ package com.practice.accsystem.config;
 import com.practice.accsystem.entity.user.AppUserEntity;
 import com.practice.accsystem.entity.user.Role;
 import com.practice.accsystem.repository.UserRepository;
-import com.practice.accsystem.service.UserService;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 import javax.annotation.PostConstruct;
 
 @Configuration
 public class InitSuperuser {
-    private final UserService userService;
     private final UserRepository userRepository;
+    private final PasswordEncoder passwordEncoder;
 
-    public InitSuperuser(UserService userService, UserRepository userRepository) {
-        this.userService = userService;
+    public InitSuperuser(UserRepository userRepository, PasswordEncoder passwordEncoder) {
         this.userRepository = userRepository;
+        this.passwordEncoder = passwordEncoder;
     }
 
     @PostConstruct
     private void createSuperuser() {
         if (!userRepository.existsByUsername(System.getenv("SUPERUSER_USERNAME"))) {
-            userService.createUser(AppUserEntity.builder()
+            userRepository.save(AppUserEntity.builder()
                     .id(1L)
                     .username(System.getenv("SUPERUSER_USERNAME"))
-                    .password(System.getenv("SUPERUSER_PASSWORD"))
+                    .password(passwordEncoder.encode(System.getenv("SUPERUSER_PASSWORD")))
                     .role(Role.ADMIN)
                     .dateUserExpired(null)
                     .name("Admin")
