@@ -102,15 +102,15 @@ public class CounterpartyContractServiceImplTest {
                 new CounterpartyContractEntity()
         ));
         ContractEntity contract = new ContractEntity();
-        when(counterpartyContractRepository.findAllByContract(contract, null, null, null, null,
+        when(counterpartyContractRepository.findAllByContract(contract, null, null, null, null, null,
                 null, null, PageRequest.of(1, 2)))
                 .thenReturn(expectedCounterpartyContracts);
 
         Page<CounterpartyContractEntity> actualCounterpartyContracts = counterpartyContractService.findAllCounterpartyContractsByContract(
-                contract, null, null, null, null, null, null, PageRequest.of(1, 2));
+                contract, null, null, null, null, null, null, null, PageRequest.of(1, 2));
 
         verify(counterpartyContractRepository, times(1)).findAllByContract(contract, null,
-                null, null, null, null, null, PageRequest.of(1, 2));
+                null, null, null, null, null, null, PageRequest.of(1, 2));
         assertThat(actualCounterpartyContracts).isEqualTo(expectedCounterpartyContracts);
     }
 
@@ -122,16 +122,16 @@ public class CounterpartyContractServiceImplTest {
         ));
         ContractEntity contract = new ContractEntity();
         Date currentDate = new Date();
-        when(counterpartyContractRepository.findAllByContract(contract, 1L, "1", BigDecimal.valueOf(1),
+        when(counterpartyContractRepository.findAllByContract(contract, 1L, "1", null, BigDecimal.valueOf(1),
                 BigDecimal.valueOf(2), currentDate, currentDate, PageRequest.of(1, 2)))
                 .thenReturn(expectedCounterpartyContracts);
 
         Page<CounterpartyContractEntity> actualCounterpartyContracts = counterpartyContractService.findAllCounterpartyContractsByContract(
-                contract, 1L, "1", BigDecimal.valueOf(1), BigDecimal.valueOf(2), currentDate,
+                contract, 1L, "1", null, BigDecimal.valueOf(1), BigDecimal.valueOf(2), currentDate,
                 currentDate, PageRequest.of(1, 2));
 
         verify(counterpartyContractRepository, times(1)).findAllByContract(contract, 1L,
-                "1", BigDecimal.valueOf(1), BigDecimal.valueOf(2), currentDate, currentDate, PageRequest.of(1, 2));
+                "1", null, BigDecimal.valueOf(1), BigDecimal.valueOf(2), currentDate, currentDate, PageRequest.of(1, 2));
         assertThat(actualCounterpartyContracts).isEqualTo(expectedCounterpartyContracts);
     }
 

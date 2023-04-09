@@ -114,7 +114,7 @@ public class CounterpartyContractRepositoryTest {
         List<CounterpartyContractEntity> expectedCounterpartyContracts = Arrays.asList(counterpartyContract1, counterpartyContract2);
 
         Page<CounterpartyContractEntity> actualCounterpartyContracts = counterpartyContractRepository.findAllByContract(
-                contract1, null, null, null, null, null, null,
+                contract1, null, null, null, null, null, null, null,
                 PageRequest.of(0, 10)
         );
 
@@ -127,7 +127,7 @@ public class CounterpartyContractRepositoryTest {
         List<CounterpartyContractEntity> expectedCounterpartyContracts = Collections.singletonList(counterpartyContract1);
 
         Page<CounterpartyContractEntity> actualCounterpartyContracts = counterpartyContractRepository.findAllByContract(
-                contract1, 1L, null, null, null, null, null,
+                contract1, 1L, null, null, null, null, null, null,
                 PageRequest.of(0, 10)
         );
 
@@ -140,7 +140,7 @@ public class CounterpartyContractRepositoryTest {
         List<CounterpartyContractEntity> expectedCounterpartyContracts = Collections.singletonList(counterpartyContract2);
 
         Page<CounterpartyContractEntity> actualCounterpartyContracts = counterpartyContractRepository.findAllByContract(
-                contract1, null, "Тестовый контракт2 с контрагентом2", null, null, null, null,
+                contract1, null, "Тестовый контракт2 с контрагентом2", null, null, null, null, null,
                 PageRequest.of(0, 10)
         );
 
@@ -153,7 +153,7 @@ public class CounterpartyContractRepositoryTest {
         List<CounterpartyContractEntity> expectedCounterpartyContracts = Arrays.asList(counterpartyContract1, counterpartyContract2);
 
         Page<CounterpartyContractEntity> actualCounterpartyContracts = counterpartyContractRepository.findAllByContract(
-                contract1, null, "Тестовый", null, null, null, null,
+                contract1, null, "Тестовый", null, null, null, null, null,
                 PageRequest.of(0, 10)
         );
 
@@ -166,7 +166,7 @@ public class CounterpartyContractRepositoryTest {
         List<CounterpartyContractEntity> expectedCounterpartyContracts = Arrays.asList(counterpartyContract1, counterpartyContract2);
 
         Page<CounterpartyContractEntity> actualCounterpartyContracts = counterpartyContractRepository.findAllByContract(
-                contract1, null, null, BigDecimal.valueOf(100), null, null, null,
+                contract1, null, null, null, BigDecimal.valueOf(100), null, null, null,
                 PageRequest.of(0, 10)
         );
 
@@ -179,7 +179,7 @@ public class CounterpartyContractRepositoryTest {
         List<CounterpartyContractEntity> expectedCounterpartyContracts = Arrays.asList(counterpartyContract3, counterpartyContract4);
 
         Page<CounterpartyContractEntity> actualCounterpartyContracts = counterpartyContractRepository.findAllByContract(
-                contract2, null, null, null, BigDecimal.valueOf(500), null, null,
+                contract2, null, null, null, null, BigDecimal.valueOf(500), null, null,
                 PageRequest.of(0, 10)
         );
 
@@ -192,7 +192,7 @@ public class CounterpartyContractRepositoryTest {
         List<CounterpartyContractEntity> expectedCounterpartyContracts = Collections.singletonList(counterpartyContract1);
 
         Page<CounterpartyContractEntity> actualCounterpartyContracts = counterpartyContractRepository.findAllByContract(
-                contract1, null, null, null, null, new GregorianCalendar(2023, Calendar.JULY, 1).getTime(), null,
+                contract1, null, null, null, null, null, new GregorianCalendar(2023, Calendar.JULY, 1).getTime(), null,
                 PageRequest.of(0, 10)
         );
 
@@ -205,7 +205,7 @@ public class CounterpartyContractRepositoryTest {
         List<CounterpartyContractEntity> expectedCounterpartyContracts = Collections.singletonList(counterpartyContract4);
 
         Page<CounterpartyContractEntity> actualCounterpartyContracts = counterpartyContractRepository.findAllByContract(
-                contract2, null, null, null, null, null,
+                contract2, null, null, null, null, null, null,
                 new GregorianCalendar(2023, Calendar.JUNE, 1).getTime(), PageRequest.of(0, 10)
         );
 
@@ -221,6 +221,7 @@ public class CounterpartyContractRepositoryTest {
                 contract2,
                 2L,
                 "Тестовый контракт4 с контрагентом2",
+                null,
                 BigDecimal.valueOf(400),
                 BigDecimal.valueOf(500),
                 new GregorianCalendar(2023, Calendar.JUNE, 1).getTime(),

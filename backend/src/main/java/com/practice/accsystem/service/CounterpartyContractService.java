@@ -1,6 +1,7 @@
 package com.practice.accsystem.service;
 
 import com.practice.accsystem.entity.ContractEntity;
+import com.practice.accsystem.entity.ContractType;
 import com.practice.accsystem.entity.CounterpartyContractEntity;
 import com.practice.accsystem.entity.CounterpartyEntity;
 import com.practice.accsystem.entity.user.AppUserEntity;
@@ -42,6 +43,7 @@ public interface CounterpartyContractService {
      * @param contract       контракт, к которому относятся контракты с контрагентами
      * @param counterpartyId ID организации-контрагента, договора с которой ищутся
      * @param title          название или его часть
+     * @param contractType   тип контракта
      * @param minSum         минимальная сумма этапа
      * @param maxSum         максимальная сумма этапа
      * @param startPeriod    начальная дата для планируемой или фактической даты
@@ -49,9 +51,15 @@ public interface CounterpartyContractService {
      * @param pageable       настройки пагинации
      * @return контракты с контрагентом
      */
-    Page<CounterpartyContractEntity> findAllCounterpartyContractsByContract(ContractEntity contract, Long counterpartyId,
-                                                                            String title, BigDecimal minSum, BigDecimal maxSum,
-                                                                            Date startPeriod, Date endPeriod, Pageable pageable);
+    Page<CounterpartyContractEntity> findAllCounterpartyContractsByContract(ContractEntity contract,
+                                                                            Long counterpartyId,
+                                                                            String title,
+                                                                            ContractType contractType,
+                                                                            BigDecimal minSum,
+                                                                            BigDecimal maxSum,
+                                                                            Date startPeriod,
+                                                                            Date endPeriod,
+                                                                            Pageable pageable);
 
     /**
      * Найти все контракты с контрагентами, относящиеся к переданному пользователю и входящих в переданный период

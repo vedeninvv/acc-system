@@ -1,6 +1,7 @@
 package com.practice.accsystem.service.impl;
 
 import com.practice.accsystem.entity.ContractEntity;
+import com.practice.accsystem.entity.ContractType;
 import com.practice.accsystem.entity.CounterpartyContractEntity;
 import com.practice.accsystem.entity.CounterpartyEntity;
 import com.practice.accsystem.entity.user.AppUserEntity;
@@ -46,10 +47,16 @@ public class CounterpartyContractServiceImpl implements CounterpartyContractServ
 
 
     @Override
-    public Page<CounterpartyContractEntity> findAllCounterpartyContractsByContract(ContractEntity contract, Long counterpartyId,
-                                                                                   String title, BigDecimal minSum, BigDecimal maxSum,
-                                                                                   Date startPeriod, Date endPeriod, Pageable pageable) {
-        return counterpartyContractRepository.findAllByContract(contract, counterpartyId, title, minSum, maxSum,
+    public Page<CounterpartyContractEntity> findAllCounterpartyContractsByContract(ContractEntity contract,
+                                                                                   Long counterpartyId,
+                                                                                   String title,
+                                                                                   ContractType contractType,
+                                                                                   BigDecimal minSum,
+                                                                                   BigDecimal maxSum,
+                                                                                   Date startPeriod,
+                                                                                   Date endPeriod,
+                                                                                   Pageable pageable) {
+        return counterpartyContractRepository.findAllByContract(contract, counterpartyId, title, contractType, minSum, maxSum,
                 startPeriod, endPeriod, pageable);
     }
 
