@@ -63,19 +63,24 @@ public class WebSecurityConfig {
     @Bean
     CorsConfigurationSource corsConfigurationSource() {
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-        source.registerCorsConfiguration("/**", new CorsConfiguration().applyPermitDefaultValues());
+        CorsConfiguration configs = new CorsConfiguration().applyPermitDefaultValues();
+        configs.addAllowedMethod(HttpMethod.DELETE.name());
+        configs.addAllowedMethod(HttpMethod.PUT.name());
+        source.registerCorsConfiguration("/**", configs);
         return source;
     }
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-        http.cors().and().csrf().disable()
+        http.cors().and()
+                .csrf().disable()
                 .exceptionHandling().authenticationEntryPoint(unauthorizedHandler).and()
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
                 .authorizeRequests().antMatchers("/api/auth/**").permitAll()
                 .antMatchers(HttpMethod.GET, "/api").permitAll()
                 .antMatchers(OpenApiConfiguration.SWAGGER_WHITELIST).permitAll()
                 .antMatchers("/error").permitAll() //необходимо чтобы возвращалось тело ошибки
+                .antMatchers(HttpMethod.OPTIONS, "/**").permitAll()
                 .anyRequest().authenticated();
 
         http.authenticationProvider(authenticationProvider());
@@ -85,3 +90,4 @@ public class WebSecurityConfig {
         return http.build();
     }
 }
+
