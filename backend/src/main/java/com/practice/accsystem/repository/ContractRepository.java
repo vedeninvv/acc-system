@@ -42,8 +42,14 @@ public interface ContractRepository extends PagingAndSortingRepository<ContractE
             " and (:contractType is null or contract.contractType = :contractType)" +
             " and (:minSum is null or contract.sum >= :minSum)" +
             " and (:maxSum is null  or contract.sum <= :maxSum)" +
-            " and (:startDate is null or contract.planStartDate >= :startDate or contract.factStartDate >= :startDate)" +
-            " and (:endDate is null or contract.planEndDate <= :endDate or contract.factEndDate <= :endDate)")
+            " and (" +
+            "(:startDate is null and :endDate is null)" +
+            " or (:startDate is not null and :endDate is null and (contract.planStartDate >= :startDate or contract.factStartDate >= :startDate))" +
+            " or (:startDate is null and :endDate is not null and (contract.planEndDate <= :endDate or contract.factEndDate <= :endDate))" +
+            " or (:startDate is not null and :endDate is not null and (" +
+            "(contract.planStartDate between :startDate and :endDate and contract.planEndDate between :startDate and :endDate)" +
+            " or (contract.factStartDate between :startDate and :endDate and contract.factEndDate between :startDate and :endDate)))" +
+            ")")
     Page<ContractEntity> findAllWithFilters(Long assignedUserId,
                                             String title,
                                             ContractType contractType,

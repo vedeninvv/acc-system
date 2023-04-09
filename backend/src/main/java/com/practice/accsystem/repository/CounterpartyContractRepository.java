@@ -47,10 +47,14 @@ public interface CounterpartyContractRepository extends PagingAndSortingReposito
             " and (:title is null or counterpartyContract.title like %:title%)" +
             " and (:minSum is null or counterpartyContract.sum >= :minSum)" +
             " and (:maxSum is null or counterpartyContract.sum <= :maxSum)" +
-            " and (:startPeriod is null or counterpartyContract.planStartDate >= :startPeriod" +
-            " or counterpartyContract.factStartDate >= :startPeriod)" +
-            " and (:endPeriod is null or counterpartyContract.planEndDate <= :endPeriod" +
-            " or counterpartyContract.factEndDate <= :endPeriod)")
+            " and (" +
+            "(:startPeriod is null and :endPeriod is null)" +
+            " or (:startPeriod is not null and :endPeriod is null and (counterpartyContract.planStartDate >= :startPeriod or counterpartyContract.factStartDate >= :startPeriod))" +
+            " or (:startPeriod is null and :endPeriod is not null and (counterpartyContract.planEndDate <= :endPeriod or counterpartyContract.factEndDate <= :endPeriod))" +
+            " or (:startPeriod is not null and :endPeriod is not null and (" +
+            "(counterpartyContract.planStartDate between :startPeriod and :endPeriod and counterpartyContract.planEndDate between :startPeriod and :endPeriod)" +
+            " or (counterpartyContract.factStartDate between :startPeriod and :endPeriod and counterpartyContract.factEndDate between :startPeriod and :endPeriod)))" +
+            ")")
     Page<CounterpartyContractEntity> findAllByContract(ContractEntity contract, Long counterpartyId, String title,
                                                        BigDecimal minSum, BigDecimal maxSum, Date startPeriod, Date endPeriod, Pageable pageable);
 
