@@ -54,9 +54,19 @@ public class ContractStageServiceImpl implements ContractStageService {
     }
 
     @Override
-    public Page<ContractStageEntity> findAllContractStageByContract(ContractEntity contract, String title, BigDecimal minSum,
-                                                                    BigDecimal maxSum, Date startPeriod, Date endPeriod, Pageable pageable) {
-        return contractStageRepository.findAllByContract(contract, title, minSum, maxSum, startPeriod, endPeriod, pageable);
+    public Page<ContractStageEntity> findAllContractStageByContract(ContractEntity contract,
+                                                                    String title,
+                                                                    BigDecimal minSum,
+                                                                    BigDecimal maxSum,
+                                                                    BigDecimal minPlanTotalExpenses,
+                                                                    BigDecimal maxPlanTotalExpenses,
+                                                                    BigDecimal minFactTotalExpenses,
+                                                                    BigDecimal maxFactTotalExpenses,
+                                                                    Date startPeriod,
+                                                                    Date endPeriod,
+                                                                    Pageable pageable) {
+        return contractStageRepository.findAllByContract(contract, title, minSum, maxSum, minPlanTotalExpenses,
+                maxPlanTotalExpenses, minFactTotalExpenses, maxFactTotalExpenses, startPeriod, endPeriod, pageable);
     }
 
     @Override

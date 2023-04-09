@@ -29,13 +29,17 @@ public interface ContractStageRepository extends PagingAndSortingRepository<Cont
     /**
      * Поиск всех этапов переданного контракта, которые удовлетворяют фильтрам
      *
-     * @param contract    контракт, чьи этапы ищутся
-     * @param pageable    настройки пагинации
-     * @param title       название или его часть
-     * @param minSum      минимальная сумма этапа
-     * @param maxSum      максимальная сумма этапа
-     * @param startPeriod начальная дата для планируемой или фактической даты
-     * @param endPeriod   конечная дата для планируемой или фактической даты
+     * @param contract             контракт, чьи этапы ищутся
+     * @param pageable             настройки пагинации
+     * @param title                название или его часть
+     * @param minSum               минимальная сумма этапа
+     * @param maxSum               максимальная сумма этапа
+     * @param minPlanTotalExpenses минимальная сумма плановых расходов
+     * @param maxPlanTotalExpenses максимальная сумма плановых расходов
+     * @param minFactTotalExpenses минимальная сумма фактических расходов
+     * @param maxFactTotalExpenses максимальная сумма фактических расходов
+     * @param startPeriod          начальная дата для планируемой или фактической даты
+     * @param endPeriod            конечная дата для планируемой или фактической даты
      * @return этапы контракта
      */
     @Query("select contractStage from ContractStageEntity as contractStage where" +
@@ -43,6 +47,10 @@ public interface ContractStageRepository extends PagingAndSortingRepository<Cont
             " and (:title is null or contractStage.title like %:title%)" +
             " and (:minSum is null or contractStage.sum >= :minSum)" +
             " and (:maxSum is null or contractStage.sum <= :maxSum)" +
+            " and (:minPlanTotalExpenses is null or contractStage.planTotalExpenses >= :minPlanTotalExpenses)" +
+            " and (:maxPlanTotalExpenses is null or contractStage.planTotalExpenses <= :maxPlanTotalExpenses)" +
+            " and (:minFactTotalExpenses is null or contractStage.factTotalExpenses >= :minFactTotalExpenses)" +
+            " and (:maxFactTotalExpenses is null or contractStage.factTotalExpenses <= :maxFactTotalExpenses)" +
             " and (" +
             "(:startPeriod is null and :endPeriod is null)" +
             " or (:startPeriod is not null and :endPeriod is null and (contractStage.planStartDate >= :startPeriod or contractStage.factStartDate >= :startPeriod))" +
@@ -51,6 +59,15 @@ public interface ContractStageRepository extends PagingAndSortingRepository<Cont
             "(contractStage.planStartDate between :startPeriod and :endPeriod and contractStage.planEndDate between :startPeriod and :endPeriod)" +
             " or (contractStage.factStartDate between :startPeriod and :endPeriod and contractStage.factEndDate between :startPeriod and :endPeriod)))" +
             ")")
-    Page<ContractStageEntity> findAllByContract(ContractEntity contract, String title, BigDecimal minSum,
-                                                BigDecimal maxSum, Date startPeriod, Date endPeriod, Pageable pageable);
+    Page<ContractStageEntity> findAllByContract(ContractEntity contract,
+                                                String title,
+                                                BigDecimal minSum,
+                                                BigDecimal maxSum,
+                                                BigDecimal minPlanTotalExpenses,
+                                                BigDecimal maxPlanTotalExpenses,
+                                                BigDecimal minFactTotalExpenses,
+                                                BigDecimal maxFactTotalExpenses,
+                                                Date startPeriod,
+                                                Date endPeriod,
+                                                Pageable pageable);
 }
