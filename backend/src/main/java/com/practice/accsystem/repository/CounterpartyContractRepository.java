@@ -1,6 +1,7 @@
 package com.practice.accsystem.repository;
 
 import com.practice.accsystem.entity.ContractEntity;
+import com.practice.accsystem.entity.ContractType;
 import com.practice.accsystem.entity.CounterpartyContractEntity;
 import com.practice.accsystem.entity.user.AppUserEntity;
 import org.springframework.data.domain.Page;
@@ -34,6 +35,7 @@ public interface CounterpartyContractRepository extends PagingAndSortingReposito
      * @param contract       контракт, к которому относятся контракты с контрагентами
      * @param counterpartyId ID организации-контрагента, договора с которой ищутся
      * @param title          название или его часть
+     * @param contractType   тип контракта
      * @param minSum         минимальная сумма этапа
      * @param maxSum         максимальная сумма этапа
      * @param startPeriod    начальная дата для планируемой или фактической даты
@@ -45,6 +47,7 @@ public interface CounterpartyContractRepository extends PagingAndSortingReposito
             " counterpartyContract.contract = :contract" +
             " and (:counterpartyId is null or counterpartyContract.counterparty.id = :counterpartyId)" +
             " and (:title is null or counterpartyContract.title like %:title%)" +
+            " and (:contractType is null or counterpartyContract.contractType = :contractType)" +
             " and (:minSum is null or counterpartyContract.sum >= :minSum)" +
             " and (:maxSum is null or counterpartyContract.sum <= :maxSum)" +
             " and (" +
@@ -55,8 +58,15 @@ public interface CounterpartyContractRepository extends PagingAndSortingReposito
             "(counterpartyContract.planStartDate between :startPeriod and :endPeriod and counterpartyContract.planEndDate between :startPeriod and :endPeriod)" +
             " or (counterpartyContract.factStartDate between :startPeriod and :endPeriod and counterpartyContract.factEndDate between :startPeriod and :endPeriod)))" +
             ")")
-    Page<CounterpartyContractEntity> findAllByContract(ContractEntity contract, Long counterpartyId, String title,
-                                                       BigDecimal minSum, BigDecimal maxSum, Date startPeriod, Date endPeriod, Pageable pageable);
+    Page<CounterpartyContractEntity> findAllByContract(ContractEntity contract,
+                                                       Long counterpartyId,
+                                                       String title,
+                                                       ContractType contractType,
+                                                       BigDecimal minSum,
+                                                       BigDecimal maxSum,
+                                                       Date startPeriod,
+                                                       Date endPeriod,
+                                                       Pageable pageable);
 
     /**
      * Поиск всех контрактов с контрагентами, относящихся к переданному пользователю и входящих в переданный период

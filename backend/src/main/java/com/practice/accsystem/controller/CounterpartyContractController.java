@@ -3,6 +3,7 @@ package com.practice.accsystem.controller;
 import com.practice.accsystem.dto.counterpartyContract.CounterpartyContractGetDto;
 import com.practice.accsystem.dto.counterpartyContract.CounterpartyContractPostDto;
 import com.practice.accsystem.entity.ContractEntity;
+import com.practice.accsystem.entity.ContractType;
 import com.practice.accsystem.entity.CounterpartyContractEntity;
 import com.practice.accsystem.entity.user.AppUserEntity;
 import com.practice.accsystem.exception.NotHasPermissionException;
@@ -103,6 +104,7 @@ public class CounterpartyContractController {
     public Page<CounterpartyContractGetDto> findAllCounterpartyContracts(@PathVariable Long contractId,
                                                                          @RequestParam(required = false) Long counterpartyId,
                                                                          @RequestParam(required = false) String title,
+                                                                         @RequestParam(required = false) ContractType contractType,
                                                                          @RequestParam(required = false) BigDecimal minSum,
                                                                          @RequestParam(required = false) BigDecimal maxSum,
                                                                          @RequestParam(required = false) @DateTimeFormat(pattern = "yyyy-MM-dd") Date startPeriod,
@@ -114,7 +116,7 @@ public class CounterpartyContractController {
 
         if (contractService.hasAccessToContract(user, contract)) {
             return counterpartyContractService.findAllCounterpartyContractsByContract(contract, counterpartyId, title,
-                            minSum, maxSum, startPeriod, endPeriod, pageable)
+                            contractType, minSum, maxSum, startPeriod, endPeriod, pageable)
                     .map(counterpartyContractMapper::toDto);
         } else {
             throw new NotHasPermissionException(
