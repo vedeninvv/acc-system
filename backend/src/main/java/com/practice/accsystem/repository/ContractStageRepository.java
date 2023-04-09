@@ -43,10 +43,14 @@ public interface ContractStageRepository extends PagingAndSortingRepository<Cont
             " and (:title is null or contractStage.title like %:title%)" +
             " and (:minSum is null or contractStage.sum >= :minSum)" +
             " and (:maxSum is null or contractStage.sum <= :maxSum)" +
-            " and (:startPeriod is null or contractStage.planStartDate >= :startPeriod" +
-            " or contractStage.factStartDate >= :startPeriod)" +
-            " and (:endPeriod is null or contractStage.planEndDate <= :endPeriod" +
-            " or contractStage.factEndDate <= :endPeriod)")
+            " and (" +
+            "(:startPeriod is null and :endPeriod is null)" +
+            " or (:startPeriod is not null and :endPeriod is null and (contractStage.planStartDate >= :startPeriod or contractStage.factStartDate >= :startPeriod))" +
+            " or (:startPeriod is null and :endPeriod is not null and (contractStage.planEndDate <= :endPeriod or contractStage.factEndDate <= :endPeriod))" +
+            " or (:startPeriod is not null and :endPeriod is not null and (" +
+            "(contractStage.planStartDate between :startPeriod and :endPeriod and contractStage.planEndDate between :startPeriod and :endPeriod)" +
+            " or (contractStage.factStartDate between :startPeriod and :endPeriod and contractStage.factEndDate between :startPeriod and :endPeriod)))" +
+            ")")
     Page<ContractStageEntity> findAllByContract(ContractEntity contract, String title, BigDecimal minSum,
                                                 BigDecimal maxSum, Date startPeriod, Date endPeriod, Pageable pageable);
 }
