@@ -1,10 +1,13 @@
 <template>
-  <div>
-    <v-form v-model="isValidContractSearchForm"
-            @submit.prevent="getContracts"
-    >
-      <v-container>
+  <v-container>
+    <v-row justify="center">
+      <h1>Договоры</h1>
+    </v-row>
 
+    <v-container>
+      <v-form v-model="isValidContractSearchForm"
+              @submit.prevent="getContracts"
+      >
         <v-row justify="center">
           <v-col cols="6">
             <v-text-field
@@ -56,9 +59,8 @@
             </v-btn>
           </v-col>
         </v-row>
-
-      </v-container>
-    </v-form>
+      </v-form>
+    </v-container>
 
     <v-container>
       <v-row justify="center">
@@ -73,7 +75,7 @@
         </app-elements-paging-table>
       </v-row>
     </v-container>
-  </div>
+  </v-container>
 </template>
 
 <script>
@@ -171,7 +173,12 @@ export default {
     },
 
     deleteContract(id) {
-      apiDeleteContract(id).then(this.getContracts)
+      apiDeleteContract(id).then(() => {
+        this.contracts = this.contracts.filter((contract) => {
+          return contract.id !== id
+        })
+        this.getContracts()
+      })
     },
 
     changePage(page) {

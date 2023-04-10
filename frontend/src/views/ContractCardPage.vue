@@ -59,8 +59,6 @@ export default {
   data: () => ({
     tab: null,
     contractId: null,
-
-    counterpartyContractPages: [],
   }),
 
   computed: {
