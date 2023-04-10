@@ -125,16 +125,15 @@ export default {
     },
 
     createContract() {
-      apiCreateContract(this.contractForm).then((contract) => {
-        this.$router.push(`/contracts/${contract.id}`).then(() => {
-              this.$router.go()
-            }
-        )
+      apiCreateContract(this.contractForm).then(() => {
+        this.$router.push(`/contracts`)
       })
     },
 
     updateContract() {
-      apiUpdateContractById(this.contractId, this.contractForm)
+      apiUpdateContractById(this.contractId, this.contractForm).then(() => {
+        this.$router.push(`/contracts`)
+      })
     },
   }
 }
