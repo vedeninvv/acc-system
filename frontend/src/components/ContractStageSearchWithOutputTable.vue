@@ -17,14 +17,46 @@
         <v-col cols="3">
           <app-ruble-input
               v-model="searchFormContractStages.minSum"
-              label="Минимальная сумма"
+              label="Мин. сумма договора"
           ></app-ruble-input>
         </v-col>
 
         <v-col cols="3">
           <app-ruble-input
               v-model="searchFormContractStages.maxSum"
-              label="Максимальная сумма"
+              label="Макс. сумма договора"
+          ></app-ruble-input>
+        </v-col>
+      </v-row>
+
+      <v-row justify="center">
+        <v-col cols="3">
+          <app-ruble-input
+              v-model="searchFormContractStages.minPlanTotalExpenses"
+              label="Мин. сумма план. расходов"
+          ></app-ruble-input>
+        </v-col>
+
+        <v-col cols="3">
+          <app-ruble-input
+              v-model="searchFormContractStages.maxPlanTotalExpenses"
+              label="Макс. сумма план. расходов"
+          ></app-ruble-input>
+        </v-col>
+      </v-row>
+
+      <v-row justify="center">
+        <v-col cols="3">
+          <app-ruble-input
+              v-model="searchFormContractStages.minFactTotalExpenses"
+              label="Мин. сумма факт. расходов"
+          ></app-ruble-input>
+        </v-col>
+
+        <v-col cols="3">
+          <app-ruble-input
+              v-model="searchFormContractStages.maxFactTotalExpenses"
+              label="Макс. сумма факт. расходов"
           ></app-ruble-input>
         </v-col>
       </v-row>
@@ -101,6 +133,10 @@ export default {
       title: "",
       minSum: null,
       maxSum: null,
+      minPlanTotalExpenses: null,
+      maxPlanTotalExpenses: null,
+      minFactTotalExpenses: null,
+      maxFactTotalExpenses: null,
       dates: null,
       contractType: null,
     },
@@ -165,6 +201,10 @@ export default {
           contractType: this.searchFormContractStages.contractType,
           minSum: this.searchFormContractStages.minSum,
           maxSum: this.searchFormContractStages.maxSum,
+          minPlanTotalExpenses: this.searchFormContractStages.minPlanTotalExpenses,
+          maxPlanTotalExpenses: this.searchFormContractStages.maxPlanTotalExpenses,
+          minFactTotalExpenses: this.searchFormContractStages.minFactTotalExpenses,
+          maxFactTotalExpenses: this.searchFormContractStages.maxFactTotalExpenses,
           startPeriod: startPeriod,
           endPeriod: endPeriod,
           page: this.page - 1,
@@ -179,6 +219,9 @@ export default {
 
     deleteContractStage(contractStageId) {
       apiDeleteContractStageById(this.contractId, contractStageId).then(() => {
+            this.contractStagePages.content = this.contractStagePages.content.filter((contractStage) => {
+              return contractStage.id !== contractStageId
+            })
             this.getContractStages()
           }
       )
