@@ -9,6 +9,7 @@ import {isAuthenticated} from "@/shared/services/userService";
 import ContractCardPage from "@/views/ContractCardPage";
 import NotFoundPage from "@/views/NotFoundPage";
 import CounterpartyContractCardPage from "@/views/CounterpartyContractCardPage";
+import ContractStageCardPage from "@/views/ContractStageCardPage";
 
 Vue.use(VueRouter)
 
@@ -36,6 +37,14 @@ const routes = [
     {
         path: '/contracts/:contractId(\\d+)/counterparty-contracts/new',
         component: CounterpartyContractCardPage
+    },
+    {
+        path: '/contracts/:contractId(\\d+)/stages/:id(\\d+)',
+        component: ContractStageCardPage
+    },
+    {
+        path: '/contracts/:contractId(\\d+)/stages/new',
+        component: ContractStageCardPage
     },
     {
         path: '/contracts/new',
