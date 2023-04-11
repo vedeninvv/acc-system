@@ -1,6 +1,6 @@
 <template>
   <v-container>
-    <h1 v-if="isNewContract">Новый договор с контрагентом</h1>
+    <h1 v-if="isNewCounterpartyContract">Новый договор с контрагентом</h1>
     <h1 v-else>№{{ counterpartyContractId }} Договор с контрагентом</h1>
 
     <v-container>
@@ -33,8 +33,8 @@ export default {
   }),
 
   computed: {
-    isNewContract() {
-      return this.contractId == null
+    isNewCounterpartyContract() {
+      return this.counterpartyContractId == null
     }
   },
 }
