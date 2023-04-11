@@ -10,7 +10,14 @@
 <script>
 export default {
   name: "AppRubleInput",
-  props: ['value', 'label'],
+  props: {
+    value: [Number, String],
+    label: String,
+    nullable: {
+      type: Boolean,
+      default: false,
+    }
+  },
 
   created() {
     this.rubleValue = this.value
@@ -18,10 +25,16 @@ export default {
 
   data: () => ({
     rubleValue: null,
-    rubleRules: [
-      v => (v == null || /^\d*[.,]?\d?\d?$/.test(v)) || 'Положительное число, макс. 2 знака после запятой'
-    ]
   }),
+
+  computed: {
+    rubleRules() {
+      return [
+        v => (this.nullable || !!v),
+        v => (/^\d*[.,]?\d?\d?$/.test(v)) || 'Положительное число, макс. 2 знака после запятой'
+      ]
+    }
+  }
 }
 </script>
 

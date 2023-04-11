@@ -9,6 +9,7 @@
       persistent-hint
       return-object
       @change="selected"
+      :rules="[v => nullable || !!v.value]"
   ></v-select>
 </template>
 
