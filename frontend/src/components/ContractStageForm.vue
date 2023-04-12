@@ -12,7 +12,8 @@
 
       <v-row>
         <app-ruble-input v-model="contractStageForm.sum"
-                         label="Сумма">
+                         label="Сумма"
+                         :nullable="false">
         </app-ruble-input>
       </v-row>
 
@@ -57,11 +58,13 @@
                 </v-col>
                 <v-col cols="4">
                   <app-ruble-input label="Планируемый расход"
-                                   v-model="expense.planAmount"></app-ruble-input>
+                                   v-model="expense.planAmount"
+                                   :nullable="false"></app-ruble-input>
                 </v-col>
                 <v-col cols="4">
                   <app-ruble-input label="Фактический расход"
-                                   v-model="expense.factAmount"></app-ruble-input>
+                                   v-model="expense.factAmount"
+                                   :nullable="false"></app-ruble-input>
                 </v-col>
               </v-row>
             </v-card-text>
