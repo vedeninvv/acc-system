@@ -1,5 +1,6 @@
 import axios from 'axios'
 import * as tokenService from '@/shared/services/tokenService'
+import router from "@/router";
 
 let config = {
     baseURL: 'http://localhost:8080/api'
@@ -21,8 +22,14 @@ httpClient.interceptors.response.use(
         return response
     },
     function (error) {
-        const errorResponse = error.response
-        if (isTokenExpiredError(errorResponse)) {
+        if (isGettingResourceForbidden(error)) {
+            return router.push("/403").then(() => {
+                return Promise.reject(error)
+            }).catch(() => {
+                return Promise.reject(error)
+            })
+        }
+        if (isTokenExpiredError(error.response)) {
             return resetTokenAndReattemptRequest(error)
         }
         return Promise.reject(error)
@@ -31,6 +38,10 @@ httpClient.interceptors.response.use(
 
 function isTokenExpiredError(errorResponse) {
     return errorResponse.status === 401 && errorResponse.data.path !== "/api/auth/signin"
+}
+
+function isGettingResourceForbidden(error) {
+    return error.response.status === 403 && error.response.config.method === "get"
 }
 
 let isAlreadyFetchingAccessToken = false;
