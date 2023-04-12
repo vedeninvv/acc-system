@@ -18,7 +18,8 @@
 
     <v-row>
       <app-ruble-input v-model="contractForm.sum"
-                       label="Сумма">
+                       label="Сумма"
+                       :nullable="false">
       </app-ruble-input>
     </v-row>
 

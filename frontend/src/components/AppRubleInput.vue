@@ -15,7 +15,7 @@ export default {
     label: String,
     nullable: {
       type: Boolean,
-      default: false,
+      default: true,
     }
   },
 
@@ -31,7 +31,7 @@ export default {
     rubleRules() {
       return [
         v => (this.nullable || !!v),
-        v => (/^\d*[.,]?\d?\d?$/.test(v)) || 'Положительное число, макс. 2 знака после запятой'
+        v => (!v) || (/^\d*[.,]?\d?\d?$/.test(v)) || 'Положительное число, макс. 2 знака после запятой'
       ]
     }
   }
