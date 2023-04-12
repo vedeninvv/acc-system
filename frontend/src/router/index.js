@@ -10,6 +10,7 @@ import ContractCardPage from "@/views/ContractCardPage";
 import NotFoundPage from "@/views/NotFoundPage";
 import CounterpartyContractCardPage from "@/views/CounterpartyContractCardPage";
 import ContractStageCardPage from "@/views/ContractStageCardPage";
+import CounterpartyCardPage from "@/views/CounterpartyCardPage";
 
 Vue.use(VueRouter)
 
@@ -53,6 +54,14 @@ const routes = [
     {
         path: '/counterparties',
         component: CounterpartiesPage
+    },
+    {
+        path: '/counterparties/:id(\\d+)',
+        component: CounterpartyCardPage
+    },
+    {
+        path: '/counterparties/new',
+        component: CounterpartyCardPage
     },
     {
         path: '/reports',
