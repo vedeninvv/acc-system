@@ -11,6 +11,7 @@ import NotFoundPage from "@/views/NotFoundPage";
 import CounterpartyContractCardPage from "@/views/CounterpartyContractCardPage";
 import ContractStageCardPage from "@/views/ContractStageCardPage";
 import CounterpartyCardPage from "@/views/CounterpartyCardPage";
+import ForbiddenPage from "@/views/ForbiddenPage";
 
 Vue.use(VueRouter)
 
@@ -70,6 +71,10 @@ const routes = [
     {
         path: '/administration',
         component: AdministrationPage
+    },
+    {
+        path: '/403',
+        component: ForbiddenPage
     },
     {
         path: '/404',
