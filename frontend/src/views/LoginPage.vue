@@ -1,5 +1,11 @@
 <template>
   <v-sheet width="300" class="mx-auto">
+    <v-alert
+        v-model="isShowAlert"
+        dismissible
+        type="error"
+    >Неверные данные входа
+    </v-alert>
     <v-form
         @submit.prevent="submit"
         v-model="valid">
@@ -8,6 +14,7 @@
           label="Логин"
           :rules="loginRules"
           required
+          :loading="isLoading"
       ></v-text-field>
 
       <v-text-field
@@ -16,12 +23,14 @@
           type="password"
           :rules="loginRules"
           required
+          :loading="isLoading"
       ></v-text-field>
       <v-btn type="submit"
              block
              :class="{'disable-el': !valid, 'mt-2': true}"
              color="blue"
              dark
+             :loading="isLoading"
       >
         Вход
       </v-btn>
@@ -35,6 +44,8 @@ import {apiSignin} from "@/shared/services/userService";
 export default {
   name: "LoginPage",
   data: () => ({
+    isShowAlert: false,
+    isLoading: false,
     loginForm: {
       username: null,
       password: null,
@@ -47,9 +58,16 @@ export default {
   methods: {
     submit() {
       if (this.valid) {
-        apiSignin(this.loginForm).then(() => {
-          this.$router.push('/')
-        })
+        this.isShowAlert = false
+        this.isLoading = true
+        apiSignin(this.loginForm)
+            .then(() => {
+              this.$router.push('/')
+            })
+            .catch(() => {
+              this.isShowAlert = true
+              this.isLoading = false
+            })
       }
     }
   }

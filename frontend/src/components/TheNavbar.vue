@@ -5,15 +5,58 @@
         НИЦ СПб ЭТУ - ЦРТРИС
       </v-app-bar-title>
 
-      <v-btn color="blue" depressed class="ml-3" to="/contracts">Договоры</v-btn>
-      <v-btn color="blue" depressed class="ml-3" to="/counterparties">Контрагенты</v-btn>
-      <v-btn color="blue" depressed class="ml-3" to="/reports">Отчеты</v-btn>
-      <v-btn color="blue" depressed class="ml-3" to="/administration">Администрирование</v-btn>
+      <template v-if="$route.path !== '/signin'">
+        <v-btn to="/contracts"
+               color="blue"
+               depressed
+               class="ml-3"
+        >
+          Договоры
+        </v-btn>
 
-      <v-spacer></v-spacer>
-      <v-btn outlined
-             @click="signout">Выход
-      </v-btn>
+        <v-btn to="/counterparties"
+               color="blue"
+               depressed
+               class="ml-3"
+        >
+          Контрагенты
+        </v-btn>
+
+        <v-btn to="/reports"
+               color="blue"
+               depressed
+               class="ml-3"
+        >
+          Отчеты
+        </v-btn>
+        <v-btn v-if="role === 'ADMIN'"
+               to="/administration"
+               color="blue"
+               depressed
+               class="ml-3"
+        >
+          Администрирование
+        </v-btn>
+
+        <v-btn v-if="role === 'USER'"
+               to="/profile"
+               color="blue"
+               depressed
+               class="ml-3"
+        >
+          Профиль
+        </v-btn>
+
+        <v-spacer></v-spacer>
+        <v-btn outlined
+               @click="signout">
+          Выход
+        </v-btn>
+      </template>
+
+      <template v-else>
+        <span class="title">Вход</span>
+      </template>
 
     </v-app-bar>
   </nav>
@@ -21,10 +64,18 @@
 
 <script>
 
-import {apiSignout} from "@/shared/services/userService";
+import {apiSignout, getRole} from "@/shared/services/userService";
 
 export default {
   name: "TheNavbar",
+
+  updated() {
+    this.role = getRole()
+  },
+
+  data: () => ({
+    role: null
+  }),
   methods: {
     signout() {
       apiSignout().then(() => {
