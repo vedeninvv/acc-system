@@ -81,6 +81,7 @@ async function resetTokenAndReattemptRequest(error) {
         }
         return retryOriginalRequest;
     } catch (err) {
+        await router.push("/signin")
         return Promise.reject(err);
     }
 }
