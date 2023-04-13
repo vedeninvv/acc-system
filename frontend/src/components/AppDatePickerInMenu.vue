@@ -16,6 +16,7 @@
           readonly
           v-bind="attrs"
           v-on="on"
+          :rules="[v => !!v || nullable]"
       ></v-text-field>
     </template>
     <v-date-picker
@@ -23,6 +24,13 @@
         no-title
         scrollable
     >
+      <v-btn
+          text
+          color="primary"
+          @click="clear"
+      >
+        Clear
+      </v-btn>
       <v-spacer></v-spacer>
       <v-btn
           text
@@ -45,7 +53,14 @@
 <script>
 export default {
   name: "AppDatePickerInMenu",
-  props: ['value', 'label'],
+  props: {
+    label: String,
+    value: String,
+    nullable: {
+      type: Boolean,
+      default: true
+    }
+  },
 
   created() {
     this.date = this.value;
@@ -59,6 +74,12 @@ export default {
     picked() {
       this.$refs.menu.save(this.date)
       this.$emit('input', this.date)
+    },
+
+    clear() {
+      this.date = null
+      this.picked()
+      this.menu = false
     }
   }
 }
