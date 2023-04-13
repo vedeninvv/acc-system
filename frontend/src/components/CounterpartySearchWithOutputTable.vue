@@ -55,15 +55,15 @@
       </v-row>
 
       <v-row>
-        <app-elements-paging-table label="Договоры с контрагентами"
-                                   :headers="CounterpartyHeaders"
-                                   :items="counterpartiesForTable"
-                                   :total-pages="totalPages"
-                                   :initPage="page"
-                                   @post="$router.push(`/counterparties/new`)"
-                                   @put="updateCounterparty"
-                                   @delete="deleteCounterparty"
-                                   @pageSelected="changePage"/>
+        <app-paging-table-crud label="Договоры с контрагентами"
+                               :headers="CounterpartyHeaders"
+                               :items="counterpartiesForTable"
+                               :total-pages="totalPages"
+                               :initPage="page"
+                               @post="$router.push(`/counterparties/new`)"
+                               @put="updateCounterparty"
+                               @delete="deleteCounterparty"
+                               @pageSelected="changePage"/>
       </v-row>
     </v-container>
   </v-form>
@@ -71,12 +71,12 @@
 
 <script>
 import {apiDeleteCounterpartyById, apiGetAllCounterparties} from "@/shared/services/counterpartyService";
-import AppElementsPagingTable from "@/components/AppElementsPagingTable";
+import AppPagingTableCrud from "@/components/AppPagingTableCrud";
 import AppInnInput from "@/components/AppInnInput";
 
 export default {
   name: "CounterpartySearchWithOutputTable",
-  components: {AppInnInput, AppElementsPagingTable},
+  components: {AppInnInput, AppPagingTableCrud},
 
   created() {
     this.page = this.initPage
