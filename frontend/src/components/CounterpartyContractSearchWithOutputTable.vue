@@ -63,15 +63,15 @@
         </v-col>
       </v-row>
 
-      <app-elements-paging-table label="Договоры с контрагентами"
-                                 :headers="CounterpartyContractsHeaders"
-                                 :items="counterpartyContractsForTable"
-                                 :total-pages="totalPages"
-                                 :initPage="page"
-                                 @post="$router.push(`/contracts/${contractId}/counterparty-contracts/new`)"
-                                 @put="updateCounterpartyContract"
-                                 @delete="deleteCounterpartyContract"
-                                 @pageSelected="changePage"/>
+      <app-paging-table-crud label="Договоры с контрагентами"
+                             :headers="CounterpartyContractsHeaders"
+                             :items="counterpartyContractsForTable"
+                             :total-pages="totalPages"
+                             :initPage="page"
+                             @post="$router.push(`/contracts/${contractId}/counterparty-contracts/new`)"
+                             @put="updateCounterpartyContract"
+                             @delete="deleteCounterpartyContract"
+                             @pageSelected="changePage"/>
 
     </v-container>
   </v-form>
@@ -80,7 +80,7 @@
 <script>
 import AppRangeDatePicker from "@/components/AppRangeDatePicker";
 import AppRubleInput from "@/components/AppRubleInput";
-import AppElementsPagingTable from "@/components/AppElementsPagingTable";
+import AppPagingTableCrud from "@/components/AppPagingTableCrud";
 import AppCounterpartySelect from "@/components/AppCounterpartySelect";
 import AppContractTypeSelect from "@/components/AppContractTypeSelect";
 import {
@@ -90,7 +90,7 @@ import {
 
 export default {
   name: "CounterpartyContractSearchWithOutputTable",
-  components: {AppCounterpartySelect, AppRangeDatePicker, AppRubleInput, AppElementsPagingTable, AppContractTypeSelect},
+  components: {AppCounterpartySelect, AppRangeDatePicker, AppRubleInput, AppPagingTableCrud, AppContractTypeSelect},
 
   created() {
     this.page = this.initPage

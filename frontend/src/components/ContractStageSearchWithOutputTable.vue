@@ -83,15 +83,15 @@
         </v-col>
       </v-row>
 
-      <app-elements-paging-table label="Этапы договора"
-                                 :headers="contractStagesHeaders"
-                                 :items="contractStagesForTable"
-                                 :total-pages="totalPages"
-                                 :initPage="page"
-                                 @post="$router.push(`/contracts/${contractId}/stages/new`)"
-                                 @put="updateContractStage"
-                                 @delete="deleteContractStage"
-                                 @pageSelected="changePage"/>
+      <app-paging-table-crud label="Этапы договора"
+                             :headers="contractStagesHeaders"
+                             :items="contractStagesForTable"
+                             :total-pages="totalPages"
+                             :initPage="page"
+                             @post="$router.push(`/contracts/${contractId}/stages/new`)"
+                             @put="updateContractStage"
+                             @delete="deleteContractStage"
+                             @pageSelected="changePage"/>
 
     </v-container>
   </v-form>
@@ -101,11 +101,11 @@
 import {apiDeleteContractStageById, apiGetAllContractStagesByContractId} from "@/shared/services/contractStageService";
 import AppRangeDatePicker from "@/components/AppRangeDatePicker";
 import AppRubleInput from "@/components/AppRubleInput";
-import AppElementsPagingTable from "@/components/AppElementsPagingTable";
+import AppPagingTableCrud from "@/components/AppPagingTableCrud";
 
 export default {
   name: "ContractStageSearchWithOutputTable",
-  components: {AppRangeDatePicker, AppRubleInput, AppElementsPagingTable},
+  components: {AppRangeDatePicker, AppRubleInput, AppPagingTableCrud},
 
   created() {
     this.page = this.initPage
