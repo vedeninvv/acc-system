@@ -4,7 +4,7 @@
         v-model="isShowAlert"
         dismissible
         type="error"
-    >Неверные данные входа
+    >Неверные данные входа или действие аккаунта прекращено
     </v-alert>
     <v-form
         @submit.prevent="submit"
