@@ -5,15 +5,24 @@ import CounterpartiesPage from "@/views/СounterpartiesPage"
 import ReportsPage from "@/views/ReportsPage";
 import AdministrationPage from "@/views/AdministrationPage";
 import LoginPage from "@/views/LoginPage";
-import {isAuthenticated} from "@/shared/services/userService";
+import {getRole, isAuthenticated, roles} from "@/shared/services/userService";
 import ContractCardPage from "@/views/ContractCardPage";
 import NotFoundPage from "@/views/NotFoundPage";
 import CounterpartyContractCardPage from "@/views/CounterpartyContractCardPage";
 import ContractStageCardPage from "@/views/ContractStageCardPage";
 import CounterpartyCardPage from "@/views/CounterpartyCardPage";
 import ForbiddenPage from "@/views/ForbiddenPage";
+import UserCardPage from "@/views/UserCardPage";
 
 Vue.use(VueRouter)
+
+function isAdmin(to, from, next) {
+    if (getRole() === roles.admin) {
+        next()
+    } else {
+        router.push("/404")
+    }
+}
 
 const routes = [
     {
@@ -27,6 +36,7 @@ const routes = [
     {
         path: '/contracts',
         component: ContractsPage,
+
     },
     {
         path: '/contracts/:id(\\d+)',
@@ -70,7 +80,17 @@ const routes = [
     },
     {
         path: '/administration',
-        component: AdministrationPage
+        component: AdministrationPage,
+        beforeEnter: isAdmin,
+    },
+    {
+        path: '/users/:id(\\d+)',
+        component: UserCardPage
+    },
+    {
+        path: '/users/new',
+        component: UserCardPage,
+        beforeEnter: isAdmin,
     },
     {
         path: '/403',

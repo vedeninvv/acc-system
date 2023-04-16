@@ -22,6 +22,13 @@ httpClient.interceptors.response.use(
         return response
     },
     function (error) {
+        if (isGettingNotFound(error)) {
+            return router.push("/404").then(() => {
+                return Promise.reject(error)
+            }).catch(() => {
+                return Promise.reject(error)
+            })
+        }
         if (isGettingResourceForbidden(error)) {
             return router.push("/403").then(() => {
                 return Promise.reject(error)
@@ -42,6 +49,10 @@ function isTokenExpiredError(errorResponse) {
 
 function isGettingResourceForbidden(error) {
     return error.response.status === 403 && error.response.config.method === "get"
+}
+
+function isGettingNotFound(error) {
+    return error.response.status === 404 && error.response.config.method === "get"
 }
 
 let isAlreadyFetchingAccessToken = false;

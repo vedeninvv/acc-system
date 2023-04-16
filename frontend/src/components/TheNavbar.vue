@@ -39,7 +39,7 @@
         </v-btn>
 
         <v-btn v-if="role === 'USER'"
-               to="/profile"
+               :to="profileUrl"
                color="blue"
                depressed
                class="ml-3"
@@ -64,18 +64,25 @@
 
 <script>
 
-import {apiSignout, getRole} from "@/shared/services/userService";
+import {apiSignout, getRole, getUserId} from "@/shared/services/userService";
 
 export default {
   name: "TheNavbar",
 
   updated() {
     this.role = getRole()
+    this.userId = getUserId()
   },
 
   data: () => ({
-    role: null
+    role: null,
+    userId: null
   }),
+  computed: {
+    profileUrl() {
+      return "/users/" + this.userId
+    }
+  },
   methods: {
     signout() {
       apiSignout().then(() => {
