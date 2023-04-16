@@ -11,7 +11,7 @@
 import AppBaseItemSelect from "@/components/AppBaseItemSelect";
 
 export default {
-  name: "AppContractTypeSelect",
+  name: "AppRoleSelect",
   components: {AppBaseItemSelect},
   props: {
     value: String,
@@ -24,9 +24,8 @@ export default {
 
   data: () => ({
     items: [
-      {text: 'Закупка', value: 'PURCHASE'},
-      {text: 'Поставка', value: 'SUPPLY'},
-      {text: 'Работы', value: 'WORKS'}
+      {text: 'Админ', value: 'ADMIN'},
+      {text: 'Пользователь', value: 'USER'},
     ]
   }),
 
