@@ -3,7 +3,8 @@
                     :items="items"
                     :total-pages="totalPages"
                     :init-page="initPage"
-                    :label="label">
+                    :label="label"
+                    @pageSelected="e => $emit('pageSelected', e)">
     <template v-slot:additional-th>
       <th class="text-center">Выбрать</th>
     </template>
@@ -12,7 +13,7 @@
       <td class="text-center">
         <v-btn @click="$emit('select', slotProps.item.id)"
                color="blue" dark
-        type="button">
+               type="button">
           Выбрать
         </v-btn>
       </td>

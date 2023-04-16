@@ -19,7 +19,8 @@
                         :items="items"
                         :total-pages="totalPages"
                         :init-page="initPage"
-                        :label="label">
+                        :label="label"
+                        @pageSelected="e => $emit('pageSelected', e)">
         <template v-slot:additional-th>
           <th>Изменить</th>
           <th>Удалить</th>
