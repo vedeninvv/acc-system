@@ -1,5 +1,6 @@
 package com.practice.accsystem.dto.counterpartyContract;
 
+import com.practice.accsystem.dto.counterparty.CounterpartyGetDto;
 import com.practice.accsystem.entity.ContractType;
 import lombok.Builder;
 import lombok.Data;
@@ -18,7 +19,7 @@ public class CounterpartyContractGetDto {
     /**
      * Организация-контрагент, с которой заключается договор
      */
-    private Long counterpartyId;
+    private CounterpartyGetDto counterparty;
 
     /**
      * Основной договор, к которому относится договор с контрагентом

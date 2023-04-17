@@ -20,7 +20,6 @@ public class UserPutDto {
     /**
      * Пароль пользователя
      */
-    @NotBlank
     @Size(min = 6, max = 20)
     private String password;
 

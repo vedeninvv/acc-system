@@ -2,12 +2,8 @@ package com.practice.accsystem.mapper;
 
 import com.practice.accsystem.dto.counterparty.CounterpartyGetDto;
 import com.practice.accsystem.dto.counterparty.CounterpartyPostDto;
-import com.practice.accsystem.entity.CounterpartyContractEntity;
 import com.practice.accsystem.entity.CounterpartyEntity;
 import org.springframework.stereotype.Component;
-
-import java.util.HashSet;
-import java.util.stream.Collectors;
 
 @Component
 public class CounterpartyMapper {
@@ -17,9 +13,6 @@ public class CounterpartyMapper {
                 .title(counterparty.getTitle())
                 .address(counterparty.getAddress())
                 .INN(counterparty.getINN())
-                .counterpartyContractIds(counterparty.getCounterpartyContracts().stream()
-                        .map(CounterpartyContractEntity::getId)
-                        .collect(Collectors.toSet()))
                 .build();
     }
 

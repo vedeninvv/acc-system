@@ -1,7 +1,5 @@
 insert into appuser (id, date_user_expired, middle_name, name, password, role, surname, username)
-values (1, null, 'Admin', 'Admin', '$2a$10$XK5gACMqZ8zgL03QZSwfdu/BjM61KzT0pvtrCoaH7nlwRy/t.WiN2', 'ADMIN',
-        'Admin', 'superuser'),
-       (2, '2023-06-05', 'Витальевич', 'Вадим', '$2a$10$iq2rLNn9uZCKQ0xyqZHXHOmL5n9o1wFelKdJF4fLfIAk3f7x1halW', 'USER',
+values (2, '2023-06-05', 'Витальевич', 'Вадим', '$2a$10$iq2rLNn9uZCKQ0xyqZHXHOmL5n9o1wFelKdJF4fLfIAk3f7x1halW', 'USER',
         'Веденин', 'vvedenin');
 
 insert into contract (id, contract_type, fact_end_date, fact_start_date, plan_end_date, plan_start_date, sum, title,
