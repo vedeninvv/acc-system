@@ -13,22 +13,29 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface CounterpartyRepository extends PagingAndSortingRepository<CounterpartyEntity, Long> {
     /**
-     * Проверяет, существует ли переданное название или ИНН в БД
+     * Проверяет, существует ли переданное название в БД
      *
      * @param title проверяемое название
-     * @param INN   проверяемое ИНН
      * @return true, если существует, иначе false
      */
-    Boolean existsByTitleOrINN(String title, String INN);
+    Boolean existsByTitle(String title);
+
+    /**
+     * Проверяет, существует ли переданное ИНН в БД
+     *
+     * @param INN проверяемое ИНН
+     * @return true, если существует, иначе false
+     */
+    Boolean existsByINN(String INN);
 
     /**
      * Поиск всех контрагентов с фильтрацией по переданным значениям
      * Если параметр null, то фильтрация по нему не осуществляется
      *
-     * @param title название или его часть
-     * @param address адрес или его часть
-     * @param INN ИНН или его часть
-     * @param pageable  настройки пагинации
+     * @param title    название или его часть
+     * @param address  адрес или его часть
+     * @param INN      ИНН или его часть
+     * @param pageable настройки пагинации
      * @return контрагенты
      */
     @Query("select counterparty from CounterpartyEntity as counterparty where " +
