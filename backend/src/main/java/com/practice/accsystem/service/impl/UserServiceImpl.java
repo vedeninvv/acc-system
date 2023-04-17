@@ -65,7 +65,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public AppUserEntity updateUser(AppUserEntity oldUser, AppUserEntity newUser) {
-        if (userRepository.existsByUsername(newUser.getUsername())) {
+        if (!oldUser.getUsername().equals(newUser.getUsername()) && userRepository.existsByUsername(newUser.getUsername())) {
             throw new DuplicateUniqueValueException(
                     String.format("Username '%s' already exist when try to update user by id '%d''", newUser.getUsername(), oldUser.getId()));
         }
@@ -73,10 +73,13 @@ public class UserServiceImpl implements UserService {
             throw new NotAllowedException("Not allowed to change username for superuser");
         }
         oldUser.setUsername(newUser.getUsername());
-        oldUser.setPassword(encoder.encode(newUser.getPassword()));
         oldUser.setName(newUser.getName());
         oldUser.setSurname(newUser.getSurname());
         oldUser.setMiddleName(newUser.getMiddleName());
+
+        if (newUser.getPassword() != null) {
+            oldUser.setPassword(encoder.encode(newUser.getPassword()));
+        }
 
         return userRepository.save(oldUser);
     }
@@ -115,7 +118,7 @@ public class UserServiceImpl implements UserService {
         if (authSettings.getRole() != null) {
             user.setRole(authSettings.getRole());
         }
-        user.setDateUserExpired(user.getDateUserExpired());
+        user.setDateUserExpired(authSettings.getDateUserExpired());
         return userRepository.save(user);
     }
 }

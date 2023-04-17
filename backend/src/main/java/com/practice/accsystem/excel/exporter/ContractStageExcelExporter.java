@@ -16,7 +16,7 @@ import java.io.IOException;
 
 @Component
 public class ContractStageExcelExporter extends ExcelExporter {
-    private static final int CONTRACT_STAGE_CELL_NUMBER = 5;
+    private static final int CONTRACT_STAGE_CELL_NUMBER = 9;
 
     private final ContractStageMapper contractStageMapper;
     private final ExpenseExcelExporter expenseExcelExporter;
@@ -46,13 +46,17 @@ public class ContractStageExcelExporter extends ExcelExporter {
         cells[START_CELL_INDEX + 2].setCellValue(contractStageDto.getSum().toString());
         cells[START_CELL_INDEX + 3].setCellValue(contractStageDto.getPlanTotalExpenses().toString());
         cells[START_CELL_INDEX + 4].setCellValue(contractStageDto.getFactTotalExpenses().toString());
+        cells[START_CELL_INDEX + 5].setCellValue(contractStageDto.getPlanStartDate());
+        cells[START_CELL_INDEX + 6].setCellValue(contractStageDto.getPlanEndDate());
+        cells[START_CELL_INDEX + 7].setCellValue(contractStageDto.getFactStartDate());
+        cells[START_CELL_INDEX + 8].setCellValue(contractStageDto.getFactEndDate());
 
         int expensesNum = contractStage.getExpenses().size();
         if (expensesNum > 1) {
             mergeCellsForContractStage(sheet, row.getRowNum(), row.getRowNum() + expensesNum - 1, columnIndex);
         }
 
-        for (ExpenseEntity expense: contractStage.getExpenses()) {
+        for (ExpenseEntity expense : contractStage.getExpenses()) {
             row = expenseExcelExporter.writeEntity(row, CONTRACT_STAGE_CELL_NUMBER, expense, sheet);
         }
 
