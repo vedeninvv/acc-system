@@ -10,6 +10,7 @@
       return-object
       @change="selected"
       :rules="[v => nullable || !!v.value]"
+      :loading="loading"
   ></v-select>
 </template>
 
@@ -27,6 +28,7 @@ export default {
       type: Boolean,
       default: true,
     },
+    loading: Boolean
   },
 
   created() {

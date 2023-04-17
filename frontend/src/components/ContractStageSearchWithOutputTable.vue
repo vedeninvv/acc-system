@@ -9,6 +9,7 @@
           <v-text-field
               v-model.trim="searchFormContractStages.title"
               label="Название этапа"
+              :loading="loading"
           ></v-text-field>
         </v-col>
       </v-row>
@@ -18,6 +19,7 @@
           <app-ruble-input
               v-model="searchFormContractStages.minSum"
               label="Мин. сумма договора"
+              :loading="loading"
           ></app-ruble-input>
         </v-col>
 
@@ -25,6 +27,7 @@
           <app-ruble-input
               v-model="searchFormContractStages.maxSum"
               label="Макс. сумма договора"
+              :loading="loading"
           ></app-ruble-input>
         </v-col>
       </v-row>
@@ -34,6 +37,7 @@
           <app-ruble-input
               v-model="searchFormContractStages.minPlanTotalExpenses"
               label="Мин. сумма план. расходов"
+              :loading="loading"
           ></app-ruble-input>
         </v-col>
 
@@ -41,6 +45,7 @@
           <app-ruble-input
               v-model="searchFormContractStages.maxPlanTotalExpenses"
               label="Макс. сумма план. расходов"
+              :loading="loading"
           ></app-ruble-input>
         </v-col>
       </v-row>
@@ -50,6 +55,7 @@
           <app-ruble-input
               v-model="searchFormContractStages.minFactTotalExpenses"
               label="Мин. сумма факт. расходов"
+              :loading="loading"
           ></app-ruble-input>
         </v-col>
 
@@ -57,6 +63,7 @@
           <app-ruble-input
               v-model="searchFormContractStages.maxFactTotalExpenses"
               label="Макс. сумма факт. расходов"
+              :loading="loading"
           ></app-ruble-input>
         </v-col>
       </v-row>
@@ -66,6 +73,7 @@
           <app-range-date-picker
               v-model="searchFormContractStages.dates"
               label="Период"
+              :loading="loading"
           ></app-range-date-picker>
         </v-col>
       </v-row>
@@ -125,6 +133,8 @@ export default {
   },
 
   data: () => ({
+    loading: false,
+
     page: null,
     contractStagePages: null,
 
@@ -189,6 +199,7 @@ export default {
   methods: {
     async getContractStages() {
       if (this.isValidSearchFormContractStages) {
+        this.loading = true
         let startPeriod = null
         let endPeriod = null
         if (this.searchFormContractStages.dates != null) {
@@ -210,6 +221,7 @@ export default {
           page: this.page - 1,
           size: this.pageSize,
         })
+        this.loading = false
       }
     },
 

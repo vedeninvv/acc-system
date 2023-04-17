@@ -6,47 +6,55 @@
       <v-text-field v-model.trim="counterpartyContractForm.title"
                     label="Название договора"
                     :rules="[v => (!!v.trim() || 'Обязательно')]"
+                    :loading="loading"
       ></v-text-field>
     </v-row>
 
     <v-row>
       <app-contract-type-select v-model="counterpartyContractForm.contractType"
                                 :nullable="false"
-                                label="Тип">
+                                label="Тип"
+                                :loading="loading">
       </app-contract-type-select>
     </v-row>
 
     <v-row>
       <app-ruble-input v-model="counterpartyContractForm.sum"
                        label="Сумма"
-                       :nullable="false">
+                       :nullable="false"
+                       :loading="loading">
       </app-ruble-input>
     </v-row>
 
     <v-row>
       <app-counterparty-select :nullable="false"
                                label="Контрагент"
-                               v-model="counterpartyContractForm.counterpartyId"></app-counterparty-select>
+                               v-model="counterpartyContractForm.counterpartyId"
+                               :loading="loading"></app-counterparty-select>
     </v-row>
 
     <v-row>
       <app-date-picker-in-menu v-model="counterpartyContractForm.planStartDate"
-                               label="Плановая дата начала">
+                               label="Плановая дата начала"
+                               :loading="loading">
       </app-date-picker-in-menu>
     </v-row>
     <v-row>
       <app-date-picker-in-menu v-model="counterpartyContractForm.planEndDate"
-                               label="Плановая дата конца">
+                               label="Плановая дата конца"
+                               :loading="loading">
       </app-date-picker-in-menu>
     </v-row>
     <v-row>
       <app-date-picker-in-menu v-model="counterpartyContractForm.factStartDate"
-                               label="Фактическая дата начала">
+                               label="Фактическая дата начала"
+                               :loading="loading">
       </app-date-picker-in-menu>
     </v-row>
     <v-row>
       <app-date-picker-in-menu v-model="counterpartyContractForm.factEndDate"
-                               label="Фактическа дата конца">
+                               label="Фактическа дата конца"
+                               :loading="loading">
       </app-date-picker-in-menu>
     </v-row>
 
@@ -91,6 +99,7 @@ export default {
 
   data: () => ({
     counterpartyContractLoaded: false,
+    loading: false,
 
     isValidCounterpartyContractForm: true,
     counterpartyContractForm: {
@@ -135,6 +144,7 @@ export default {
       if (!this.isValidCounterpartyContractForm) {
         return
       }
+      this.loading = true
       if (this.isNewCounterpartyContract) {
         this.createCounterpartyContract()
       } else {
@@ -144,6 +154,7 @@ export default {
 
     createCounterpartyContract() {
       apiCreateCounterpartyContract(this.contractId, this.counterpartyContractForm).then((counterpartyContract) => {
+            this.loading = false
             this.$router.push(`/contracts/${counterpartyContract.contractId}`)
           }
       )
@@ -152,6 +163,7 @@ export default {
     updateCounterpartyContract() {
       apiUpdateCounterpartyContractById(this.contractId, this.counterpartyContractId, this.counterpartyContractForm)
           .then((counterpartyContract) => {
+            this.loading = false
             this.$router.push(`/contracts/${counterpartyContract.contractId}`)
           })
     },

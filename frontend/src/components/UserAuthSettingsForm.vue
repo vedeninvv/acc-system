@@ -19,6 +19,7 @@
         <app-role-select v-model="authSettingsForm.role"
                          :nullable="false"
                          label="Роль"
+                         :loading="loading"
         >
         </app-role-select>
       </v-col>
@@ -27,7 +28,8 @@
     <v-row no-gutters>
       <v-col>
         <app-date-picker-in-menu v-model="authSettingsForm.dateUserExpired"
-                                 label="Дата действия аккаунта">
+                                 label="Дата действия аккаунта"
+                                 :loading="loading">
         </app-date-picker-in-menu>
       </v-col>
     </v-row>
@@ -63,6 +65,7 @@ export default {
   },
 
   data: () => ({
+    loading: false,
     userLoaded: false,
     isShowErrorAlert: false,
     isShowAuthSettingsSavedAlert: false,
@@ -100,11 +103,14 @@ export default {
       if (!this.isValidAuthSettingsForm) {
         return
       }
+      this.loading = true
       apiUpdateUserAuthSettingsById(this.userId, this.authSettingsForm)
           .then(() => {
+            this.loading = false
             this.isShowAuthSettingsSavedAlert = true
           })
           .catch(() => {
+            this.loading = false
             this.isShowErrorAlert = true
           })
     },

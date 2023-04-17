@@ -4,6 +4,7 @@
       :rules="innRules"
       @input="$emit('input',   $event.length > 0 ? $event : null)"
       :value="innValue"
+      :loading="loading"
   ></v-text-field>
 </template>
 
@@ -16,7 +17,8 @@ export default {
     nullable: {
       type: Boolean,
       default: true,
-    }
+    },
+    loading: Boolean
   },
 
   created() {
@@ -32,7 +34,7 @@ export default {
       return [
         v => (this.nullable || !!v),
         v => (/^\d*$/.test(v)) || 'Только цифры',
-        v => (v.length <= 12 || 'ИНН не может превышать 12 цирф')
+        v => (v.length <= 12 || 'ИНН не может превышать 12 цифр')
       ]
     }
   }

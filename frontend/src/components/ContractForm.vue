@@ -6,41 +6,48 @@
       <v-text-field v-model.trim="contractForm.title"
                     label="Название договора"
                     :rules="[v => (!!v.trim() || 'Обязательно')]"
+                    :loading="loading"
       ></v-text-field>
     </v-row>
 
     <v-row>
       <app-contract-type-select v-model="contractForm.contractType"
                                 :nullable="false"
-                                label="Тип">
+                                label="Тип"
+                                :loading="loading">
       </app-contract-type-select>
     </v-row>
 
     <v-row>
       <app-ruble-input v-model="contractForm.sum"
                        label="Сумма"
-                       :nullable="false">
+                       :nullable="false"
+                       :loading="loading">
       </app-ruble-input>
     </v-row>
 
     <v-row>
       <app-date-picker-in-menu v-model="contractForm.planStartDate"
-                               label="Плановая дата начала">
+                               label="Плановая дата начала"
+                               :loading="loading">
       </app-date-picker-in-menu>
     </v-row>
     <v-row>
       <app-date-picker-in-menu v-model="contractForm.planEndDate"
-                               label="Плановая дата конца">
+                               label="Плановая дата конца"
+                               :loading="loading">
       </app-date-picker-in-menu>
     </v-row>
     <v-row>
       <app-date-picker-in-menu v-model="contractForm.factStartDate"
-                               label="Фактическая дата начала">
+                               label="Фактическая дата начала"
+                               :loading="loading">
       </app-date-picker-in-menu>
     </v-row>
     <v-row>
       <app-date-picker-in-menu v-model="contractForm.factEndDate"
-                               label="Фактическа дата конца">
+                               label="Фактическа дата конца"
+                               :loading="loading">
       </app-date-picker-in-menu>
     </v-row>
 
@@ -76,6 +83,7 @@ export default {
 
   data: () => ({
     contractLoaded: false,
+    loading: false,
 
     isValidContractForm: true,
     contractForm: {
@@ -101,6 +109,8 @@ export default {
 
   methods: {
     async getContract() {
+      this.contractLoaded = false
+
       let contract = await apiGetContractById(this.contractId)
 
       this.contractForm.title = contract.title
@@ -118,6 +128,7 @@ export default {
       if (!this.isValidContractForm) {
         return
       }
+      this.loading = true
       if (this.isNewContract) {
         this.createContract()
       } else {
@@ -127,12 +138,14 @@ export default {
 
     createContract() {
       apiCreateContract(this.contractForm).then(() => {
+        this.loading = false
         this.$router.push(`/contracts`)
       })
     },
 
     updateContract() {
       apiUpdateContractById(this.contractId, this.contractForm).then(() => {
+        this.loading = false
         this.$router.push(`/contracts`)
       })
     },

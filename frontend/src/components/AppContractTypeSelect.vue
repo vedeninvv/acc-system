@@ -3,7 +3,8 @@
                         :value="value"
                         :label="label"
                         :nullable="nullable"
-                        @input="selected">
+                        @input="selected"
+                        :loading="loading">
   </app-base-item-select>
 </template>
 
@@ -19,7 +20,8 @@ export default {
     nullable: {
       type: Boolean,
       default: true,
-    }
+    },
+    loading: Boolean
   },
 
   data: () => ({

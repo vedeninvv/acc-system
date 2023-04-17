@@ -23,17 +23,32 @@
       <v-col>
         <v-text-field v-model.trim="userForm.username"
                       label="Username"
-                      :rules="loginRules"
+                      :rules="[...loginRules,  v => !!v.trim() || 'Обязательно']"
+                      :loading="loading"
         ></v-text-field>
       </v-col>
     </v-row>
 
-    <v-row no-gutters>
+    <v-row no-gutters
+           v-if="isNewUser">
       <v-col>
         <v-text-field v-model.trim="userForm.password"
-                      :label="isNewUser? 'Пароль': 'Новый пароль'"
-                      :rules="loginRules"
+                      label="Новый пароль"
+                      :rules="[...loginRules,  v => !!v.trim() || 'Обязательно']"
                       type="password"
+                      :loading="loading"
+        ></v-text-field>
+      </v-col>
+    </v-row>
+
+    <v-row no-gutters
+           v-else>
+      <v-col>
+        <v-text-field v-model.trim="userForm.password"
+                      label="Пароль"
+                      :rules="[...loginRules]"
+                      type="password"
+                      :loading="loading"
         ></v-text-field>
       </v-col>
     </v-row>
@@ -43,6 +58,7 @@
         <v-text-field v-model.trim="userForm.name"
                       label="Имя"
                       :rules="[v => (!!v.trim() || 'Обязательно')]"
+                      :loading="loading"
         ></v-text-field>
       </v-col>
     </v-row>
@@ -52,6 +68,7 @@
         <v-text-field v-model.trim="userForm.surname"
                       label="Фамилия"
                       :rules="[v => (!!v.trim() || 'Обязательно')]"
+                      :loading="loading"
         ></v-text-field>
       </v-col>
     </v-row>
@@ -61,6 +78,7 @@
         <v-text-field v-model.trim="userForm.middleName"
                       label="Отчество"
                       :rules="[v => (!!v.trim() || 'Обязательно')]"
+                      :loading="loading"
         ></v-text-field>
       </v-col>
     </v-row>
@@ -72,6 +90,7 @@
           <app-role-select v-model="authSettingsForm.role"
                            :nullable="false"
                            label="Роль"
+                           :loading="loading"
           >
           </app-role-select>
         </v-col>
@@ -80,7 +99,8 @@
       <v-row no-gutters>
         <v-col>
           <app-date-picker-in-menu v-model="authSettingsForm.dateUserExpired"
-                                   label="Дата действия аккаунта">
+                                   label="Дата действия аккаунта"
+                                   :loading="loading">
           </app-date-picker-in-menu>
         </v-col>
       </v-row>
@@ -117,6 +137,7 @@ export default {
   },
 
   data: () => ({
+    loading: false,
     isShowUsernameExistAlert: false,
     isShowUserSavedAlert: false,
     userLoaded: false,
@@ -135,9 +156,8 @@ export default {
     },
 
     loginRules: [
-      v => !!v.trim() || 'Обязательно',
-      v => v.length >= 6 || 'Мин. 6 символов',
-      v => v.length <= 20 || 'Макс. 20 символов',
+      v => !v || v.length >= 6 || 'Мин. 6 символов',
+      v => !v || v.length <= 20 || 'Макс. 20 символов',
     ],
   }),
 
@@ -169,6 +189,7 @@ export default {
       if (!this.isValidUserForm) {
         return
       }
+      this.loading = true
       if (this.isNewUser) {
         this.createUser()
       } else {
@@ -182,20 +203,26 @@ export default {
         ...this.authSettingsForm
       })
           .then(() => {
+            this.loading = false
             this.isShowUserSavedAlert = true
             this.$router.push("/administration")
           })
           .catch(() => {
+            this.loading = false
             this.isShowUsernameExistAlert = true
           })
     },
 
     updateUser() {
-      apiUpdateUserById(this.userId, this.userForm)
+      let user = {...this.userForm}
+      user.password = user.password.length === 0 ? null : user.password
+      apiUpdateUserById(this.userId, user)
           .then(() => {
+            this.loading = false
             this.isShowUserSavedAlert = true
           })
           .catch(() => {
+            this.loading = false
             this.isShowUsernameExistAlert = true
           })
     },

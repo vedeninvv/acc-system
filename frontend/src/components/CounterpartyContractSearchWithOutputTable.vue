@@ -9,6 +9,7 @@
           <v-text-field
               v-model.trim="searchFormCounterpartyContracts.title"
               label="Название этапа"
+              :loading="loading"
           ></v-text-field>
         </v-col>
       </v-row>
@@ -18,6 +19,7 @@
           <app-ruble-input
               v-model="searchFormCounterpartyContracts.minSum"
               label="Минимальная сумма"
+              :loading="loading"
           ></app-ruble-input>
         </v-col>
 
@@ -25,6 +27,7 @@
           <app-ruble-input
               v-model="searchFormCounterpartyContracts.maxSum"
               label="Максимальная сумма"
+              :loading="loading"
           ></app-ruble-input>
         </v-col>
       </v-row>
@@ -34,19 +37,23 @@
           <app-range-date-picker
               v-model="searchFormCounterpartyContracts.dates"
               label="Период"
+              :loading="loading"
           ></app-range-date-picker>
         </v-col>
         <v-col cols="3">
           <app-contract-type-select
               v-model="searchFormCounterpartyContracts.contractType"
               label="Тип контракта"
+              :loading="loading"
           ></app-contract-type-select>
         </v-col>
       </v-row>
 
       <v-row justify="center">
         <v-col cols="6">
-          <app-counterparty-select v-model="searchFormCounterpartyContracts.counterpartyId"></app-counterparty-select>
+          <app-counterparty-select v-model="searchFormCounterpartyContracts.counterpartyId"
+                                   :loading="loading">
+          </app-counterparty-select>
         </v-col>
       </v-row>
 
@@ -110,6 +117,8 @@ export default {
   },
 
   data: () => ({
+    loading: false,
+
     page: null,
     counterpartyContractPages: null,
 
@@ -151,8 +160,8 @@ export default {
           counterpartyContracts.push({
             id: this.counterpartyContractPages.content[index].id,
             title: this.counterpartyContractPages.content[index].title,
-            contractType: this.counterpartyContractPages.content[index].contractType,
-            counterparty: this.counterpartyContractPages.content[index].counterpartyId,
+            contractType: this.processContractType(this.counterpartyContractPages.content[index].contractType),
+            counterparty: this.counterpartyContractPages.content[index].counterparty.title,
             sum: this.counterpartyContractPages.content[index].sum,
             planStartDate: this.counterpartyContractPages.content[index].planStartDate,
             planEndDate: this.counterpartyContractPages.content[index].planEndDate,
@@ -171,6 +180,7 @@ export default {
   methods: {
     async getCounterpartyContracts() {
       if (this.isValidSearchFormCounterpartyContracts) {
+        this.loading = true
         let startPeriod = null
         let endPeriod = null
         if (this.searchFormCounterpartyContracts.dates != null) {
@@ -189,6 +199,7 @@ export default {
           page: this.page - 1,
           size: this.pageSize,
         })
+        this.loading = false
       }
     },
 
@@ -210,6 +221,15 @@ export default {
       this.page = page
       this.getCounterpartyContracts()
     },
+
+    processContractType(contractType) {
+      let contractTypes = {
+        "PURCHASE": "Закупка",
+        "SUPPLY": "Поставка",
+        "WORKS": "Работы"
+      }
+      return contractTypes[contractType]
+    }
   }
 }
 </script>

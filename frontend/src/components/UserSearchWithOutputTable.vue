@@ -7,13 +7,15 @@
         <v-text-field
             v-model="searchFormUsers.searchStr"
             label="Поиск по ФИО или username"
+            :loading="loading"
         ></v-text-field>
       </v-col>
     </v-row>
 
     <v-row justify="center">
       <v-col cols="6">
-        <app-role-select v-model="searchFormUsers.role">
+        <app-role-select v-model="searchFormUsers.role"
+                         :loading="loading">
         </app-role-select>
       </v-col>
     </v-row>
@@ -70,6 +72,7 @@ export default {
   },
 
   data: () => ({
+    loading: false,
     isShowAlert: false,
     isValidUserSearchForm: true,
     searchFormUsers: {
@@ -119,11 +122,13 @@ export default {
         return
       }
 
+      this.loading = true
       let contractsPages = await apiGetAllUsers({
         ...this.searchFormUsers,
         page: this.page - 1,
         size: this.pageSize,
       })
+      this.loading = false
 
       this.users = contractsPages.content
       this.totalPages = contractsPages.totalPages
@@ -154,15 +159,11 @@ export default {
     },
 
     processRole(role) {
-      const roles = [
-        {serverValue: "ADMIN", usersTableValue: "Админ"},
-        {serverValue: "USER", usersTableValue: "Пользователь"}
-      ]
-      for (let index in roles) {
-        if (role === roles[index].serverValue) {
-          return roles[index].usersTableValue
-        }
+      let roles = {
+        "ADMIN": "Админ",
+        "USER": "Пользователь",
       }
+      return roles[role]
     }
   }
 }

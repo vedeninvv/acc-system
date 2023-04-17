@@ -9,6 +9,7 @@
           <v-text-field
               v-model.trim="searchFormCounterparties.title"
               label="Название"
+              :loading="loading"
           ></v-text-field>
         </v-col>
       </v-row>
@@ -18,6 +19,7 @@
           <v-text-field
               v-model.trim="searchFormCounterparties.address"
               label="Адрес"
+              :loading="loading"
           ></v-text-field>
         </v-col>
       </v-row>
@@ -25,7 +27,8 @@
       <v-row justify="center">
         <v-col cols="6">
           <app-inn-input v-model="searchFormCounterparties.inn"
-                         label="ИНН">
+                         label="ИНН"
+                         :loading="loading">
           </app-inn-input>
         </v-col>
       </v-row>
@@ -95,6 +98,8 @@ export default {
   },
 
   data: () => ({
+    loading: false,
+
     page: null,
     counterpartyPages: null,
 
@@ -145,6 +150,7 @@ export default {
   methods: {
     async getCounterparties() {
       if (this.isValidSearchFormCounterparties) {
+        this.loading = true
         this.counterpartyPages = await apiGetAllCounterparties({
           title: this.searchFormCounterparties.title,
           address: this.searchFormCounterparties.address,
@@ -152,6 +158,7 @@ export default {
           page: this.page - 1,
           size: this.pageSize,
         })
+        this.loading = false
       }
     },
 
