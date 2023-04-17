@@ -46,7 +46,8 @@ public class CounterpartyServiceImplTest {
                 .address("Адрес")
                 .INN("123")
                 .build();
-        when(counterpartyRepository.existsByTitleOrINN("Контрагент", "123")).thenReturn(false);
+        when(counterpartyRepository.existsByTitle("Контрагент")).thenReturn(false);
+        when(counterpartyRepository.existsByINN("123")).thenReturn(false);
         when(counterpartyRepository.save(counterparty)).thenReturn(expectedCounterparty);
 
         CounterpartyEntity actualCounterparty = counterpartyService.createCounterparty(counterparty);
@@ -62,7 +63,8 @@ public class CounterpartyServiceImplTest {
                 .address("Адрес")
                 .INN("123")
                 .build();
-        when(counterpartyRepository.existsByTitleOrINN("Контрагент", "123")).thenReturn(true);
+        when(counterpartyRepository.existsByTitle("Контрагент")).thenReturn(true);
+        when(counterpartyRepository.existsByINN("123")).thenReturn(true);
 
         assertThatThrownBy(() -> counterpartyService.createCounterparty(counterparty)).isInstanceOf(DuplicateUniqueValueException.class);
 
@@ -119,7 +121,8 @@ public class CounterpartyServiceImplTest {
                 .address("Обновленный Адрес")
                 .INN("456")
                 .build();
-        when(counterpartyRepository.existsByTitleOrINN("Обновленный контрагент", "456")).thenReturn(false);
+        when(counterpartyRepository.existsByTitle("Обновленный контрагент")).thenReturn(false);
+        when(counterpartyRepository.existsByINN("456")).thenReturn(false);
         when(counterpartyRepository.save(counterparty)).thenReturn(expectedCounterparty);
         ArgumentCaptor<CounterpartyEntity> counterpartyCaptor = ArgumentCaptor.forClass(CounterpartyEntity.class);
 
