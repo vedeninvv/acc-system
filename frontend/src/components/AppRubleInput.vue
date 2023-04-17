@@ -4,6 +4,7 @@
       :rules="rubleRules"
       @input="$emit('input',   $event.length > 0 ? $event : null)"
       :value="rubleValue"
+      :loading="loading"
   ></v-text-field>
 </template>
 
@@ -16,7 +17,8 @@ export default {
     nullable: {
       type: Boolean,
       default: true,
-    }
+    },
+    loading: Boolean
   },
 
   created() {

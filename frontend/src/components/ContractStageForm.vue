@@ -7,34 +7,40 @@
         <v-text-field v-model.trim="contractStageForm.title"
                       label="Название этапа"
                       :rules="[v => (!!v.trim() || 'Обязательно')]"
+                      :loading="loading"
         ></v-text-field>
       </v-row>
 
       <v-row>
         <app-ruble-input v-model="contractStageForm.sum"
                          label="Сумма"
-                         :nullable="false">
+                         :nullable="false"
+                         :loading="loading">
         </app-ruble-input>
       </v-row>
 
       <v-row>
         <app-date-picker-in-menu v-model="contractStageForm.planStartDate"
-                                 label="Плановая дата начала">
+                                 label="Плановая дата начала"
+                                 :loading="loading">
         </app-date-picker-in-menu>
       </v-row>
       <v-row>
         <app-date-picker-in-menu v-model="contractStageForm.planEndDate"
-                                 label="Плановая дата конца">
+                                 label="Плановая дата конца"
+                                 :loading="loading">
         </app-date-picker-in-menu>
       </v-row>
       <v-row>
         <app-date-picker-in-menu v-model="contractStageForm.factStartDate"
-                                 label="Фактическая дата начала">
+                                 label="Фактическая дата начала"
+                                 :loading="loading">
         </app-date-picker-in-menu>
       </v-row>
       <v-row>
         <app-date-picker-in-menu v-model="contractStageForm.factEndDate"
-                                 label="Фактическа дата конца">
+                                 label="Фактическа дата конца"
+                                 :loading="loading">
         </app-date-picker-in-menu>
       </v-row>
     </v-container>
@@ -54,17 +60,22 @@
                   <v-text-field v-model.trim="expense.title"
                                 label="Название вида расхода"
                                 :rules="[v => (!!v.trim() || 'Обязательно')]"
+                                :loading="loading"
                   ></v-text-field>
                 </v-col>
                 <v-col cols="4">
                   <app-ruble-input label="Планируемый расход"
                                    v-model="expense.planAmount"
-                                   :nullable="false"></app-ruble-input>
+                                   :nullable="false"
+                                   :loading="loading">
+                  </app-ruble-input>
                 </v-col>
                 <v-col cols="4">
                   <app-ruble-input label="Фактический расход"
                                    v-model="expense.factAmount"
-                                   :nullable="false"></app-ruble-input>
+                                   :nullable="false"
+                                   :loading="loading">
+                  </app-ruble-input>
                 </v-col>
               </v-row>
             </v-card-text>
@@ -136,6 +147,7 @@ export default {
 
   data: () => ({
     ContractStageLoaded: false,
+    loading: false,
 
     isValidContractStageForm: true,
     contractStageForm: {
@@ -190,6 +202,7 @@ export default {
       if (!this.isValidContractStageForm) {
         return
       }
+      this.loading = true
       if (this.isNewContractStage) {
         this.createContractStage()
       } else {
@@ -199,6 +212,7 @@ export default {
 
     createContractStage() {
       apiCreateContractStage(this.contractId, this.contractStageForm).then((contractStage) => {
+            this.loading = false
             this.$router.push(`/contracts/${contractStage.contractId}`)
           }
       )
@@ -207,6 +221,7 @@ export default {
     updateContractStage() {
       apiUpdateContractStageById(this.contractId, this.contractStageId, this.contractStageForm)
           .then((contractStage) => {
+            this.loading = false
             this.$router.push(`/contracts/${contractStage.contractId}`)
           })
     },

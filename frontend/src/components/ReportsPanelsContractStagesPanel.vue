@@ -23,6 +23,7 @@
             <v-text-field
                 v-model="searchFormContracts.title"
                 label="Название договора"
+                :loading="loading"
             ></v-text-field>
           </v-col>
         </v-row>
@@ -32,6 +33,7 @@
             <app-ruble-input
                 v-model="searchFormContracts.minSum"
                 label="Минимальная сумма"
+                :loading="loading"
             ></app-ruble-input>
           </v-col>
 
@@ -39,6 +41,7 @@
             <app-ruble-input
                 v-model="searchFormContracts.maxSum"
                 label="Максимальная сумма"
+                :loading="loading"
             ></app-ruble-input>
           </v-col>
         </v-row>
@@ -48,6 +51,7 @@
             <app-range-date-picker
                 v-model="searchFormContracts.dates"
                 label="Период"
+                :loading="loading"
             ></app-range-date-picker>
           </v-col>
 
@@ -55,6 +59,7 @@
             <app-contract-type-select
                 v-model="searchFormContracts.contractType"
                 label="Тип контракта"
+                :loading="loading"
             ></app-contract-type-select>
           </v-col>
         </v-row>
@@ -115,6 +120,8 @@ export default {
   },
 
   data: () => ({
+    loading: false,
+
     isValidContractSearchForm: true,
     searchFormContracts: {
       title: null,
@@ -167,6 +174,7 @@ export default {
       if (!this.isValidContractSearchForm) {
         return
       }
+      this.loading = true
       let startPeriod = null
       let endPeriod = null
       if (this.searchFormContracts.dates != null) {
@@ -187,6 +195,7 @@ export default {
 
       this.contracts = contractsPages.content
       this.totalPages = contractsPages.totalPages
+      this.loading = false
     },
 
     contractSelected(contractId) {

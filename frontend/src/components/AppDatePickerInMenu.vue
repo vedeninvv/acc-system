@@ -17,6 +17,7 @@
           v-bind="attrs"
           v-on="on"
           :rules="[v => !!v || nullable]"
+          :loading="loading"
       ></v-text-field>
     </template>
     <v-date-picker
@@ -59,7 +60,8 @@ export default {
     nullable: {
       type: Boolean,
       default: true
-    }
+    },
+    loading: Boolean
   },
 
   created() {

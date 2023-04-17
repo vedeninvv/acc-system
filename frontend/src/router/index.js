@@ -93,6 +93,10 @@ const routes = [
         beforeEnter: isAdmin,
     },
     {
+        path: '/users',
+        redirect: '/administration'
+    },
+    {
         path: '/403',
         component: ForbiddenPage
     },

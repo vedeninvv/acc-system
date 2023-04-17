@@ -16,6 +16,7 @@
           readonly
           v-bind="attrs"
           v-on="on"
+          :loading="loading"
       ></v-text-field>
     </template>
     <v-date-picker
@@ -54,7 +55,8 @@
 export default {
   name: "AppRangeDatePicker",
   props: {
-    label: String
+    label: String,
+    loading: Boolean
   },
   data: () => ({
     dates: [],

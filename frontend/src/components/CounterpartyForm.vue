@@ -3,25 +3,45 @@
           v-model="isValidCounterpartyForm"
           @submit.prevent="saveCounterparty">
     <v-row>
-      <v-text-field v-model.trim="counterpartyForm.title"
-                    label="Название"
-                    :rules="[v => (!!v.trim() || 'Обязательно')]"
-      ></v-text-field>
+      <v-col>
+        <v-alert
+            v-model="isShowCounterpartyExistAlert"
+            dismissible
+            type="error"
+        >Контрагент с введенными данными уже существует. Название или ИНН уже существуют.
+        </v-alert>
+      </v-col>
     </v-row>
 
-    <v-row>
-      <v-text-field v-model.trim="counterpartyForm.address"
-                    label="Адрес"
-                    :rules="[v => (!!v.trim() || 'Обязательно')]"
-      ></v-text-field>
+    <v-row no-gutters>
+      <v-col>
+        <v-text-field v-model.trim="counterpartyForm.title"
+                      label="Название"
+                      :rules="[v => (!!v.trim() || 'Обязательно')]"
+                      :loading="loading"
+        ></v-text-field>
+      </v-col>
     </v-row>
 
-    <v-row>
-      <app-inn-input v-model="counterpartyForm.inn"
-                     label="ИНН"
-                     :nullable="false"
-      >
-      </app-inn-input>
+    <v-row no-gutters>
+      <v-col>
+        <v-text-field v-model.trim="counterpartyForm.address"
+                      label="Адрес"
+                      :rules="[v => (!!v.trim() || 'Обязательно')]"
+                      :loading="loading"
+        ></v-text-field>
+      </v-col>
+    </v-row>
+
+    <v-row no-gutters>
+      <v-col>
+        <app-inn-input v-model="counterpartyForm.inn"
+                       label="ИНН"
+                       :nullable="false"
+                       :loading="loading"
+        >
+        </app-inn-input>
+      </v-col>
     </v-row>
 
     <v-row>
@@ -58,7 +78,9 @@ export default {
   },
 
   data: () => ({
+    loading: false,
     counterpartyLoaded: false,
+    isShowCounterpartyExistAlert: false,
 
     isValidCounterpartyForm: true,
     counterpartyForm: {
@@ -93,6 +115,7 @@ export default {
       if (!this.isValidCounterpartyForm) {
         return
       }
+      this.loading = true
       if (this.isNewCounterparty) {
         this.createCounterparty()
       } else {
@@ -101,16 +124,28 @@ export default {
     },
 
     createCounterparty() {
-      apiCreateCounterparty(this.counterpartyForm).then(() => {
+      this.isShowCounterpartyExistAlert = false
+      apiCreateCounterparty(this.counterpartyForm)
+          .then(() => {
+            this.loading = false
             this.$router.push(`/counterparties`)
-          }
-      )
+          })
+          .catch(() => {
+            this.loading = false
+            this.isShowCounterpartyExistAlert = true
+          })
     },
 
     updateCounterpartyContract() {
+      this.isShowCounterpartyExistAlert = false
       apiUpdateCounterpartyById(this.counterpartyId, this.counterpartyForm)
           .then(() => {
+            this.loading = false
             this.$router.push(`/counterparties`)
+          })
+          .catch(() => {
+            this.loading = false
+            this.isShowCounterpartyExistAlert = true
           })
     },
   }
