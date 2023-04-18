@@ -28,11 +28,6 @@ public class UserGetDto {
     private String username;
 
     /**
-     * ID Контрактов, управляемых пользователем
-     */
-    private Set<Long> managingContractsIds;
-
-    /**
      * Имя пользователя
      */
     private String name;

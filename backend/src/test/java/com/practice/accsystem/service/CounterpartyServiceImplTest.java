@@ -57,13 +57,27 @@ public class CounterpartyServiceImplTest {
     }
 
     @Test
-    void testCreateCounterpartyWhenTitleOrInnExist() {
+    void testCreateCounterpartyWhenTitleExist() {
         CounterpartyEntity counterparty = CounterpartyEntity.builder()
                 .title("Контрагент")
                 .address("Адрес")
                 .INN("123")
                 .build();
         when(counterpartyRepository.existsByTitle("Контрагент")).thenReturn(true);
+
+        assertThatThrownBy(() -> counterpartyService.createCounterparty(counterparty)).isInstanceOf(DuplicateUniqueValueException.class);
+
+        verify(counterpartyRepository, times(0)).save(counterparty);
+    }
+
+    @Test
+    void testCreateCounterpartyWhenInnExist() {
+        CounterpartyEntity counterparty = CounterpartyEntity.builder()
+                .title("Контрагент")
+                .address("Адрес")
+                .INN("123")
+                .build();
+        when(counterpartyRepository.existsByTitle("Контрагент")).thenReturn(false);
         when(counterpartyRepository.existsByINN("123")).thenReturn(true);
 
         assertThatThrownBy(() -> counterpartyService.createCounterparty(counterparty)).isInstanceOf(DuplicateUniqueValueException.class);

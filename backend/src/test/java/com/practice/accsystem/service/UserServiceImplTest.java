@@ -177,6 +177,13 @@ public class UserServiceImplTest {
     @Test
     void testDeleteUserWhenHasRelatedContracts() {
         AppUserEntity user = AppUserEntity.builder()
+                .id(1L)
+                .username("username")
+                .password("encoded_password")
+                .role(Role.USER)
+                .name("Петр")
+                .surname("Петров")
+                .middleName("Петрович")
                 .managingContracts(new HashSet<>(Arrays.asList(
                         new ContractEntity(),
                         new ContractEntity()
@@ -188,7 +195,15 @@ public class UserServiceImplTest {
 
     @Test
     void testDeleteUserWhenNotHasRelatedContracts() {
-        AppUserEntity user = AppUserEntity.builder().id(1L).build();
+        AppUserEntity user = AppUserEntity.builder()
+                .id(1L)
+                .username("username")
+                .password("encoded_password")
+                .role(Role.USER)
+                .name("Петр")
+                .surname("Петров")
+                .middleName("Петрович")
+                .build();
 
         AppUserEntity actualUser = userService.deleteUser(user);
 

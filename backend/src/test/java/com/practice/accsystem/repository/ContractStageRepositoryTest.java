@@ -230,7 +230,7 @@ public class ContractStageRepositoryTest {
                 BigDecimal.valueOf(100),
                 BigDecimal.valueOf(150.10),
                 null, null, null, null,
-                new GregorianCalendar(2023, Calendar.JUNE, 20).getTime(),
+                new GregorianCalendar(2023, Calendar.JUNE, 10).getTime(),
                 new GregorianCalendar(2023, Calendar.JULY, 10).getTime(),
                 PageRequest.of(0, 10));
 
