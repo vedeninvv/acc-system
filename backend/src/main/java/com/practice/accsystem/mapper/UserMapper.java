@@ -3,12 +3,8 @@ package com.practice.accsystem.mapper;
 import com.practice.accsystem.dto.user.UserGetDto;
 import com.practice.accsystem.dto.user.UserPostDto;
 import com.practice.accsystem.dto.user.UserPutDto;
-import com.practice.accsystem.entity.ContractEntity;
 import com.practice.accsystem.entity.user.AppUserEntity;
 import org.springframework.stereotype.Component;
-
-import java.util.HashSet;
-import java.util.stream.Collectors;
 
 @Component
 public class UserMapper {
@@ -21,9 +17,6 @@ public class UserMapper {
                 .name(appUser.getName())
                 .surname(appUser.getSurname())
                 .middleName(appUser.getMiddleName())
-                .managingContractsIds(appUser.getManagingContracts().stream()
-                        .map(ContractEntity::getId)
-                        .collect(Collectors.toSet()))
                 .build();
     }
 
