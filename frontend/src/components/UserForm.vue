@@ -8,7 +8,7 @@
             v-model="isShowUsernameExistAlert"
             dismissible
             type="error"
-        >Username уже занят. Попробуйте другой
+        >Username уже занят, или попытка обновить данные суперпользователя
         </v-alert>
         <v-alert
             v-model="isShowUserSavedAlert"

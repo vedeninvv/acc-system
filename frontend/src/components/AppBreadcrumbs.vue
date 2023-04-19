@@ -28,7 +28,6 @@ export default {
 
   methods: {
     processRouteItem(routeItemKey, currentPath) {
-      console.log(routeItemKey)
       let routeItemsMap = {
         "contracts": {
           text: "Договоры",
