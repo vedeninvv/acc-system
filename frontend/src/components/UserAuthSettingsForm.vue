@@ -37,7 +37,7 @@
     <v-row>
       <v-col align="right">
         <v-btn
-            :class="{'disable-el': !isValidAuthSettingsForm}"
+            :class="{'disable-el': !isValidAuthSettingsForm || loading}"
             color="blue" dark
             type="submit">Сохранить
         </v-btn>

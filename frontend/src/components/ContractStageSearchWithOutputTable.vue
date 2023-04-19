@@ -84,7 +84,7 @@
         </v-col>
         <v-col cols="2">
           <v-btn
-              :class="{'disable-el': !isValidSearchFormContractStages}"
+              :class="{'disable-el': !isValidSearchFormContractStages || loading}"
               color="blue" dark
               type="submit">Поиск
           </v-btn>

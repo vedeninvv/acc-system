@@ -39,7 +39,7 @@
         </v-col>
         <v-col cols="2">
           <v-btn
-              :class="{'disable-el': !isValidSearchFormCounterparties}"
+              :class="{'disable-el': !isValidSearchFormCounterparties || loading}"
               color="blue" dark
               type="submit">Поиск
           </v-btn>

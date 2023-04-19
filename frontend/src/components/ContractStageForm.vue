@@ -109,7 +109,7 @@
       <v-row>
         <v-col align="right">
           <v-btn
-              :class="{'disable-el': !isValidContractStageForm}"
+              :class="{'disable-el': !isValidContractStageForm || loading}"
               color="blue" dark
               type="submit">Сохранить
           </v-btn>

@@ -63,7 +63,7 @@
         </v-col>
         <v-col cols="2">
           <v-btn
-              :class="{'disable-el': !isValidSearchFormCounterpartyContracts}"
+              :class="{'disable-el': !isValidSearchFormCounterpartyContracts || loading}"
               color="blue" dark
               type="submit">Поиск
           </v-btn>

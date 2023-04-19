@@ -24,7 +24,7 @@
       <v-spacer></v-spacer>
       <v-col cols="3">
         <v-btn
-            :class="{'disable-el': !isValidUserSearchForm}"
+            :class="{'disable-el': !isValidUserSearchForm || loading}"
             color="blue" dark
             type="submit">Поиск
         </v-btn>

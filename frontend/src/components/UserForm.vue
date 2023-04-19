@@ -109,7 +109,7 @@
     <v-row>
       <v-col align="right">
         <v-btn
-            :class="{'disable-el': !isValidUserForm}"
+            :class="{'disable-el': !isValidUserForm || loading}"
             color="blue" dark
             type="submit">Сохранить
         </v-btn>

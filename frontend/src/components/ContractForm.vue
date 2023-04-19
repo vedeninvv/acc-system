@@ -54,7 +54,7 @@
     <v-row>
       <v-spacer></v-spacer>
       <v-btn
-          :class="{'disable-el': !isValidContractForm}"
+          :class="{'disable-el': !isValidContractForm || loading}"
           color="blue" dark
           type="submit">Сохранить
       </v-btn>

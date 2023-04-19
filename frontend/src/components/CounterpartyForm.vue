@@ -47,7 +47,7 @@
     <v-row>
       <v-spacer></v-spacer>
       <v-btn
-          :class="{'disable-el': !isValidCounterpartyForm}"
+          :class="{'disable-el': !isValidCounterpartyForm || loading}"
           color="blue" dark
           type="submit">Сохранить
       </v-btn>

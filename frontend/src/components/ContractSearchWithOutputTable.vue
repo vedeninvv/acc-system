@@ -48,11 +48,13 @@
       </v-col>
     </v-row>
 
-    <v-row>
-      <v-spacer></v-spacer>
-      <v-col cols="3">
+    <v-row justify="center">
+      <v-col cols="6">
+        <v-spacer></v-spacer>
+      </v-col>
+      <v-col cols="2">
         <v-btn
-            :class="{'disable-el': !isValidContractSearchForm}"
+            :class="{'disable-el': !isValidContractSearchForm || loading}"
             color="blue" dark
             type="submit">Поиск
         </v-btn>
