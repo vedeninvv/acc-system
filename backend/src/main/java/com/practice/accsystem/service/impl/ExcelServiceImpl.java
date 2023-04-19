@@ -45,7 +45,7 @@ public class ExcelServiceImpl implements ExcelService {
 
     @Override
     public byte[] writeEntitiesInTemplateLineByLine(List<ExcelRecord> entities, Resource template) {
-        try (InputStream inputStream = new FileInputStream(template.getFile());
+        try (InputStream inputStream = template.getInputStream();
              ByteArrayOutputStream outputStream = new ByteArrayOutputStream()) {
             Workbook workbook = new HSSFWorkbook(inputStream);
             Sheet sheet = workbook.getSheetAt(DEFAULT_SHEET_INDEX);
