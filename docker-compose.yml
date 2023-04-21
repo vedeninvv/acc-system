@@ -13,8 +13,8 @@ services:
       MONGO_INITDB_DATABASE: ${MONGO_DATABASE_NAME}
     volumes:
       - mongo_data:/data/db
-  app:
-    build: .
+  server:
+    build: ./backend
     depends_on:
       - db
       - mongo
@@ -26,8 +26,18 @@ services:
       PORT: ${PORT}
       SUPERUSER_USERNAME: ${SUPERUSER_USERNAME}
       SUPERUSER_PASSWORD: ${SUPERUSER_PASSWORD}
+      JWT_SECRET: ${JWT_SECRET}
+      JWT_EXPIRATION_MS: ${JWT_EXPIRATION_MS}
+      JWT_REFRESH_EXPIRATION_MS: ${JWT_REFRESH_EXPIRATION_MS}
     ports:
       - ${PORT}:${PORT}
+    restart: always
+  web:
+    build: ./frontend
+    depends_on:
+      - server
+    ports:
+      - "3000:3000"
 volumes:
   db_data:
   mongo_data:

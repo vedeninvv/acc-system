@@ -36,5 +36,3 @@ target/
 /sql-diagrams/paradigm-project
 
 **/node_modules/
-
-.env
