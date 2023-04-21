@@ -130,12 +130,16 @@ export const apiUpdateUserAuthSettingsById = (userId, authSettings) => new Promi
 export const apiSignout = () => new Promise((resolve, reject) => {
     httpClient.post(`auth/signout`)
         .then(resp => {
-            tokenService.clearTokens()
-            clearRole()
-            clearUserId()
+            clientSignout()
             resolve(resp.data)
         })
         .catch(err => {
             reject(err)
         })
 })
+
+export const clientSignout = () => {
+    tokenService.clearTokens()
+    clearRole()
+    clearUserId()
+}

@@ -81,7 +81,9 @@ async function resetTokenAndReattemptRequest(error) {
                 data: {
                     refreshToken: refreshToken
                 }
-            });
+            }).catch(async (err) => {
+                return Promise.reject(err);
+            })
             if (!response.data) {
                 return Promise.reject(error);
             }

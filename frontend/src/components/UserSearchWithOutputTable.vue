@@ -61,7 +61,7 @@
 <script>
 import AppPagingTableCrud from "@/components/AppPagingTableCrud";
 import AppRoleSelect from "@/components/AppRoleSelect";
-import {apiDeleteUserById, apiGetAllUsers} from "@/shared/services/userService";
+import {apiDeleteUserById, apiGetAllUsers, clientSignout, getUserId} from "@/shared/services/userService";
 
 export default {
   name: "UserSearchWithOutputTable",
@@ -141,10 +141,14 @@ export default {
     deleteUser(id) {
       apiDeleteUserById(id)
           .then(() => {
-            this.users = this.users.filter((user) => {
-              return user.id !== id
-            })
-            this.getUsers()
+            if (id === getUserId()) {
+              clientSignout()
+            } else {
+              this.users = this.users.filter((user) => {
+                return user.id !== id
+              })
+              this.getUsers()
+            }
           })
           .catch((err) => {
             if (err.response.status === 403) {
