@@ -131,7 +131,7 @@ export default {
       this.counterpartyContractForm.title = counterpartyContract.title
       this.counterpartyContractForm.contractType = counterpartyContract.contractType
       this.counterpartyContractForm.sum = counterpartyContract.sum
-      this.counterpartyContractForm.counterpartyId = counterpartyContract.counterpartyId
+      this.counterpartyContractForm.counterpartyId = counterpartyContract.counterparty.id
       this.counterpartyContractForm.planStartDate = counterpartyContract.planStartDate
       this.counterpartyContractForm.planEndDate = counterpartyContract.planEndDate
       this.counterpartyContractForm.factStartDate = counterpartyContract.factStartDate
