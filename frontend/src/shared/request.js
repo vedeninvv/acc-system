@@ -3,7 +3,7 @@ import * as tokenService from '@/shared/services/tokenService'
 import router from "@/router";
 
 let config = {
-    baseURL: 'http://localhost:8080/api'
+    baseURL: `http://${document.location.host.split(':')[0]}:8080/api`
 };
 
 const httpClient = axios.create(config);
